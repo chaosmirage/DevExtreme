@@ -1,5 +1,7 @@
 import type { ColumnBase } from '@js/common/grids';
 
+import type { DataObject, Key } from '../data_controller/types';
+
 export interface Column extends Pick<Required<ColumnBase>, 'alignment' | 'dataType' | 'visible' | 'caption' | 'visibleIndex'> {
   dataField?: string;
 
@@ -20,7 +22,7 @@ export interface Cell {
 export interface DataRow {
   cells: Cell[];
 
-  key: unknown;
+  key: Key;
 
-  data: Record<string, unknown>;
+  data: DataObject;
 }
