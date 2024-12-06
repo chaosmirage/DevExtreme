@@ -11,16 +11,18 @@ import type { CardHeaderItem } from './card/header';
 export interface ContentProps {
   items: DataRow[];
 
-  toolbar?: CardHeaderItem[];
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fieldTemplate?: any;
 
   onRowHeightChange?: (value: number) => void;
 
   cardsPerRow?: number;
-  cardMinWidth?: number;
-  cardMaxWidth?: number;
+
+  cardProps?: {
+    toolbar?: CardHeaderItem[];
+    minWidth?: number;
+    maxWidth?: number;
+  };
 }
 
 export const CLASSES = {
@@ -50,13 +52,11 @@ export class Content extends PureComponent<ContentProps> {
       >
         {this.props.items.map((item, i) => (
           <Card
+            {...this.props.cardProps}
             key={item.key as string}
             elementRef={this.cardRefs[i]}
             row={item}
             fieldTemplate={this.props.fieldTemplate}
-            toolbar={this.props.toolbar}
-            minWidth={this.props.cardMinWidth}
-            maxWidth={this.props.cardMaxWidth}
           />
         ))}
       </div>

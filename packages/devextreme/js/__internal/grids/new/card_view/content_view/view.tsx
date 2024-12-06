@@ -37,8 +37,6 @@ export class ContentView extends View<ContentViewProps> {
 
   private readonly cardMinWidth = this.options.oneWay('cardMinWidth');
 
-  private readonly cardMaxWidth = this.options.oneWay('cardMaxWidth');
-
   private readonly rowHeight = state(0);
 
   private readonly viewportHeight = state(0);
@@ -138,9 +136,18 @@ export class ContentView extends View<ContentViewProps> {
         // items: computed((virtualState) => virtualState.virtualItems, [this.virtualState]),
         fieldTemplate: this.options.template('fieldTemplate'),
         cardsPerRow: this.cardsPerRow,
-        cardMinWidth: this.cardMinWidth,
-        cardMaxWidth: this.cardMaxWidth,
         onRowHeightChange: this.rowHeight.update.bind(this.rowHeight),
+        cardProps: combined({
+          minWidth: this.cardMinWidth,
+          maxWidth: this.options.oneWay('cardMaxWidth'),
+          onClick: this.options.action('onCardClick'),
+          onDblClick: this.options.action('onCardDblClick'),
+          onHoverChanged: this.options.action('onCardHoverChanged'),
+          onPrepared: this.options.action('onCardPrepared'),
+          cover: this.options.oneWay('cardCover'),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          toolbar: this.options.oneWay('cardHeader.items') as any,
+        }),
       }),
       onWidthChange: this.width.update.bind(this.width),
       virtualScrollingProps: combined({

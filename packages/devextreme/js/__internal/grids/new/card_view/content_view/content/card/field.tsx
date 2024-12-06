@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { PureComponent } from '@ts/grids/new/grid_core/core/pure_component';
 import type { RefObject } from 'inferno';
@@ -17,7 +18,6 @@ export interface FieldProps {
   wordWrapEnabled?: boolean;
   cellHintEnabled?: boolean;
   elementRef?: RefObject<HTMLDivElement>;
-  template?: (props: FieldProps) => JSX.Element;
   captionTemplate?: (title: string) => JSX.Element;
   valueTemplate?: (value: unknown) => JSX.Element;
 
@@ -36,39 +36,8 @@ export class Field extends PureComponent<FieldProps> {
   }
 
   componentDidMount(): void {
-    const { onPrepared } = this.props;
-    if (onPrepared && this.containerRef.current) {
-      onPrepared(this.containerRef.current);
-    }
+    this.props.onPrepared?.(this.containerRef.current!);
   }
-
-  handleMouseEnter = (): void => {
-    const { onHoverChanged } = this.props;
-    if (onHoverChanged) {
-      onHoverChanged(true);
-    }
-  };
-
-  handleMouseLeave = (): void => {
-    const { onHoverChanged } = this.props;
-    if (onHoverChanged) {
-      onHoverChanged(false);
-    }
-  };
-
-  handleClick = (event: MouseEvent): void => {
-    const { onClick } = this.props;
-    if (onClick) {
-      onClick(event);
-    }
-  };
-
-  handleDblClick = (event: MouseEvent): void => {
-    const { onDblClick } = this.props;
-    if (onDblClick) {
-      onDblClick(event);
-    }
-  };
 
   renderCaption(): JSX.Element {
     const { title, captionTemplate } = this.props;
@@ -106,24 +75,16 @@ export class Field extends PureComponent<FieldProps> {
   }
 
   render(): JSX.Element {
-    const { template } = this.props;
-
-    const containerProps = {
-      onMouseEnter: this.handleMouseEnter,
-      onMouseLeave: this.handleMouseLeave,
-      onClick: this.handleClick,
-      onDblClick: this.handleDblClick,
-      ref: this.containerRef,
-      tabIndex: 0,
-      className: `${CLASSES.field}`.trim(),
-    };
-
-    if (template) {
-      return template(this.props);
-    }
-
     return (
-      <div {...containerProps}>
+      <div
+        onMouseEnter={(): void => this.props.onHoverChanged?.(true)}
+        onMouseLeave={(): void => this.props.onHoverChanged?.(false)}
+        onClick={this.props.onClick}
+        onDblClick={this.props.onDblClick}
+        ref={this.containerRef}
+        tabIndex={0}
+        className={CLASSES.field}
+      >
         {this.renderCaption()}
         {this.renderValue()}
       </div>

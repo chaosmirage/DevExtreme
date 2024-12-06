@@ -157,4 +157,14 @@ export class OptionsController<TProps, TDefaultProps extends TProps = TProps> {
       [this.oneWay(name)],
     );
   }
+
+  public action<TProp extends string>(
+    name: TProp,
+  ): SubsGets<PropertyWithDefaults<TProps, TDefaultProps, TProp>> {
+    return computed(
+      // @ts-expect-error
+      () => this.component._createActionByOption(name) as any,
+      [this.oneWay(name)],
+    );
+  }
 }

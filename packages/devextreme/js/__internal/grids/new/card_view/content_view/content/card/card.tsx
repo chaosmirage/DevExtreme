@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import $ from '@js/core/renderer';
 import type { DataRow } from '@ts/grids/new/grid_core/columns_controller/types';
 import { PureComponent } from '@ts/grids/new/grid_core/core/pure_component';
 import { CollectionController } from '@ts/grids/new/grid_core/keyboard_navigation/collection_controller';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { InfernoNode, RefObject } from 'inferno';
-import { createRef, render } from 'inferno';
+import { createRef } from 'inferno';
 
 import { Cover } from './cover';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { FieldProps } from './field';
 import { Field } from './field';
 import type { CardHeaderItem } from './header';
 import { CardHeader } from './header';
@@ -38,9 +34,9 @@ export interface CardProps {
   row: DataRow;
 
   cover?: {
-    altExpr?: string;
-
     imageExpr?: string;
+
+    altExpr?: string;
   };
 
   elementRef?: RefObject<HTMLDivElement>;
@@ -129,9 +125,7 @@ export class Card extends PureComponent<CardProps> {
         {this.props.row.cells.map((cell, index) => (
           <FieldTemplate
             elementRef={this.fieldRefs[index]}
-            index={index}
             // eslint-disable-next-line max-len, @typescript-eslint/explicit-function-return-type
-            defaultTemplate={{ render(model, _index, container) { render(<Field {...model} />, $(container).get(0)); } }}
             alignment={cell.column.alignment}
             title={cell.column.caption || cell.column.name}
             value={cell.value}

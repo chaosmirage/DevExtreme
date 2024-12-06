@@ -120,14 +120,6 @@
                     },
                     cardMinWidth: 250,
                     cardMaxWidth: 350,
-                    fieldTemplate({ defaultTemplate, ...props}, index) {
-                        const el = $('<div>')
-                        if (index % 2) {
-                            el.css({color: 'red'});
-                        }
-                        defaultTemplate.render(props, index, el);
-                        return el;
-                    },
                     columns: [
                         {
                             dataField: 'OrderNumber',
