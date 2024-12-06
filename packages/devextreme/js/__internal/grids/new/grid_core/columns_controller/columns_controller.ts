@@ -4,6 +4,7 @@ import type { SubsGets, SubsGetsUpd } from '@ts/core/reactive/index';
 import { computed, iif, interruptableComputed } from '@ts/core/reactive/index';
 
 import { DataController } from '../data_controller/index';
+import type { DataObject } from '../data_controller/types';
 import { OptionsController } from '../options_controller/options_controller';
 import type { Column, DataRow } from './types';
 import { normalizeColumn } from './utils';
@@ -57,7 +58,7 @@ export class ColumnsController {
     );
   }
 
-  public createDataRow(data: Record<string, unknown>, columns: Column[]): DataRow {
+  public createDataRow(data: DataObject, columns: Column[]): DataRow {
     return {
       cells: columns.map((c) => ({
         column: c,

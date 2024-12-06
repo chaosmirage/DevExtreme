@@ -1,5 +1,1 @@
-export interface Paging {
-  pageSize?: number;
-
-  pageIndex?: number;
-}
+export type DataObject = Record<string, unknown>;

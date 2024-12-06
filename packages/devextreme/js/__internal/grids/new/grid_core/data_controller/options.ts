@@ -1,9 +1,13 @@
 import type { DataSourceLike } from '@js/data/data_source';
 
-import type { Paging } from './types';
+interface PagingOptions {
+  pageSize?: number;
+
+  pageIndex?: number;
+}
 
 export interface Options {
-  paging?: Paging;
+  paging?: PagingOptions;
 
   dataSource?: DataSourceLike<unknown>;
 

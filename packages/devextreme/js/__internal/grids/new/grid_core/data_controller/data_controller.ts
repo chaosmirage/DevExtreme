@@ -9,6 +9,7 @@ import {
 // import { EditingController } from '../editing/controller';
 // import type { Change } from '../editing/types';
 import { OptionsController } from '../options_controller/options_controller';
+import type { DataObject } from './types';
 import { normalizeDataSource } from './utils';
 
 export class DataController {
@@ -25,9 +26,9 @@ export class DataController {
 
   public readonly pageSize = this.options.twoWay('paging.pageSize');
 
-  private readonly _items = state<unknown[]>([]);
+  private readonly _items = state<DataObject[]>([]);
 
-  public readonly items: Subscribable<unknown[]> = this._items;
+  public readonly items: Subscribable<DataObject[]> = this._items;
 
   private readonly _totalCount = state(0);
 
@@ -49,7 +50,7 @@ export class DataController {
   // );
 
   public readonly pageCount = computed(
-    (totalCount, pageSize) => Math.ceil(totalCount / pageSize!),
+    (totalCount, pageSize) => Math.ceil(totalCount / pageSize),
     [this.totalCount, this.pageSize],
   );
 
@@ -87,11 +88,11 @@ export class DataController {
       (dataSource, pageIndex, pageSize, filter) => {
         let someParamChanged = false;
         if (dataSource.pageIndex() !== pageIndex) {
-          dataSource.pageIndex(pageIndex!);
+          dataSource.pageIndex(pageIndex);
           someParamChanged ||= true;
         }
         if (dataSource.pageSize() !== pageSize) {
-          dataSource.pageSize(pageSize!);
+          dataSource.pageSize(pageSize);
           someParamChanged ||= true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
