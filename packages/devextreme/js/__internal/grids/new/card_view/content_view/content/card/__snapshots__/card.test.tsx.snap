@@ -8,105 +8,109 @@ exports[`Rendering should be rendered correctly 1`] = `
     tabindex="0"
   >
     <div
-      class="dx-toolbar dx-widget dx-visibility-change-handler dx-collection"
-      role="toolbar"
+      class="dx-cardheader"
     >
       <div
-        class="dx-toolbar-items-container"
+        class="dx-toolbar dx-widget dx-visibility-change-handler dx-collection"
+        role="toolbar"
       >
         <div
-          class="dx-toolbar-before"
-          role="presentation"
+          class="dx-toolbar-items-container"
         >
           <div
-            class="dx-item dx-toolbar-item dx-toolbar-button"
+            class="dx-toolbar-before"
+            role="presentation"
           >
             <div
-              class="dx-item-content dx-toolbar-item-content"
+              class="dx-item dx-toolbar-item dx-toolbar-button"
             >
               <div
-                aria-checked="false"
-                aria-invalid="false"
-                aria-readonly="false"
-                class="dx-widget dx-checkbox"
-                role="checkbox"
-                tabindex="0"
+                class="dx-item-content dx-toolbar-item-content"
               >
-                <input
-                  type="hidden"
-                  value="false"
-                />
                 <div
-                  class="dx-checkbox-container"
+                  aria-checked="false"
+                  aria-invalid="false"
+                  aria-readonly="false"
+                  class="dx-widget dx-checkbox"
+                  role="checkbox"
+                  tabindex="0"
                 >
-                  <span
-                    class="dx-checkbox-icon"
+                  <input
+                    type="hidden"
+                    value="false"
                   />
-                  
+                  <div
+                    class="dx-checkbox-container"
+                  >
+                    <span
+                      class="dx-checkbox-icon"
+                    />
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="dx-item dx-toolbar-item dx-toolbar-label"
+            >
+              <div
+                class="dx-item-content dx-toolbar-item-content"
+              >
+                <div>
+                  Card Header
                 </div>
               </div>
             </div>
           </div>
           <div
-            class="dx-item dx-toolbar-item dx-toolbar-label"
-          >
-            <div
-              class="dx-item-content dx-toolbar-item-content"
-            >
-              <div>
-                Card Header
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="dx-toolbar-center"
-          role="presentation"
-        />
-        <div
-          class="dx-toolbar-after"
-          role="presentation"
-        >
+            class="dx-toolbar-center"
+            role="presentation"
+          />
           <div
-            class="dx-item dx-toolbar-item dx-toolbar-button"
+            class="dx-toolbar-after"
+            role="presentation"
           >
             <div
-              class="dx-item-content dx-toolbar-item-content"
+              class="dx-item dx-toolbar-item dx-toolbar-button"
             >
               <div
-                aria-label="edit"
-                class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon"
-                role="button"
-                tabindex="0"
+                class="dx-item-content dx-toolbar-item-content"
               >
                 <div
-                  class="dx-button-content"
+                  aria-label="edit"
+                  class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon"
+                  role="button"
+                  tabindex="0"
                 >
-                  <i
-                    class="dx-icon dx-icon-edit"
-                  />
+                  <div
+                    class="dx-button-content"
+                  >
+                    <i
+                      class="dx-icon dx-icon-edit"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="dx-item dx-toolbar-item dx-toolbar-button"
-          >
             <div
-              class="dx-item-content dx-toolbar-item-content"
+              class="dx-item dx-toolbar-item dx-toolbar-button"
             >
               <div
-                aria-label="trash"
-                class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon"
-                role="button"
-                tabindex="0"
+                class="dx-item-content dx-toolbar-item-content"
               >
                 <div
-                  class="dx-button-content"
+                  aria-label="trash"
+                  class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon"
+                  role="button"
+                  tabindex="0"
                 >
-                  <i
-                    class="dx-icon dx-icon-trash"
-                  />
+                  <div
+                    class="dx-button-content"
+                  >
+                    <i
+                      class="dx-icon dx-icon-trash"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -119,7 +123,7 @@ exports[`Rendering should be rendered correctly 1`] = `
     >
       <img
         alt="Card Cover"
-        class="dx-card-cover-image cover-image"
+        class="dx-card-cover-image"
         src="https://www.devexpress.com/support/demos/i/demo-thumbs/aspnetcore-grid.png"
         style="width: 100%; height: auto;"
       />
@@ -132,10 +136,11 @@ exports[`Rendering should be rendered correctly 1`] = `
         class="dx-cardview-field-name"
       >
         Field
-        : 
+        :
       </span>
       <span
         class="dx-cardview-field-value"
+        style="overflow: hidden;"
       >
         devextreme
       </span>

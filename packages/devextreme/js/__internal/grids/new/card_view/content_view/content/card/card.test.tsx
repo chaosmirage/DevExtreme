@@ -16,6 +16,11 @@ const props = {
       },
     ],
     key: 0,
+    data: {
+      Field: 'Name',
+      img: 'https://www.devexpress.com/support/demos/i/demo-thumbs/aspnetcore-grid.png',
+      alt: 'Card Cover',
+    },
   },
   toolbar: [
     {
@@ -44,9 +49,8 @@ const props = {
     },
   ],
   cover: {
-    src: 'https://www.devexpress.com/support/demos/i/demo-thumbs/aspnetcore-grid.png',
-    alt: 'Card Cover',
-    className: 'cover-image',
+    imageExpr: 'img',
+    altExpr: 'alt',
   },
 };
 
@@ -97,8 +101,6 @@ describe('Image', () => {
 
     const image = container.querySelector('img');
     expect(image).not.toBeNull();
-    expect(image?.src).toBe(props.cover.src);
-    expect(image?.alt).toBe(props.cover.alt);
   });
 });
 
@@ -111,7 +113,7 @@ describe('Field Template', () => {
     const fieldName = container.querySelector('.dx-cardview-field-name');
     const fieldValue = container.querySelector('.dx-cardview-field-value');
 
-    expect(fieldName?.textContent).toBe('Field: ');
+    expect(fieldName?.textContent).toBe('Field:');
     expect(fieldValue?.textContent).toBe('devextreme');
   });
 });

@@ -215,26 +215,31 @@ exports[`common initial render should be successfull 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="dx-toolbar dx-widget dx-visibility-change-handler dx-collection dx-toolbar-mini"
-                  role="toolbar"
+                  class="dx-cardheader"
                 >
                   <div
-                    class="dx-toolbar-items-container"
+                    class="dx-toolbar dx-widget dx-visibility-change-handler dx-collection dx-toolbar-mini"
+                    role="toolbar"
                   >
                     <div
-                      class="dx-toolbar-before"
-                      role="presentation"
-                    />
-                    <div
-                      class="dx-toolbar-center"
-                      role="presentation"
-                    />
-                    <div
-                      class="dx-toolbar-after"
-                      role="presentation"
-                    />
+                      class="dx-toolbar-items-container"
+                    >
+                      <div
+                        class="dx-toolbar-before"
+                        role="presentation"
+                      />
+                      <div
+                        class="dx-toolbar-center"
+                        role="presentation"
+                      />
+                      <div
+                        class="dx-toolbar-after"
+                        role="presentation"
+                      />
+                    </div>
                   </div>
                 </div>
+                
                 <div
                   class="dx-cardview-field"
                   tabindex="0"
@@ -243,11 +248,11 @@ exports[`common initial render should be successfull 1`] = `
                     class="dx-cardview-field-name"
                   >
                     A
-                    : 
+                    :
                   </span>
                   <span
                     class="dx-cardview-field-value"
-                    style="text-align: left;"
+                    style="overflow: hidden;"
                   >
                     a
                   </span>

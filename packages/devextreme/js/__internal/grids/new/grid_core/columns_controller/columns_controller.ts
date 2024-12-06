@@ -57,13 +57,14 @@ export class ColumnsController {
     );
   }
 
-  public createDataRow(data: unknown, columns: Column[]): DataRow {
+  public createDataRow(data: Record<string, unknown>, columns: Column[]): DataRow {
     return {
       cells: columns.map((c) => ({
         column: c,
         value: c.calculateCellValue(data),
       })),
       key: this.dataController.getDataKey(data),
+      data,
     };
   }
 }

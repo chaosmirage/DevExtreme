@@ -1,11 +1,10 @@
 import type { dxToolbarItem } from '@js/ui/toolbar';
+import type { DataRow } from '@ts/grids/new/grid_core/columns_controller/types';
 import { Toolbar } from '@ts/grids/new/grid_core/inferno_wrappers/toolbar';
+import { Component } from 'inferno';
 
 export const CLASSES = {
   cardHeader: 'dx-cardheader',
-  cardHeaderItem: 'dx-cardheader-item',
-  cardHeaderBefore: 'dx-cardheader-before',
-  cardHeaderAfter: 'dx-cardheader-after',
 };
 
 export interface CardHeaderItem {
@@ -16,8 +15,41 @@ export interface CardHeaderItem {
 }
 
 export interface CardHeaderProps {
-  items: CardHeaderItem[];
+  items?: CardHeaderItem[];
+  visible?: boolean;
+  captionExpr?: string;
+  template?: (items: CardHeaderItem[]) => JSX.Element;
+  row?: DataRow;
 }
-export const CardHeader = ({ items }: CardHeaderProps): JSX.Element => (
-  <Toolbar items={items} />
-);
+
+export class CardHeader extends Component<CardHeaderProps> {
+  render(): JSX.Element | null {
+    const {
+      visible = true,
+      items = [],
+      captionExpr,
+      template,
+      row,
+    } = this.props;
+
+    if (!visible) {
+      return null;
+    }
+
+    const captionItem: CardHeaderItem | null = captionExpr && row?.[captionExpr]
+      ? { location: 'before', text: row[captionExpr] }
+      : null;
+
+    const finalItems = captionItem ? [captionItem, ...items] : items;
+
+    if (template) {
+      return template(finalItems);
+    }
+
+    return (
+      <div className={CLASSES.cardHeader}>
+        <Toolbar items={finalItems} />
+      </div>
+    );
+  }
+}

@@ -21,4 +21,6 @@ export interface DataRow {
   cells: Cell[];
 
   key: unknown;
+
+  data: Record<string, unknown>;
 }
