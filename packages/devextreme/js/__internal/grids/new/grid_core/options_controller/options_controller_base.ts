@@ -111,10 +111,12 @@ export class OptionsController<TProps, TDefaultProps extends TProps = TProps> {
     const obs = computed(
       (props) => {
         const value = getValue(props, name);
-        // NOTE: it is better not to use '??' operator,
-        // because result will be different if value is 'null'.
-        // Some code works differently if undefined is passed instead of null,
-        // for example dataSource getter-setter .filter()
+        /*
+          NOTE: it is better not to use '??' operator,
+          because result will be different if value is 'null'.
+          Some code works differently if undefined is passed instead of null,
+          for example dataSource's getter-setter `.filter()`
+        */
         return value !== undefined ? value : getValue(this.defaults, name);
       },
       [this.props],
@@ -125,7 +127,6 @@ export class OptionsController<TProps, TDefaultProps extends TProps = TProps> {
 
   public twoWay<TProp extends string>(
     name: TProp,
-  // eslint-disable-next-line max-len
   ): SubsGetsUpd<PropertyWithDefaults<TProps, TDefaultProps, TProp>> {
     const obs = state(this.component.option(name));
     this.oneWay(name).subscribe(obs.update.bind(obs) as any);

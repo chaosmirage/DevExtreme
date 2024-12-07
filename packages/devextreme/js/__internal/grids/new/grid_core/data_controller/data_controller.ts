@@ -10,7 +10,7 @@ import {
 // import type { Change } from '../editing/types';
 import { OptionsController } from '../options_controller/options_controller';
 import type { DataObject } from './types';
-import { normalizeDataSource } from './utils';
+import { normalizeDataSource, updateItemsImmutable } from './utils';
 
 export class DataController {
   private readonly dataSourceConfiguration = this.options.oneWay('dataSource');
@@ -61,8 +61,15 @@ export class DataController {
   ) {
     effect(
       (dataSource) => {
-        const changedCallback = (): void => {
-          this._items.update(dataSource.items());
+        const changedCallback = (e?): void => {
+          let items = dataSource.items() as DataObject[];
+
+          if (e?.changes) {
+            items = this._items.unreactive_get();
+            items = updateItemsImmutable(items, e.changes, dataSource.store());
+          }
+
+          this._items.update(items);
           this.pageIndex.update(dataSource.pageIndex());
           this.pageSize.update(dataSource.pageSize());
           this._totalCount.update(dataSource.totalCount());

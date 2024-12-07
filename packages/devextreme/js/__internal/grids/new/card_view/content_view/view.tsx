@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable spellcheck/spell-checker */
+import { compileGetter } from '@js/core/utils/data';
+import { isDefined } from '@js/core/utils/type';
 import type dxScrollable from '@js/ui/scroll_view/ui.scrollable';
 import type { ScrollEventInfo } from '@js/ui/scroll_view/ui.scrollable';
 import { combined, computed, state } from '@ts/core/reactive/index';
@@ -12,6 +14,7 @@ import { DataController } from '@ts/grids/new/grid_core/data_controller';
 import { ErrorController } from '@ts/grids/new/grid_core/error_controller/error_controller';
 import { createRef } from 'inferno';
 
+import type { DataObject } from '../../grid_core/data_controller/types';
 import type { ContentViewProps } from './content_view';
 import { ContentView as ContentViewComponent } from './content_view';
 
@@ -144,7 +147,16 @@ export class ContentView extends View<ContentViewProps> {
           onDblClick: this.options.action('onCardDblClick'),
           onHoverChanged: this.options.action('onCardHoverChanged'),
           onPrepared: this.options.action('onCardPrepared'),
-          cover: this.options.oneWay('cardCover'),
+          cover: combined({
+            imageExpr: computed(
+              (imageExpr) => this.processExpr(imageExpr),
+              [this.options.oneWay('cardCover.imageExpr')],
+            ),
+            altExpr: computed(
+              (altExpr) => this.processExpr(altExpr),
+              [this.options.oneWay('cardCover.altExpr')],
+            ),
+          }),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           toolbar: this.options.oneWay('cardHeader.items') as any,
         }),
@@ -171,6 +183,16 @@ export class ContentView extends View<ContentViewProps> {
         ),
       }),
     });
+  }
+
+  private processExpr<T>(
+    expr: T | ((data: DataObject) => T) | undefined,
+  ): ((data: DataObject) => T) | undefined {
+    if (!isDefined(expr)) {
+      return undefined;
+    }
+    // @ts-expect-error
+    return compileGetter(expr);
   }
 
   private onScroll(e: ScrollEventInfo<unknown>): void {

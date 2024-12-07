@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { DataRow } from '@ts/grids/new/grid_core/columns_controller/types';
 import { PureComponent } from '@ts/grids/new/grid_core/core/pure_component';
+import type { DataObject } from '@ts/grids/new/grid_core/data_controller/types';
 import { CollectionController } from '@ts/grids/new/grid_core/keyboard_navigation/collection_controller';
 import type { InfernoNode, RefObject } from 'inferno';
 import { createRef } from 'inferno';
@@ -34,9 +35,9 @@ export interface CardProps {
   row: DataRow;
 
   cover?: {
-    imageExpr?: string;
+    imageExpr?: (data: DataObject) => string;
 
-    altExpr?: string;
+    altExpr?: (data: DataObject) => string;
   };
 
   elementRef?: RefObject<HTMLDivElement>;
@@ -99,8 +100,8 @@ export class Card extends PureComponent<CardProps> {
       hoverStateEnabled ? CLASSES.cardHover : '',
     ].filter(Boolean).join(' ');
 
-    const imageSrc = cover?.imageExpr && this.props.row.data[cover.imageExpr] as string;
-    const alt = cover?.altExpr && this.props.row.data[cover.altExpr] as string;
+    const imageSrc = cover?.imageExpr?.(this.props.row.data);
+    const alt = cover?.altExpr?.(this.props.row.data);
 
     return (
       <div
@@ -118,10 +119,12 @@ export class Card extends PureComponent<CardProps> {
         <CardHeader
           items={this.props.toolbar || []}
         />
+        {imageSrc && (
           <Cover
             imageSrc={imageSrc}
             alt={alt}
           />
+        )}
         {this.props.row.cells.map((cell, index) => (
           <FieldTemplate
             elementRef={this.fieldRefs[index]}
