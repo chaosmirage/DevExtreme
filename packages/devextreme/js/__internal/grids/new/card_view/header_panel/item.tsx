@@ -10,7 +10,7 @@ export const CLASSES = {
 export interface HeaderItemProps {
   column: Column;
   buttons?: ComponentType;
-  onRemoveButtonClicked?: () => void;
+  onRemove?: () => void;
 }
 
 export function Item(props: HeaderItemProps): JSX.Element {
@@ -18,11 +18,11 @@ export function Item(props: HeaderItemProps): JSX.Element {
     <div className={CLASSES.item}>
       {props.column.caption}
       <Button
-          icon='close'
-          stylingMode='text'
-          elementAttr={{ class: CLASSES.button }}
-          onClick={(): void => { props.onRemoveButtonClicked?.(); }}
-        />
+        icon='close'
+        stylingMode='text'
+        elementAttr={{ class: CLASSES.button }}
+        onClick={(): void => { props.onRemove?.(); }}
+      />
     </div>
   );
 }

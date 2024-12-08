@@ -12,7 +12,7 @@ export class HeaderPanelView extends View {
         columns={columns}
         onReorder={this.onReorder.bind(this)}
         onAdd={this.onAdd.bind(this)}
-        onHeaderRemoveButtonClicked={this.onHeaderCloseButtonClick.bind(this)}
+        onRemove={this.onRemove.bind(this)}
       />
     ),
     [this.columnsController.visibleColumns],
@@ -26,7 +26,7 @@ export class HeaderPanelView extends View {
     super();
   }
 
-  public onHeaderCloseButtonClick(name: string): void {
+  public onRemove(name: string): void {
     const index = this.getColumnIndexByName(name);
 
     this.columnsController.columns.updateFunc((columns) => {

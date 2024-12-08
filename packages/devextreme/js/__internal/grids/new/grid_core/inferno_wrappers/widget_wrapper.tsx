@@ -4,13 +4,14 @@ import { Component, createRef } from 'inferno';
 
 interface WithRef<TComponent> {
   componentRef?: RefObject<TComponent>;
+  elementRef?: RefObject<HTMLDivElement>;
 }
 
 export abstract class InfernoWrapper<
   TProperties,
   TComponent extends DOMComponent<TProperties>,
 > extends Component<TProperties & WithRef<TComponent>> {
-  protected readonly ref = createRef<HTMLDivElement>();
+  protected ref = createRef<HTMLDivElement>();
 
   protected component?: TComponent;
 
@@ -19,6 +20,9 @@ export abstract class InfernoWrapper<
   ) => TComponent;
 
   public render(): InfernoNode {
+    if (this.props.elementRef) {
+      this.ref = this.props.elementRef;
+    }
     return <div ref={this.ref}></div>;
   }
 
@@ -37,9 +41,13 @@ export abstract class InfernoWrapper<
     });
   }
 
-  public componentDidMount(): void {
+  protected createComponent(ref: RefObject<HTMLDivElement>, props: TProperties): TComponent {
     // eslint-disable-next-line no-new, @typescript-eslint/no-non-null-assertion
-    this.component = new (this.getComponentFabric())(this.ref.current!, this.props);
+    return new (this.getComponentFabric())(ref.current!, props);
+  }
+
+  public componentDidMount(): void {
+    this.component = this.createComponent(this.ref, this.props);
     this.updateComponentRef();
   }
 
