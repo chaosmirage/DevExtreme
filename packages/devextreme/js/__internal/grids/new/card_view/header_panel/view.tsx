@@ -3,12 +3,12 @@ import { computed } from '@ts/core/reactive/index';
 import { ColumnsController } from '@ts/grids/new/grid_core/columns_controller/columns_controller';
 import { View } from '@ts/grids/new/grid_core/core/view_old';
 
-import { HeaderPanel } from './header_panel';
+import { ResizableHeaderPanel } from './resizable_header_panel';
 
 export class HeaderPanelView extends View {
   public vdom = computed(
     (columns) => (
-      <HeaderPanel
+      <ResizableHeaderPanel
         columns={columns}
         onReorder={this.onReorder.bind(this)}
         onAdd={this.onAdd.bind(this)}
