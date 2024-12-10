@@ -14,9 +14,9 @@ export const CLASSES = {
 export interface HeaderPanelProps {
   columns: Column[];
 
-  onReorder: (fromIndex: number, toIndex: number) => void;
+  onReorder: (name: string, toIndex: number) => void;
 
-  onAdd: (fromIndex: number, toIndex: number) => void;
+  onAdd: (name: string, toIndex: number) => void;
 
   onRemove: (name: string) => void;
 
@@ -25,11 +25,7 @@ export interface HeaderPanelProps {
   elementRef: RefObject<HTMLDivElement>;
 }
 
-interface HeaderPanelState {
-  shownColumnCount: number;
-}
-
-export class HeaderPanel extends Component<HeaderPanelProps, HeaderPanelState> {
+export class HeaderPanel extends Component<HeaderPanelProps> {
   public render(): JSX.Element {
     const visibleColumns = this.props.columns.filter(
       (_, index) => index < this.props.shownColumnCount,
@@ -43,8 +39,14 @@ export class HeaderPanel extends Component<HeaderPanelProps, HeaderPanelState> {
         <Sortable
           itemOrientation='horizontal'
           dropFeedbackMode='indicate'
-          onReorder={(e): void => this.props.onReorder?.(e.fromIndex, e.toIndex)}
-          onAdd={(e): void => this.props.onAdd?.(e.fromIndex, e.toIndex)}
+          onReorder={(e): void => this.props.onReorder?.(e.itemData.columnName, e.toIndex)}
+          onAdd={(e): void => this.props.onAdd?.(e.itemData.columnName, e.toIndex)}
+          onDragStart={(e): void => {
+            e.itemData = {
+              columnName: visibleColumns[e.fromIndex].name,
+              source: 'main-header-panel',
+            };
+          }}
           group='cardview'
         >
           {visibleColumns.map((column) => (
@@ -60,6 +62,9 @@ export class HeaderPanel extends Component<HeaderPanelProps, HeaderPanelState> {
           <DropDownButton
             columns={nonVisibleColumns}
             onRemove={this.props.onRemove}
+            onAdd={this.props.onAdd}
+            onReorder={this.props.onReorder}
+            shownColumnCount={this.props.shownColumnCount}
           />
         )}
       </div>

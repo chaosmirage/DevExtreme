@@ -12,3 +12,5 @@ export interface WithDIContext {
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type Template<T> = (props: T) => HTMLDivElement | template;
+
+export type WithOptional<T, TProp extends keyof T> = Omit<T, TProp> & Partial<Pick<T, TProp>>;

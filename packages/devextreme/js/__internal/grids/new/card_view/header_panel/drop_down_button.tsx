@@ -14,11 +14,13 @@ const CLASSES = {
 export interface DropDownButtonProps {
   columns: Column[];
 
-  onReorder?: (fromIndex: number, toIndex: number) => void;
+  onReorder?: (name: string, toIndex: number) => void;
 
-  onAdd?: (fromIndex: number, toIndex: number) => void;
+  onAdd?: (name: string, toIndex: number) => void;
 
   onRemove?: (name: string) => void;
+
+  shownColumnCount: number;
 }
 
 interface DropDownButtonState {
@@ -73,10 +75,21 @@ export class DropDownButton extends Component<DropDownButtonProps, DropDownButto
         }}
       >
         <Sortable
-          itemOrientation='horizontal'
+          itemOrientation='vertical'
           dropFeedbackMode='indicate'
-          onReorder={(e): void => this.props.onReorder?.(e.fromIndex, e.toIndex)}
-          onAdd={(e): void => this.props.onAdd?.(e.fromIndex, e.toIndex)}
+          onReorder={(e): void => this.props.onReorder?.(
+            e.itemData.columnName,
+            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'main-header-panel'),
+          )}
+          onAdd={(e): void => this.props.onAdd?.(
+            e.itemData.columnName,
+            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'main-header-panel'),
+          )}
+          onDragStart={(e): void => {
+            e.itemData = {
+              columnName: this.props.columns[e.fromIndex].name,
+            };
+          }}
           group='cardview'
         >
           {this.props.columns.map((column) => (

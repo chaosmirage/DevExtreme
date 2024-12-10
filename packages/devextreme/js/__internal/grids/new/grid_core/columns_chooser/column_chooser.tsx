@@ -26,6 +26,12 @@ export function ColumnChooser({ visible, items }: ColumnChooserProps): JSX.Eleme
     >
       <Sortable
         group='cardview'
+        filter='.dx-item'
+        onDragStart={(e): void => {
+          e.itemData = {
+            columnName: items[e.fromIndex].text,
+          };
+        }}
       >
         <TreeView
           items={items}

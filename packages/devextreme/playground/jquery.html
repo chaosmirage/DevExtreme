@@ -53,7 +53,17 @@
 <body class="dx-surface">
     <div role="main">
         <h1 style="position: fixed; left: 0; top: 0; clip: rect(1px, 1px, 1px, 1px);">Test header</h1>
+        <style>
+            .dx-cardview-headers {
+                width: 100%;
+                display: flex;
+            }
 
+            .dx-cardview-headerpanel-popup .dx-sortable {
+                display: flex;
+                flex-direction: column;
+            }
+        </style>
         <select id="theme-selector" style="display: block;">
         </select>
         <br />
@@ -222,6 +232,36 @@
                 },
                 cardMinWidth: 250,
                 cardMaxWidth: 350,
+                columns: [
+                    {
+                        dataField: 'ID',
+                        // visibleIndex: 2,
+                    },
+                    {
+                        dataField: 'First Name',
+                    },
+                    {
+                        dataField: 'Last Name',
+                    },
+                    {
+                        dataField: 'Prefix',
+                    },
+                    {
+                        dataField: 'Position',
+                    },
+                    {
+                        dataField: 'Picture',
+                    },
+                    {
+                        dataField: 'Birth Date',
+                    },
+                    {
+                        dataField: 'Hire Date',
+                    },
+                    {
+                        dataField: 'Address',
+                    },
+                ],
                 // columns: [
                 //     {
                 //         dataField: 'OrderNumber',

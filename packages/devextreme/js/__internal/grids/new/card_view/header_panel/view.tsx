@@ -27,53 +27,27 @@ export class HeaderPanelView extends View {
   }
 
   public onRemove(name: string): void {
-    const index = this.getColumnIndexByName(name);
-
-    this.columnsController.columns.updateFunc((columns) => {
-      const newColumns = columns.slice();
-      newColumns[index] = { ...newColumns[index], visible: false };
-      return newColumns;
-    });
+    this.columnsController.columnOption(name, 'visible', false);
   }
 
-  public onReorder(visibleFromIndex: number, visibleToIndex: number): void {
-    const cs = this.columnsController.columns.unreactive_get();
-    const vcs = this.columnsController.visibleColumns.unreactive_get();
-    const fromIndex = cs.indexOf(vcs[visibleFromIndex]);
-    const toIndex = cs.indexOf(vcs[visibleToIndex]);
+  public onReorder(name: string, toIndex: number): void {
+    this.columnsController.columnOption(name, 'visibleIndex', toIndex);
+    // const cs = this.columnsController.columns.unreactive_get();
+    // const vcs = this.columnsController.visibleColumns.unreactive_get();
+    // const fromIndex = cs.indexOf(vcs[visibleFromIndex]);
+    // const toIndex = cs.indexOf(vcs[visibleToIndex]);
 
-    this.columnsController.columns.updateFunc((columns) => {
-      const column = columns[fromIndex];
-      const newColumns = columns.slice();
-      newColumns.splice(fromIndex, 1);
-      newColumns.splice(toIndex, 0, column);
-      return newColumns;
-    });
+    // this.columnsController.columns.updateFunc((columns) => {
+    //   const column = columns[fromIndex];
+    //   const newColumns = columns.slice();
+    //   newColumns.splice(fromIndex, 1);
+    //   newColumns.splice(toIndex, 0, column);
+    //   return newColumns;
+    // });
   }
 
-  public onAdd(nonVisibleFromIndex: number, visibleToIndex: number): void {
-    const cs = this.columnsController.columns.unreactive_get();
-    const vcs = this.columnsController.visibleColumns.unreactive_get();
-    const nvcs = this.columnsController.nonVisibleColumns.unreactive_get();
-    const fromIndex = cs.indexOf(nvcs[nonVisibleFromIndex]);
-    const toIndex = cs.indexOf(vcs[visibleToIndex]);
-
-    this.columnsController.columns.updateFunc((columns) => {
-      const column = columns[fromIndex];
-      const newColumns = columns.slice();
-      newColumns.splice(fromIndex, 1);
-      newColumns.splice(toIndex, 0, { ...column, visible: true });
-      return newColumns;
-    });
-  }
-
-  private getColumnIndexByName(name: string): number {
-    const cs = this.columnsController.columns.unreactive_get();
-    const targetColumn = cs.filter((c) => c.name === name)[0];
-
-    if (!targetColumn) {
-      return -1;
-    }
-    return cs.indexOf(targetColumn);
+  public onAdd(name: string, toIndex: number): void {
+    this.columnsController.columnOption(name, 'visible', true);
+    this.columnsController.columnOption(name, 'visibleIndex', toIndex);
   }
 }
