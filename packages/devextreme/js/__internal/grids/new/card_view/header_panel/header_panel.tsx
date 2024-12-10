@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { Column } from '@ts/grids/new/grid_core/columns_controller/types';
-import type { RefObject } from 'inferno';
+import type { InfernoNode, RefObject } from 'inferno';
 import { Component } from 'inferno';
 
-import { Sortable } from '../../grid_core/inferno_wrappers/sortable';
+import { ColumnSortable } from './column_sortable';
 import { DropDownButton } from './drop_down_button';
 import { Item } from './item';
 
@@ -23,6 +23,8 @@ export interface HeaderPanelProps {
   shownColumnCount: number;
 
   elementRef: RefObject<HTMLDivElement>;
+
+  allowColumnReordering: boolean;
 }
 
 export class HeaderPanel extends Component<HeaderPanelProps> {
@@ -34,30 +36,39 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
       (_, index) => index >= this.props.shownColumnCount,
     );
 
-    return (
-      <div className={CLASSES.headers} ref={this.props.elementRef}>
-        <Sortable
+    const wrapSortable = (content: InfernoNode): InfernoNode => {
+      if (!this.props.allowColumnReordering) {
+        return content;
+      }
+
+      return (
+        <ColumnSortable
+          allowColumnReordering={this.props.allowColumnReordering}
+          source='header-panel-main'
+          visibleColumns={visibleColumns}
           itemOrientation='horizontal'
-          dropFeedbackMode='indicate'
           onReorder={(e): void => this.props.onReorder?.(e.itemData.columnName, e.toIndex)}
           onAdd={(e): void => this.props.onAdd?.(e.itemData.columnName, e.toIndex)}
-          onDragStart={(e): void => {
-            e.itemData = {
-              columnName: visibleColumns[e.fromIndex].name,
-              source: 'main-header-panel',
-            };
-          }}
-          group='cardview'
         >
-          {visibleColumns.map((column) => (
+          {content}
+        </ColumnSortable>
+      );
+    };
+
+    return (
+      <div className={CLASSES.headers} ref={this.props.elementRef}>
+        {
+          wrapSortable(
+            visibleColumns.map((column) => (
             <Item
               column={column}
               onRemove={
                 (): void => this.props.onRemove?.(column.name)
               }
             />
-          ))}
-        </Sortable>
+            )),
+          )
+        }
         {!!nonVisibleColumns.length && (
           <DropDownButton
             columns={nonVisibleColumns}
@@ -65,6 +76,7 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
             onAdd={this.props.onAdd}
             onReorder={this.props.onReorder}
             shownColumnCount={this.props.shownColumnCount}
+            allowColumnReordering={this.props.allowColumnReordering}
           />
         )}
       </div>

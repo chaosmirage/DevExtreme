@@ -224,7 +224,7 @@
                 },
                 width: "100%",
                 // width: 750,
-                height: 500,
+                height: 700,
                 keyExpr: 'ID',
                 cardsPerRow: 'auto',
                 paging: {
@@ -232,10 +232,12 @@
                 },
                 cardMinWidth: 250,
                 cardMaxWidth: 350,
+                allowColumnReordering: true,
                 columns: [
                     {
                         dataField: 'ID',
                         // visibleIndex: 2,
+                        allowReordering: false,
                     },
                     {
                         dataField: 'First Name',

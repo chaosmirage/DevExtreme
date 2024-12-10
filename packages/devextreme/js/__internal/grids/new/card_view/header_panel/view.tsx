@@ -7,15 +7,19 @@ import { ResizableHeaderPanel } from './resizable_header_panel';
 
 export class HeaderPanelView extends View {
   public vdom = computed(
-    (columns) => (
+    (columns, allowColumnReordering) => (
       <ResizableHeaderPanel
         columns={columns}
         onReorder={this.onReorder.bind(this)}
         onAdd={this.onAdd.bind(this)}
         onRemove={this.onRemove.bind(this)}
+        allowColumnReordering={allowColumnReordering}
       />
     ),
-    [this.columnsController.visibleColumns],
+    [
+      this.columnsController.visibleColumns,
+      this.columnsController.allowColumnReordering,
+    ],
   );
 
   public static dependencies = [ColumnsController] as const;

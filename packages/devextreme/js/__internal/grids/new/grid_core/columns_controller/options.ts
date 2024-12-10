@@ -14,6 +14,7 @@ export const defaultColumnProperties = {
   },
   alignment: 'left',
   visible: true,
+  allowReordering: true,
 } satisfies Partial<Column>;
 
 export const defaultColumnPropertiesByDataType: Record<
@@ -42,8 +43,10 @@ Exclude<ColumnProperties, string>
 
 export interface Options {
   columns?: ColumnProperties[];
+
+  allowColumnReordering?: boolean;
 }
 
 export const defaultOptions = {
-
+  allowColumnReordering: false,
 } satisfies Options;

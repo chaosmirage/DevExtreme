@@ -4,7 +4,7 @@ import { Component, createRef } from 'inferno';
 import type { Column } from '../../grid_core/columns_controller/types';
 import { Button } from '../../grid_core/inferno_wrappers/button';
 import { Popup } from '../../grid_core/inferno_wrappers/popup';
-import { Sortable } from '../../grid_core/inferno_wrappers/sortable';
+import { ColumnSortable } from './column_sortable';
 import { Item } from './item';
 
 const CLASSES = {
@@ -21,6 +21,8 @@ export interface DropDownButtonProps {
   onRemove?: (name: string) => void;
 
   shownColumnCount: number;
+
+  allowColumnReordering: boolean;
 }
 
 interface DropDownButtonState {
@@ -74,23 +76,19 @@ export class DropDownButton extends Component<DropDownButtonProps, DropDownButto
           class: CLASSES.popup,
         }}
       >
-        <Sortable
+        <ColumnSortable
+          visibleColumns={this.props.columns}
+          allowColumnReordering={this.props.allowColumnReordering}
+          source='header-panel-hidden'
           itemOrientation='vertical'
-          dropFeedbackMode='indicate'
           onReorder={(e): void => this.props.onReorder?.(
             e.itemData.columnName,
-            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'main-header-panel'),
+            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'header-panel-main'),
           )}
           onAdd={(e): void => this.props.onAdd?.(
             e.itemData.columnName,
-            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'main-header-panel'),
+            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'header-panel-main'),
           )}
-          onDragStart={(e): void => {
-            e.itemData = {
-              columnName: this.props.columns[e.fromIndex].name,
-            };
-          }}
-          group='cardview'
         >
           {this.props.columns.map((column) => (
             <Item
@@ -100,7 +98,7 @@ export class DropDownButton extends Component<DropDownButtonProps, DropDownButto
               }
             />
           ))}
-        </Sortable>
+        </ColumnSortable>
       </Popup>
     </>);
   }

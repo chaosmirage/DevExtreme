@@ -4,7 +4,11 @@ import { type InfernoNode } from 'inferno';
 
 import { InfernoWrapper } from './widget_wrapper';
 
-export class Sortable extends InfernoWrapper<SortableProperties, dxSortable> {
+export interface Props extends SortableProperties {
+
+}
+
+export class Sortable extends InfernoWrapper<Props, dxSortable> {
   public render(): InfernoNode {
     return (
       <div ref={this.ref}>

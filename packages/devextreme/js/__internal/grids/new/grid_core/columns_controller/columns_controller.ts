@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable spellcheck/spell-checker */
-import type { SubsGets, SubsGetsUpd } from '@ts/core/reactive/index';
+import type { Subscribable, SubsGets, SubsGetsUpd } from '@ts/core/reactive/index';
 import { computed, iif, interruptableComputed } from '@ts/core/reactive/index';
 
 import { DataController } from '../data_controller/index';
@@ -15,6 +15,8 @@ export class ColumnsController {
   public readonly visibleColumns: SubsGets<Column[]>;
 
   public readonly nonVisibleColumns: SubsGets<Column[]>;
+
+  public readonly allowColumnReordering: Subscribable<boolean>;
 
   public static dependencies = [OptionsController, DataController] as const;
 
@@ -58,6 +60,8 @@ export class ColumnsController {
       (columns) => columns.filter((column) => !column.visible),
       [this.columns],
     );
+
+    this.allowColumnReordering = this.options.oneWay('allowColumnReordering');
   }
 
   public createDataRow(data: DataObject, columns: Column[]): DataRow {

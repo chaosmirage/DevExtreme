@@ -7,6 +7,7 @@ type InheritedColumnProps =
   | 'dataType'
   | 'visible'
   | 'visibleIndex'
+  | 'allowReordering'
   | 'caption';
 
 export type Column = Pick<Required<ColumnBase>, InheritedColumnProps> & {
