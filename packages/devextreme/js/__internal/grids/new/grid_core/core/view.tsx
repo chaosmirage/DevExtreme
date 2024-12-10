@@ -13,6 +13,8 @@ import { Component, type ComponentType, render } from 'inferno';
 export abstract class View<T extends {}> {
   private inferno: undefined | ComponentType;
 
+  private props?: T;
+
   protected abstract component: ComponentType<T>;
 
   protected abstract getProps(): Subscribable<T>;
@@ -20,6 +22,7 @@ export abstract class View<T extends {}> {
   public render(root: Element): Subscription {
     const ViewComponent = this.component;
     return toSubscribable(this.getProps()).subscribe((props: T) => {
+      this.props = props;
       // @ts-expect-error
       render(<ViewComponent {...props}/>, root);
     });

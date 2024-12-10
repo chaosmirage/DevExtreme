@@ -1,16 +1,25 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable spellcheck/spell-checker */
+import formatHelper from '@js/format_helper';
 import type { Subscribable, SubsGets, SubsGetsUpd } from '@ts/core/reactive/index';
-import { computed, iif, interruptableComputed } from '@ts/core/reactive/index';
+import {
+  computed, iif, interruptableComputed,
+} from '@ts/core/reactive/index';
 
 import { DataController } from '../data_controller/index';
 import type { DataObject } from '../data_controller/types';
 import { OptionsController } from '../options_controller/options_controller';
+import type { ColumnProperties, PreNormalizedColumn } from './options';
 import type { Column, DataRow, VisibleColumn } from './types';
-import { getColumnIndexByName, normalizeColumns, normalizeVisibleIndexes } from './utils';
+import {
+  getColumnIndexByName, normalizeColumns, normalizeVisibleIndexes, preNormalizeColumns,
+} from './utils';
 
 export class ColumnsController {
-  public readonly columns: SubsGetsUpd<Column[]>;
+  private readonly columnsConfiguration: Subscribable<ColumnProperties[] | undefined>;
+  private readonly columnsSettings: SubsGetsUpd<PreNormalizedColumn[]>;
+
+  public readonly columns: SubsGets<Column[]>;
 
   public readonly visibleColumns: SubsGets<Column[]>;
 
@@ -24,7 +33,7 @@ export class ColumnsController {
     private readonly options: OptionsController,
     private readonly dataController: DataController,
   ) {
-    const columnsConfiguration = this.options.oneWay('columns');
+    this.columnsConfiguration = this.options.oneWay('columns');
 
     const columnsFromDataSource = computed(
       (items: unknown[]) => {
@@ -38,14 +47,21 @@ export class ColumnsController {
       [this.dataController.items],
     );
 
-    this.columns = interruptableComputed(
-      (columnsConfiguration) => normalizeColumns(columnsConfiguration ?? []),
+    this.columnsSettings = interruptableComputed(
+      (columnsConfiguration) => preNormalizeColumns(columnsConfiguration ?? []),
       [
         iif(
-          computed((columnsConfiguration) => !!columnsConfiguration, [columnsConfiguration]),
-          columnsConfiguration,
+          computed((columnsConfiguration) => !!columnsConfiguration, [this.columnsConfiguration]),
+          this.columnsConfiguration,
           columnsFromDataSource,
         ),
+      ],
+    );
+
+    this.columns = computed(
+      (columnsSettings) => normalizeColumns(columnsSettings ?? []),
+      [
+        this.columnsSettings,
       ],
     );
 
@@ -66,10 +82,25 @@ export class ColumnsController {
 
   public createDataRow(data: DataObject, columns: Column[]): DataRow {
     return {
-      cells: columns.map((c) => ({
-        column: c,
-        value: c.calculateCellValue(data),
-      })),
+      cells: columns.map((c) => {
+        const displayValue = c.calculateDisplayValue(data);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let text = formatHelper.format(displayValue as any, c.format);
+
+        if (c.customizeText) {
+          text = c.customizeText({
+            value: displayValue,
+            valueText: text,
+          });
+        }
+
+        return {
+          column: c,
+          value: c.calculateCellValue(data),
+          displayValue,
+          text,
+        };
+      }),
       key: this.dataController.getDataKey(data),
       data,
     };
@@ -80,7 +111,7 @@ export class ColumnsController {
     option: TProp,
     value: Column[TProp],
   ): void {
-    this.columns.updateFunc((columns) => {
+    this.columnsSettings.updateFunc((columns) => {
       const index = getColumnIndexByName(columns, name);
       const newColumns = [...columns];
 

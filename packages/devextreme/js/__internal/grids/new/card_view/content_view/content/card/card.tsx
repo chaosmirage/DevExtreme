@@ -131,7 +131,7 @@ export class Card extends PureComponent<CardProps> {
             // eslint-disable-next-line max-len, @typescript-eslint/explicit-function-return-type
             alignment={cell.column.alignment}
             title={cell.column.caption || cell.column.name}
-            value={cell.value}
+            value={cell.text}
           />
         ))}
       </div>

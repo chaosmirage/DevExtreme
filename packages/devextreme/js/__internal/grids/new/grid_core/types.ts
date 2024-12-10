@@ -14,3 +14,4 @@ export interface WithDIContext {
 export type Template<T> = (props: T) => HTMLDivElement | template;
 
 export type WithOptional<T, TProp extends keyof T> = Omit<T, TProp> & Partial<Pick<T, TProp>>;
+export type WithRequired<T, TProp extends keyof T> = Omit<T, TProp> & Required<Pick<T, TProp>>;

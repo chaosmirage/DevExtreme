@@ -16,6 +16,8 @@ import { OptionsController } from './options_controller';
 export class CardViewBase extends GridCoreNew {
   contentView!: ContentViewModule.View;
 
+  headerPanel!: HeaderPanelView;
+
   protected _registerDIContext(): void {
     super._registerDIContext();
     this.diContext.register(HeaderPanelView);
@@ -37,6 +39,7 @@ export class CardViewBase extends GridCoreNew {
   protected _initDIContext(): void {
     super._initDIContext();
     this.contentView = this.diContext.get(ContentViewModule.View);
+    this.headerPanel = this.diContext.get(HeaderPanelView);
   }
 
   // eslint-disable-next-line max-len

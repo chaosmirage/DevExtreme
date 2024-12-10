@@ -1,26 +1,14 @@
 /* eslint-disable spellcheck/spell-checker */
-import { computed } from '@ts/core/reactive/index';
+import type { Subscribable } from '@ts/core/reactive/index';
+import { combined } from '@ts/core/reactive/index';
 import { ColumnsController } from '@ts/grids/new/grid_core/columns_controller/columns_controller';
-import { View } from '@ts/grids/new/grid_core/core/view_old';
+import { View } from '@ts/grids/new/grid_core/core/view';
 
+import type { Props } from './resizable_header_panel';
 import { ResizableHeaderPanel } from './resizable_header_panel';
 
-export class HeaderPanelView extends View {
-  public vdom = computed(
-    (columns, allowColumnReordering) => (
-      <ResizableHeaderPanel
-        columns={columns}
-        onReorder={this.onReorder.bind(this)}
-        onAdd={this.onAdd.bind(this)}
-        onRemove={this.onRemove.bind(this)}
-        allowColumnReordering={allowColumnReordering}
-      />
-    ),
-    [
-      this.columnsController.visibleColumns,
-      this.columnsController.allowColumnReordering,
-    ],
-  );
+export class HeaderPanelView extends View<Props> {
+  protected component = ResizableHeaderPanel;
 
   public static dependencies = [ColumnsController] as const;
 
@@ -28,6 +16,16 @@ export class HeaderPanelView extends View {
     private readonly columnsController: ColumnsController,
   ) {
     super();
+  }
+
+  protected override getProps(): Subscribable<Props> {
+    return combined({
+      columns: this.columnsController.visibleColumns,
+      onReorder: this.onReorder.bind(this),
+      onAdd: this.onAdd.bind(this),
+      onRemove: this.onRemove.bind(this),
+      allowColumnReordering: this.columnsController.allowColumnReordering,
+    });
   }
 
   public onRemove(name: string): void {

@@ -1,30 +1,31 @@
+import { compileGetter } from '@js/core/utils/data';
 import { captionize } from '@js/core/utils/inflector';
-import { isDefined } from '@js/core/utils/type';
+import { isDefined, isString } from '@js/core/utils/type';
 
-import type { WithOptional } from '../types';
-import { type ColumnProperties, defaultColumnProperties, defaultColumnPropertiesByDataType } from './options';
+import type { DataObject } from '../data_controller/types';
+import type { ColumnProperties, ColumnSettings, PreNormalizedColumn } from './options';
+import { defaultColumnProperties, defaultColumnPropertiesByDataType } from './options';
 import type { Column } from './types';
 
-function normalizeColumn(column: ColumnProperties, index: number): WithOptional<Column, 'visibleIndex'> {
-  let col = column;
-
-  if (typeof col === 'string') {
-    col = { dataField: col };
-  }
-
+function normalizeColumn(column: PreNormalizedColumn): Column {
   const dataTypeDefault = defaultColumnPropertiesByDataType[
-    col.dataType ?? defaultColumnProperties.dataType
+    column.dataType ?? defaultColumnProperties.dataType
   ];
 
-  const name = col.name ?? col.dataField ?? `column${index}`;
-  const caption = captionize(name);
+  const caption = captionize(column.name);
 
-  return {
+  const colWithDefaults = {
     ...defaultColumnProperties,
     ...dataTypeDefault,
-    name,
     caption,
-    ...col,
+    ...column,
+  };
+
+  return {
+    ...colWithDefaults,
+    calculateDisplayValue: isString(colWithDefaults.calculateDisplayValue)
+      ? compileGetter(colWithDefaults.calculateDisplayValue) as (data: DataObject) => string
+      : colWithDefaults.calculateDisplayValue,
   };
 }
 
@@ -81,8 +82,26 @@ export function normalizeVisibleIndexes(
   return returnIndexes;
 }
 
-export function normalizeColumns(columns: ColumnProperties[]): Column[] {
-  const normalizedColumns = columns.map((c, i) => normalizeColumn(c, i));
+export function normalizeColumns(columns: PreNormalizedColumn[]): Column[] {
+  const normalizedColumns = columns.map((c) => normalizeColumn(c));
+  return normalizedColumns;
+}
+
+export function preNormalizeColumns(columns: ColumnProperties[]): PreNormalizedColumn[] {
+  const normalizedColumns = columns
+    .map((column): ColumnSettings => {
+      if (typeof column === 'string') {
+        return {
+          dataField: column,
+        };
+      }
+
+      return column;
+    })
+    .map((column, index) => ({
+      ...column,
+      name: column.name ?? column.dataField ?? `column-${index}`,
+    }));
 
   const visibleIndexes = getVisibleIndexes(
     normalizedColumns.map((c) => c.visibleIndex),
@@ -92,9 +111,17 @@ export function normalizeColumns(columns: ColumnProperties[]): Column[] {
     normalizedColumns[i].visibleIndex = visibleIndexes[i];
   });
 
-  return normalizedColumns as Column[];
+  return normalizedColumns as PreNormalizedColumn[];
 }
 
-export function getColumnIndexByName(columns: Column[], name: string): number {
+export function normalizeStringColumn(column: ColumnProperties): ColumnSettings {
+  if (typeof column === 'string') {
+    return { dataField: column };
+  }
+
+  return column;
+}
+
+export function getColumnIndexByName(columns: PreNormalizedColumn[], name: string): number {
   return columns.findIndex((c) => c.name === name);
 }
