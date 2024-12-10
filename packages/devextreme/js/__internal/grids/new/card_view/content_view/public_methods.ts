@@ -10,6 +10,7 @@ import type { DataRow } from '@ts/grids/new/grid_core/columns_controller/types';
 import { DataController } from '@ts/grids/new/grid_core/data_controller';
 import type { Constructor } from '@ts/grids/new/grid_core/types';
 
+import type { Key } from '../../grid_core/data_controller/types';
 import type { CardViewBase } from '../widget';
 import * as cardModule from './content/card/card';
 import { ContentView } from './view';
@@ -43,16 +44,20 @@ export function PublicMethods<T extends Constructor<CardViewBase>>(GridCore: T) 
       return getPublicElement(card);
     }
 
-    public getCardIndexByKey(key: unknown): number {
+    public getVisibleCards(): DataRow[] {
+      const contentView = this.diContext.get(ContentView);
+      return contentView.items.unreactive_get();
+    }
+
+    public getCardIndexByKey(key: Key): number {
       const contentView = this.diContext.get(ContentView);
       const cards = contentView.items.unreactive_get();
 
       return cards.findIndex((card) => card.key === key);
     }
 
-    public getVisibleCards(): DataRow[] {
-      const contentView = this.diContext.get(ContentView);
-      return contentView.items.unreactive_get();
+    public getKeyByCardIndex(cardIndex: number): Key {
+      return this.getVisibleCards()[cardIndex]?.key;
     }
   };
 }
