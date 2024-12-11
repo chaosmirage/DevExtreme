@@ -14,11 +14,9 @@ const CLASSES = {
 export interface DropDownButtonProps {
   columns: Column[];
 
-  onReorder?: (name: string, toIndex: number) => void;
+  onMove?: (column: Column, toIndex: number) => void;
 
-  onAdd?: (name: string, toIndex: number) => void;
-
-  onRemove?: (name: string) => void;
+  onRemove?: (column: Column) => void;
 
   shownColumnCount: number;
 
@@ -81,20 +79,16 @@ export class DropDownButton extends Component<DropDownButtonProps, DropDownButto
           allowColumnReordering={this.props.allowColumnReordering}
           source='header-panel-hidden'
           itemOrientation='vertical'
-          onReorder={(e): void => this.props.onReorder?.(
-            e.itemData.columnName,
-            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'header-panel-main'),
-          )}
-          onAdd={(e): void => this.props.onAdd?.(
-            e.itemData.columnName,
-            e.toIndex + this.props.shownColumnCount - +(e.itemData.source === 'header-panel-main'),
+          onMove={(column, toIndex, source): void => this.props.onMove?.(
+            column,
+            toIndex + this.props.shownColumnCount - +(source === 'header-panel-main'),
           )}
         >
           {this.props.columns.map((column) => (
             <Item
               column={column}
               onRemove={
-                (): void => this.props.onRemove?.(column.name)
+                (): void => this.props.onRemove?.(column)
               }
             />
           ))}

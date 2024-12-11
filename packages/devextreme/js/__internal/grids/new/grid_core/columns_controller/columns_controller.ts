@@ -107,12 +107,12 @@ export class ColumnsController {
   }
 
   public columnOption<TProp extends keyof Column>(
-    name: string,
+    column: Column,
     option: TProp,
     value: Column[TProp],
   ): void {
     this.columnsSettings.updateFunc((columns) => {
-      const index = getColumnIndexByName(columns, name);
+      const index = getColumnIndexByName(columns, column.name);
       const newColumns = [...columns];
 
       if (columns[index][option] === value) {

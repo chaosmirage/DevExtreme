@@ -4,6 +4,7 @@ import { combined } from '@ts/core/reactive/index';
 import { ColumnsController } from '@ts/grids/new/grid_core/columns_controller/columns_controller';
 import { View } from '@ts/grids/new/grid_core/core/view';
 
+import type { Column } from '../../grid_core/columns_controller/types';
 import type { Props } from './resizable_header_panel';
 import { ResizableHeaderPanel } from './resizable_header_panel';
 
@@ -21,35 +22,18 @@ export class HeaderPanelView extends View<Props> {
   protected override getProps(): Subscribable<Props> {
     return combined({
       columns: this.columnsController.visibleColumns,
-      onReorder: this.onReorder.bind(this),
-      onAdd: this.onAdd.bind(this),
+      onMove: this.onMove.bind(this),
       onRemove: this.onRemove.bind(this),
       allowColumnReordering: this.columnsController.allowColumnReordering,
     });
   }
 
-  public onRemove(name: string): void {
-    this.columnsController.columnOption(name, 'visible', false);
+  public onRemove(column: Column): void {
+    this.columnsController.columnOption(column, 'visible', false);
   }
 
-  public onReorder(name: string, toIndex: number): void {
-    this.columnsController.columnOption(name, 'visibleIndex', toIndex);
-    // const cs = this.columnsController.columns.unreactive_get();
-    // const vcs = this.columnsController.visibleColumns.unreactive_get();
-    // const fromIndex = cs.indexOf(vcs[visibleFromIndex]);
-    // const toIndex = cs.indexOf(vcs[visibleToIndex]);
-
-    // this.columnsController.columns.updateFunc((columns) => {
-    //   const column = columns[fromIndex];
-    //   const newColumns = columns.slice();
-    //   newColumns.splice(fromIndex, 1);
-    //   newColumns.splice(toIndex, 0, column);
-    //   return newColumns;
-    // });
-  }
-
-  public onAdd(name: string, toIndex: number): void {
-    this.columnsController.columnOption(name, 'visible', true);
-    this.columnsController.columnOption(name, 'visibleIndex', toIndex);
+  public onMove(column: Column, toIndex: number): void {
+    this.columnsController.columnOption(column, 'visible', true);
+    this.columnsController.columnOption(column, 'visibleIndex', toIndex);
   }
 }

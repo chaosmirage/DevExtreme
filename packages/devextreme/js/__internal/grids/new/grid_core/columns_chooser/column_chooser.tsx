@@ -1,19 +1,26 @@
+import { ColumnSortable } from '../../card_view/header_panel/column_sortable';
+import type { Column } from '../columns_controller/types';
 import { Popup } from '../inferno_wrappers/popup';
-import { Sortable } from '../inferno_wrappers/sortable';
 import { TreeView } from '../inferno_wrappers/tree_view';
 
 export interface ColumnChooserProps {
-  items: {
-    text: string;
-  }[];
+  columns: Column[];
 
   visible: boolean;
+
+  onMove: (column: Column) => void;
 }
 
-export function ColumnChooser({ visible, items }: ColumnChooserProps): JSX.Element | null {
+export function ColumnChooser(
+  { visible, columns, onMove }: ColumnChooserProps,
+): JSX.Element | null {
   if (!visible) {
     return null;
   }
+
+  const items = columns.map((c) => ({
+    text: c.caption,
+  }));
 
   return (
     <Popup
@@ -24,19 +31,17 @@ export function ColumnChooser({ visible, items }: ColumnChooserProps): JSX.Eleme
       width={250}
       height={260}
     >
-      <Sortable
-        group='cardview'
+      <ColumnSortable
         filter='.dx-item'
-        onDragStart={(e): void => {
-          e.itemData = {
-            columnName: items[e.fromIndex].text,
-          };
-        }}
+        source='column-chooser'
+        visibleColumns={columns}
+        allowColumnReordering={true}
+        onMove={(column): void => { onMove(column); }}
       >
         <TreeView
           items={items}
         />
-      </Sortable>
+      </ColumnSortable>
     </Popup>
   );
 }

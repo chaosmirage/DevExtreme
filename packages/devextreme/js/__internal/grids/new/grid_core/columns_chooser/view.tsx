@@ -1,8 +1,9 @@
 /* eslint-disable spellcheck/spell-checker */
 import type { SubsGets } from '@ts/core/reactive/index';
-import { computed, state } from '@ts/core/reactive/index';
+import { combined, state } from '@ts/core/reactive/index';
 
 import { ColumnsController } from '../columns_controller/columns_controller';
+import type { Column } from '../columns_controller/types';
 import { View } from '../core/view';
 import { ToolbarController } from '../toolbar/controller';
 import type { ColumnChooserProps } from './column_chooser';
@@ -12,13 +13,6 @@ export class ColumnsChooserView extends View<ColumnChooserProps> {
   protected override component = ColumnChooser;
 
   private readonly visible = state(false);
-
-  private readonly items = computed(
-    (columns) => columns.map((c) => ({
-      text: c.name,
-    })),
-    [this.columns.nonVisibleColumns],
-  );
 
   public static dependencies = [ToolbarController, ColumnsController] as const;
 
@@ -41,10 +35,15 @@ export class ColumnsChooserView extends View<ColumnChooserProps> {
     });
   }
 
+  private onMove(column: Column): void {
+    this.columns.columnOption(column, 'visible', false);
+  }
+
   protected override getProps(): SubsGets<ColumnChooserProps> {
-    return computed(
-      (visible, items) => ({ visible, items }),
-      [this.visible, this.items],
-    );
+    return combined({
+      visible: this.visible,
+      columns: this.columns.nonVisibleColumns,
+      onMove: this.onMove.bind(this),
+    });
   }
 }

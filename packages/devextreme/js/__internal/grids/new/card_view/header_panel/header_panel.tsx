@@ -14,11 +14,9 @@ export const CLASSES = {
 export interface HeaderPanelProps {
   columns: Column[];
 
-  onReorder: (name: string, toIndex: number) => void;
+  onMove: (column: Column, toIndex: number) => void;
 
-  onAdd: (name: string, toIndex: number) => void;
-
-  onRemove: (name: string) => void;
+  onRemove: (column: Column) => void;
 
   shownColumnCount: number;
 
@@ -47,8 +45,7 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
           source='header-panel-main'
           visibleColumns={visibleColumns}
           itemOrientation='horizontal'
-          onReorder={(e): void => this.props.onReorder?.(e.itemData.columnName, e.toIndex)}
-          onAdd={(e): void => this.props.onAdd?.(e.itemData.columnName, e.toIndex)}
+          onMove={(column, index): void => this.props.onMove?.(column, index)}
         >
           {content}
         </ColumnSortable>
@@ -63,7 +60,7 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
             <Item
               column={column}
               onRemove={
-                (): void => this.props.onRemove?.(column.name)
+                (): void => this.props.onRemove?.(column)
               }
             />
             )),
@@ -73,8 +70,7 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
           <DropDownButton
             columns={nonVisibleColumns}
             onRemove={this.props.onRemove}
-            onAdd={this.props.onAdd}
-            onReorder={this.props.onReorder}
+            onMove={this.props.onMove}
             shownColumnCount={this.props.shownColumnCount}
             allowColumnReordering={this.props.allowColumnReordering}
           />

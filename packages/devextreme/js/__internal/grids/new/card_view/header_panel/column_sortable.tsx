@@ -5,12 +5,14 @@ import type { Column } from '../../grid_core/columns_controller/types';
 import type { Props as SortableProps } from '../../grid_core/inferno_wrappers/sortable';
 import { Sortable } from '../../grid_core/inferno_wrappers/sortable';
 
-export interface Props extends SortableProps {
+export interface Props extends Omit<SortableProps, 'onAdd' | 'onReorder'> {
   source: string;
 
   visibleColumns: Column[];
 
   allowColumnReordering: boolean;
+
+  onMove: (column: Column, toIndex: number, source: string) => void;
 }
 
 export class ColumnSortable extends Component<Props> {
@@ -23,9 +25,17 @@ export class ColumnSortable extends Component<Props> {
     }
 
     e.itemData = {
-      columnName: column.name,
+      column,
       source: this.props.source,
     };
+  };
+
+  private readonly onMove = (e): void => {
+    this.props.onMove(
+      e.itemData.column,
+      e.toIndex,
+      e.itemData.source,
+    );
   };
 
   render(): InfernoNode {
@@ -44,6 +54,8 @@ export class ColumnSortable extends Component<Props> {
         dropFeedbackMode='indicate'
         onDragStart={this.onDragStart}
         group='dx-cardview-columns'
+        onAdd={this.onMove}
+        onReorder={this.onMove}
         {...restProps}
       >
       {this.props.children}
