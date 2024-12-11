@@ -1,11 +1,12 @@
+import messageLocalization from '@js/common/core/localization/message';
 import registerComponent from '@js/core/component_registrator';
 import devices from '@js/core/devices';
 import $ from '@js/core/renderer';
 import { extend } from '@js/core/utils/extend';
 import { getHeight, getWidth } from '@js/core/utils/size';
 import { getNavigator } from '@js/core/utils/window';
-import messageLocalization from '@js/localization/message';
 import type { Properties as PublicProps } from '@js/ui/load_indicator';
+
 // @ts-expect-error
 import { current, isGeneric, isMaterialBased } from '@js/ui/themes';
 import Widget from '@ts/core/widget/widget';
