@@ -31131,10 +31131,6 @@ declare module DevExpress.ui.dxCardView {
    */
   export type DataControllerProperties = {
     /**
-     * [descr:DataControllerProperties.dataSource]
-     */
-    dataSource?: DevExpress.data.DataSource.DataSourceLike<any, any>;
-    /**
      * [descr:DataControllerProperties.paging]
      */
     paging?: {

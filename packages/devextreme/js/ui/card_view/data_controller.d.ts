@@ -1,4 +1,4 @@
-import { DataSourceLike } from '../../data/data_source';
+// import { DataSourceLike } from '../../data/data_source';
 
 /**
  * @docid
@@ -6,13 +6,13 @@ import { DataSourceLike } from '../../data/data_source';
  * @namespace DevExpress.ui.dxCardView
  */
 export type DataControllerProperties = {
-  /**
-   * @docid
-   * @default undefined
-   * @type string | Array<any> | Store | DataSource | DataSourceOptions
-   * @public
-   */
-  dataSource?: DataSourceLike<any, any>;
+  // /**
+  //  * @docid
+  //  * @default undefined
+  //  * @type string | Array<any> | Store | DataSource | DataSourceOptions
+  //  * @public
+  //  */
+  // dataSource?: DataSourceLike<any, any>;
   /**
    * @docid
    * @public
