@@ -1,5 +1,6 @@
 import BaseStrategy from '@js/common/core/events/pointer/base';
 import Observer from '@js/common/core/events/pointer/observer';
+import browser from '@js/core/utils/browser';
 import { extend } from '@js/core/utils/extend';
 
 /* eslint-disable spellcheck/spell-checker */
@@ -13,6 +14,11 @@ const eventMap = {
   dxpointerenter: 'mouseenter',
   dxpointerleave: 'mouseleave',
 };
+
+// due to this https://bugs.webkit.org/show_bug.cgi?id=222632 issue
+if (browser.safari) {
+  eventMap.dxpointercancel = 'dragstart';
+}
 
 const normalizeMouseEvent = function (e) {
   e.pointerId = 1;
