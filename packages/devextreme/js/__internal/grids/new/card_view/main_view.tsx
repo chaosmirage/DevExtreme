@@ -32,8 +32,17 @@ function MainViewComponent({
     <Content/>
     {/* @ts-expect-error */}
     <FilterPanel/>
-    {/* @ts-expect-error */}
-    <Pager/>
+    <div>
+      {/*
+        Pager, as renovated component, has strange disposing.
+        See `inferno_renderer.remove` method.
+        It somehow mutates $V prop of parent element.
+        Without this div, CardView would be parent of Pager.
+        In this case all `componentWillUnmount`s aren't called
+      */}
+      {/* @ts-expect-error */}
+      <Pager/>
+    </div>
     {/* @ts-expect-error */}
     <ColumnsChooser/>
   </>);
