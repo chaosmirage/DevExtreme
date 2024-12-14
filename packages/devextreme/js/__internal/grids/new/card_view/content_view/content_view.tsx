@@ -94,4 +94,10 @@ export class ContentView extends Component<ContentViewProps> {
   componentDidUpdate(): void {
     this.updateSizesInfo();
   }
+
+  componentWillUnmount(): void {
+    resizeObserverSingleton.unobserve(
+      this.containerRef.current!,
+    );
+  }
 }

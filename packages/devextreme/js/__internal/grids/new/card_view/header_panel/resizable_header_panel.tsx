@@ -100,4 +100,10 @@ export class ResizableHeaderPanel extends Component<Props, State> {
   componentDidUpdate(): void {
     this.updateShownColumns();
   }
+
+  componentWillUnmount(): void {
+    resizeObserverSingleton.unobserve(
+      this.ref.current!,
+    );
+  }
 }
