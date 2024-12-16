@@ -15,9 +15,10 @@ export interface HeaderItemProps {
 
 export function Item(props: HeaderItemProps): JSX.Element {
   return (
-    <div className={CLASSES.item}>
+    <div className={CLASSES.item} tabIndex={0}>
       {props.column.caption}
       <Button
+        tabIndex={-1}
         icon='close'
         stylingMode='text'
         elementAttr={{ class: CLASSES.button }}

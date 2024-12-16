@@ -5,11 +5,11 @@ import { ColumnsController } from '@ts/grids/new/grid_core/columns_controller/co
 import { View } from '@ts/grids/new/grid_core/core/view';
 
 import type { Column } from '../../grid_core/columns_controller/types';
-import type { Props } from './resizable_header_panel';
-import { ResizableHeaderPanel } from './resizable_header_panel';
+import type { HeaderPanelProps } from './header_panel';
+import { HeaderPanel } from './header_panel';
 
-export class HeaderPanelView extends View<Props> {
-  protected component = ResizableHeaderPanel;
+export class HeaderPanelView extends View<HeaderPanelProps> {
+  protected component = HeaderPanel;
 
   public static dependencies = [ColumnsController] as const;
 
@@ -19,7 +19,7 @@ export class HeaderPanelView extends View<Props> {
     super();
   }
 
-  protected override getProps(): Subscribable<Props> {
+  protected override getProps(): Subscribable<HeaderPanelProps> {
     return combined({
       columns: this.columnsController.visibleColumns,
       onMove: this.onMove.bind(this),
