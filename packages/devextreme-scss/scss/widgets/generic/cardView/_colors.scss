@@ -1,7 +1,8 @@
 @use '../../base/cardView/variables' as *;
 @use '../colors' as *;
 
-// getFigmaVariable('Header item/neutrals/background/1/rest', 'Components', 'Generic')
 $cardview-header-item-background-color: $colors-neutral-grey-0 !default;
-// getFigmaVariable('Header item/neutrals/strokes/1/rest', 'Components', 'Generic')
 $cardview-header-item-border-color: #DDDDDD !default;
+
+// getFigmaVariable('Card/neutrals/strokes/1/rest', 'Components ', 'Generic', 'Light', 'Default')
+$cardview-card-border-color: #4D4D4D !default;

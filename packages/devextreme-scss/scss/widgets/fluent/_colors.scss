@@ -134,7 +134,6 @@ $colors-grey-10: null !default;
 }
 
 @if $mode == "light" {
-  // getFigmaVariable('Colors/Grey/10', 'Fluent (Colors)', 'Light')
   $colors-grey-10: #F0F0F0 !default;
 
   $fluent-color-theme-modificator: "light" !default;
@@ -203,7 +202,6 @@ $colors-grey-10: null !default;
 }
 
 @if $mode == "dark" {
-  // getFigmaVariable('Colors/Grey/10', 'Fluent (Colors)', 'Dark')
   $colors-grey-10: #0A0A0A !default;
 
   $fluent-color-theme-modificator: "dark" !default;

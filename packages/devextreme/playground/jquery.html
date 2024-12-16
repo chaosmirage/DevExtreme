@@ -202,7 +202,7 @@
                     },
                 });
 
-                $("#cardview").dxDataGrid({
+                $("#cardview").dxCardView({
                     repaintChangesOnly: false,
                     accessKey: 'q',
                     // dataSource: [],
@@ -221,7 +221,13 @@
                     keyExpr: 'ID',
                     cardsPerRow: 'auto',
                     paging: {
-                        pageSize: 5,
+                        pageSize: 6,
+                    },
+                    pager: {
+                        visible: true,
+                        showPageSizeSelector: true,
+                        allowedPageSizes: 'auto',
+                        // allowedPageSizes: [2,4,6],
                     },
                     cardMinWidth: 250,
                     cardMaxWidth: 350,
@@ -292,6 +298,7 @@
                 cardView.dispose();
                 cardView = undefined;
             }
+            render();
         </script>
     </div>
 </body>

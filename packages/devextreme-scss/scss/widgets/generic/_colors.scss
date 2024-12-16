@@ -201,7 +201,6 @@ $colors-neutral-grey-0: null !default;
 }
 
 @if $color == "dark" {
-  // getFigmaVariable('colors/neutral/grey/0', 'Generic (Colors)', 'Dark')
   $colors-neutral-grey-0: #2A2A2A !default;
 
   $generic-color-postfix: ".dark" !default;
@@ -340,7 +339,6 @@ $colors-neutral-grey-0: null !default;
 }
 
 @if $color == "light" {
-  // getFigmaVariable('colors/neutral/grey/0', 'Generic (Colors)', 'Light')
   $colors-neutral-grey-0: #FFFFFF !default;
 
   $generic-color-postfix: ".light" !default;
