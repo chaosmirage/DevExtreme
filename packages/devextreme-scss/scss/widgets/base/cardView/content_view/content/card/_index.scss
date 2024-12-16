@@ -1,9 +1,8 @@
-@use './colors' as *;
-@use './sizes' as *;
+@use './variables' as *;
 
 .dx-cardview-card {
-  min-width: $min-width;
-  border: $border-size solid $border-color;
+  min-width: $cardview-card-min-width;
+  border: $cardview-card-border-size solid $cardview-card-border-color;
   padding: 15px 30px;
 }
 

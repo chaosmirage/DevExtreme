@@ -9,7 +9,7 @@ import {
 import { DataController } from '../data_controller/index';
 import type { DataObject } from '../data_controller/types';
 import { OptionsController } from '../options_controller/options_controller';
-import type { ColumnProperties, PreNormalizedColumn } from './options';
+import type { ColumnProperties, ColumnSettings, PreNormalizedColumn } from './options';
 import type { Column, DataRow, VisibleColumn } from './types';
 import {
   getColumnIndexByName, normalizeColumns, normalizeVisibleIndexes, preNormalizeColumns,
@@ -106,10 +106,10 @@ export class ColumnsController {
     };
   }
 
-  public columnOption<TProp extends keyof Column>(
+  public columnOption<TProp extends keyof ColumnSettings>(
     column: Column,
     option: TProp,
-    value: Column[TProp],
+    value: ColumnSettings[TProp],
   ): void {
     this.columnsSettings.updateFunc((columns) => {
       const index = getColumnIndexByName(columns, column.name);

@@ -20,7 +20,7 @@ export const defaultColumnProperties = {
     return data[this.dataField!];
   },
   calculateDisplayValue(data): unknown {
-    return data[this.dataField!];
+    return this.calculateCellValue(data);
   },
   alignment: 'left',
   visible: true,

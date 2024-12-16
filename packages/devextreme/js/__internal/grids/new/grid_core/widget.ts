@@ -125,4 +125,8 @@ export class GridCoreNewBase<
   }
 }
 
-export class GridCoreNew extends DataControllerModule.PublicMethods(GridCoreNewBase) {}
+export class GridCoreNew extends ColumnsControllerModule.PublicMethods(
+  DataControllerModule.PublicMethods(
+    GridCoreNewBase,
+  ),
+) {}
