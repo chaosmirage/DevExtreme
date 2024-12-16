@@ -1,0 +1,16 @@
+
+@use '../colors' as *;
+@use '../sizes' as *;
+
+.dx-cardview-headers-content {
+  display: flex;
+  gap: 5px;
+}
+
+.dx-cardview-header-item {
+  background-color: $cardview-header-item-background-color;
+  border: solid $cardview-header-item-border-width $cardview-header-item-border-color;
+  border-radius: #{$cardview-header-item-border-radius}px;
+  padding: $cardview-header-item-padding-vertical $cardview-header-item-padding-horizontal;
+  min-width: fit-content;
+}

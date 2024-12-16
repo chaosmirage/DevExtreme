@@ -1,0 +1,8 @@
+@use '../colors' as *;
+@use '../sizes' as *;
+@use './content';
+
+.dx-cardview-contentview {
+  overflow: hidden;
+  flex-grow: 1;
+}
