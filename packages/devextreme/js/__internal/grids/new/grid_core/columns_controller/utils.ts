@@ -125,3 +125,17 @@ export function normalizeStringColumn(column: ColumnProperties): ColumnSettings 
 export function getColumnIndexByName(columns: PreNormalizedColumn[], name: string): number {
   return columns.findIndex((c) => c.name === name);
 }
+
+export function getColumnByIndexOrName(
+  columns: Column[],
+  columnNameOrIndex: string | number,
+): Column | undefined {
+  const column = columns.find((c, i) => {
+    if (isString(columnNameOrIndex)) {
+      return c.name === columnNameOrIndex;
+    }
+    return i === columnNameOrIndex;
+  });
+
+  return column;
+}

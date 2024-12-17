@@ -106,6 +106,19 @@ export class ColumnsController {
     };
   }
 
+  public addColumn(columnProps: ColumnProperties): void {
+    this.columnsSettings.updateFunc((columns) => preNormalizeColumns([
+      ...columns,
+      columnProps,
+    ]));
+  }
+
+  public deleteColumn(column: Column): void {
+    this.columnsSettings.updateFunc(
+      (columns) => columns.filter((c) => c.name !== column.name),
+    );
+  }
+
   public columnOption<TProp extends keyof ColumnSettings>(
     column: Column,
     option: TProp,
