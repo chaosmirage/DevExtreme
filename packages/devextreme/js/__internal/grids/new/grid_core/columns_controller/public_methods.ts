@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /* eslint-disable consistent-return */
 /* eslint-disable spellcheck/spell-checker */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -6,14 +7,12 @@
 import { isObject } from '@js/core/utils/type';
 
 import type { Constructor } from '../types';
-import type { ColumnsController } from './columns_controller';
+import type { GridCoreNewBase } from '../widget';
 import type { ColumnProperties, ColumnSettings } from './options';
 import type { Column } from './types';
 import { getColumnByIndexOrName } from './utils';
 
-export function PublicMethods<TBase extends Constructor<{
-  columnsController: ColumnsController;
-}>>(GridCore: TBase) {
+export function PublicMethods<TBase extends Constructor<GridCoreNewBase>>(GridCore: TBase) {
   return class GridCoreWithColumnsController extends GridCore {
     public getVisibleColumns(): Column[] {
       return this.columnsController.visibleColumns.unreactive_get();

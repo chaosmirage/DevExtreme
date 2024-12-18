@@ -11,8 +11,10 @@ const setup = (config: Options = {}) => {
   const options = new OptionsControllerMock(config);
   const dataController = new DataController(options);
   const columnsController = new ColumnsController(options, dataController);
+
+  // @ts-expect-error
   const gridCore = new (PublicMethods(class {
-    public columnsController = columnsController;
+    protected columnsController = columnsController;
   }))();
 
   return {
