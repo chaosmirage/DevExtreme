@@ -156,24 +156,60 @@ exports[`common initial render should be successfull 1`] = `
     class="dx-cardview-headers"
   >
     <div
-      class="dx-cardview-header-item"
+      class="dx-scrollable dx-visibility-change-handler dx-scrollable-horizontal dx-scrollable-simulated"
     >
-      A
       <div
-        aria-label="Close"
-        class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon dx-cardview-header-item-button"
-        role="button"
-        tabindex="0"
+        class="dx-scrollable-wrapper"
       >
         <div
-          class="dx-button-content"
+          class="dx-scrollable-container"
+          tabindex="0"
         >
-          <i
-            class="dx-icon dx-icon-close"
-          />
+          <div
+            class="dx-scrollable-content"
+            style="left: 0px; top: 0px; transform: none;"
+          >
+            <div
+              class="dx-cardview-headers-content"
+            >
+              <div
+                class="dx-cardview-header-item"
+                tabindex="0"
+              >
+                A
+                <div
+                  aria-label="Close"
+                  class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon dx-cardview-header-item-button"
+                  role="button"
+                  tabindex="-1"
+                >
+                  <div
+                    class="dx-button-content"
+                  >
+                    <i
+                      class="dx-icon dx-icon-close"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="dx-scrollable-scrollbar dx-widget dx-scrollbar-horizontal"
+            style="display: none;"
+          >
+            <div
+              class="dx-scrollable-scroll dx-state-invisible"
+            >
+              <div
+                class="dx-scrollable-scroll-content"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    
   </div>
   <div
     class="dx-cardview-contentview"
@@ -288,7 +324,9 @@ exports[`common initial render should be successfull 1`] = `
     />
   </div>
   
-  
+  <div>
+    
+  </div>
   
 </div>
 `;

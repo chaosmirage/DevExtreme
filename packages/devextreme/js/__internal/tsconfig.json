@@ -9,7 +9,7 @@
     "allowJs": true,
     "noEmitOnError": true,
     "resolveJsonModule": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": false,
     "declarationMap": false,
     "emitDecoratorMetadata": true,

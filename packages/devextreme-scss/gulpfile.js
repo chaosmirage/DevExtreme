@@ -44,8 +44,8 @@ gulp.task('generate', gulp.series(
         .src('scss/widgets/**/*.scss')
         .pipe(through.obj(function(file, encoding, callback) {
             const content = file.contents.toString(encoding);
-            const iter = content.matchAll(/(\s*\/\/ getFigmaVariable\('(.+?)', *'(.+?)', *'(.+?)' *\)\n\s*(\$.+?): *)(.+?)( !default;)/g);
-            for (let [match, beginning,  name, collection, mode, scssName, scssValue, end] of iter) {
+            const iter = content.matchAll(/(\s*\/\/ getFigmaVariable\('(.+?)', *'(.+?)', *'(.+?)', *'(.+?)', *'(.+?)' *\)\n\s*(\$.+?): *)(.+?)( !default;)/g);
+            for (let [match, beginning,  name, collection, theme, color, size, scssName, scssValue, end] of iter) {
                 setFigmaVarAlias(name, scssName, collection);
             }
             callback(null, file);
@@ -54,12 +54,12 @@ gulp.task('generate', gulp.series(
         .src('scss/widgets/**/*.scss')
         .pipe(through.obj(function(file, encoding, callback) {
             const content = file.contents.toString(encoding);
-            const newContent = content.replace(/(\s*\/\/ getFigmaVariable\('(.+?)', *'(.+?)', *'(.+?)' *\)\n\s*(\$.+?): *)(.+?)( !default;)/g, function(match, beginning,  name, collection, mode, scssName, scssValue, end) {
+            const newContent = content.replace(/(\s*\/\/ getFigmaVariable\('(.+?)', *'(.+?)', *'(.+?)', *'(.+?)', *'(.+?)' *\)\n\s*(\$.+?): *)(.+?)( !default;)/g, function(match, beginning,  name, collection, theme, color, size, scssName, scssValue, end) {
                 return beginning + getFigmaVarValue(name, collection, {
-                    'Fluent (Colors)': 'Dark',
-                    'Material (Colors)': 'Dark',
-                    'Generic (Colors)': 'Dark',
-                    [collection]: mode
+                    'Fluent (Colors)': color,
+                    'Material (Colors)': color,
+                    'Generic (Colors)': color,
+                    'Components ': theme,
                 }) + end;
             })
             file.contents = Buffer.from(newContent)

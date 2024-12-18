@@ -33,7 +33,7 @@ export class GridCoreNewBase<
 
   private dataController!: DataControllerModule.DataController;
 
-  private columnsController!: ColumnsControllerModule.ColumnsController;
+  protected columnsController!: ColumnsControllerModule.ColumnsController;
 
   private editingController!: EditingController;
 
