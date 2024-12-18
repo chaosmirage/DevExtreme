@@ -153,7 +153,8 @@ $base-link-color: $base-accent !default;
   $base-icon-color: color.change($base-text-color, $alpha: 0.54) !default;
   $base-spin-icon-color: color.change($base-text-color, $alpha: 0.54) !default;
   $base-bg: #fff !default;
-  $base-border-color: #e0e0e0 !default;
+  // getFigmaVariable('Colors/Neutral/300', 'Material (Colors)', 'Material', 'Light', 'null')
+  $base-border-color: #E0E0E0 !default;
   $base-inverted-bg: darken($base-bg, 100%) !default;
   $base-element-bg: $base-bg !default;
   $base-shadow-color: $base-inverted-bg !default;

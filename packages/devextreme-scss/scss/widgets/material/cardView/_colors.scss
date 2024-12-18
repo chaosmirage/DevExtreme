@@ -1,8 +1,9 @@
-@use '../../base/cardView/variables';
-@use '../../base/cardView/content_view/content/card/variables' as card;
+@use '../../base/cardView/variables' as *;
+@use '../../base/cardView/content_view/content/card/variables' as *;
 @use '../colors' as *;
 
 $cardview-header-item-background-color: $colors-neutral-300 !default;
 $cardview-header-item-border-color: $colors-neutral-300 !default;
 
-$cardview-card-border-color: rgba(224, 224, 224, 1);
+// getFigmaVariable('Card/neutrals/strokes/1/rest', 'Components ', 'Material', 'Light', 'Default')
+$cardview-card-border-color: $base-border-color !default;
