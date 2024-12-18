@@ -17,7 +17,7 @@ const eventMap = {
 
 // due to this https://bugs.webkit.org/show_bug.cgi?id=222632 issue
 if (browser.safari) {
-  eventMap.dxpointercancel = 'dragstart';
+  eventMap.dxpointercancel += [' ', 'dragstart'].join('');
 }
 
 const normalizeMouseEvent = function (e) {
