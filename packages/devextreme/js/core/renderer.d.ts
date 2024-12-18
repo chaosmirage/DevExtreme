@@ -36,6 +36,14 @@ export interface dxElementWrapper {
 
   detach(): this;
 
+  /**
+   * Iterates over each element in the set of matched elements, executing the provided function for each element.
+   *
+   * @param {(this: Element, index: number, element: Element) => boolean} func - A function to execute for each matched element.
+   *        The function receives the index position of the element in the set and the element itself as arguments.
+   *        If the function returns `false`, the iteration will stop.
+   * @returns {this} The current instance for chaining.
+   */
   each(func: (this: Element, index: number, element: Element) => boolean): this;
 
   empty(): this;
@@ -90,6 +98,12 @@ export interface dxElementWrapper {
 
   remove(element?: Element | dxElementWrapper): this;
 
+  /**
+   * Removes the specified attribute from each element in the set of matched elements.
+   *
+   * @param {string} attrName - The name of the attribute to remove.
+   * @returns {Object} The current instance of `initRender` for chaining.
+   */
   removeAttr(attributeName: string): this;
 
   removeClass(className: string): this;
