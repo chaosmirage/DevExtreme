@@ -17,7 +17,8 @@ const eventMap = {
 
 // due to this https://bugs.webkit.org/show_bug.cgi?id=222632 issue
 if (browser.safari) {
-  eventMap.dxpointercancel += [' ', 'dragstart'].join('');
+  // eslint-disable-next-line no-useless-concat
+  eventMap.dxpointercancel += ' ' + 'dragstart';
 }
 
 const normalizeMouseEvent = function (e) {
