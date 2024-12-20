@@ -8,6 +8,7 @@ import type { Properties as ToolbarProperties } from '@js/ui/toolbar';
 import Toolbar from '@js/ui/toolbar';
 import type { EditingController } from '@ts/grids/grid_core/editing/m_editing';
 import type { HeaderFilterController } from '@ts/grids/grid_core/header_filter/m_header_filter';
+import * as NewToolbar from '@ts/grids/new/grid_core/toolbar/index';
 
 import type { ModuleType } from '../m_types';
 import { ColumnsView } from '../views/m_columns_view';
@@ -28,6 +29,15 @@ export class HeaderPanel extends ColumnsView {
   protected _editingController!: EditingController;
 
   protected _headerFilterController!: HeaderFilterController;
+
+  public static dependencies = ['component', NewToolbar.Controller] as any;
+
+  constructor(
+    component,
+    protected readonly newToolbarController: NewToolbar.Controller,
+  ) {
+    super(component);
+  }
 
   public init() {
     super.init();
@@ -261,6 +271,9 @@ const resizing = (Base: ModuleType<ResizingController>) => class HeaderPanelResi
 export const headerPanelModule = {
   defaultOptions() {
     return {
+      toolbar: {
+        visible: true,
+      },
     };
   },
   views: {

@@ -15,6 +15,7 @@ import { hasWindow } from '@js/core/utils/window';
 import errors from '@js/ui/widget/ui.errors';
 import { DIContext } from '@ts/core/di/index';
 
+import { OptionsController } from '../new/grid_core/options_controller/options_controller';
 import type {
   Controllers, GridPropertyType, InternalGrid, InternalGridOptions, Module,
   OptionChanged,
@@ -419,9 +420,17 @@ export function processModules(
 ): void {
   const diContext = new DIContext();
   diContext.registerInstance('component' as any, componentInstance);
+  diContext.registerInstance(OptionsController, new OptionsController(componentInstance as any));
 
   const { modules } = componentClass;
   const { modulesOrder } = componentClass;
+
+  modules.forEach((module) => {
+    module?.newModules?.forEach((newModule) => {
+      // @ts-expect-error
+      diContext.register(newModule);
+    });
+  });
 
   function createModuleItems(
     moduleTypes: Record<string, ModuleItemTypeCore>,

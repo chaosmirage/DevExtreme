@@ -7,6 +7,7 @@ import type { dxElementWrapper } from '@js/core/renderer';
 import type { Properties as DataGridOptions } from '@js/ui/data_grid';
 import type { Properties as TreeListdOptions } from '@js/ui/tree_list';
 import type Widget from '@js/ui/widget/ui.widget';
+import type { DIContext } from '@ts/core/di';
 
 import type { EditingController } from './editing/m_editing';
 import type { ModuleItem } from './m_modules';
@@ -34,6 +35,8 @@ type OptionsMethod<TOptions> =
 type GridBaseType = GridBase<unknown, unknown> & Omit<Widget<InternalGridOptions>, 'option'>;
 
 export interface InternalGrid extends GridBaseType {
+  diContext: DIContext;
+
   _views: Views;
 
   _controllers: Controllers;
@@ -239,5 +242,7 @@ export interface Module {
     controllers?: Partial<ControllersExtender>;
     views?: Partial<ViewsExtender>;
   };
+
+  newModules?: unknown[];
   defaultOptions?: () => InternalGridOptions;
 }
