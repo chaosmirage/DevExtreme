@@ -17,12 +17,6 @@
         document.getElementsByTagName("head")[0].appendChild(link);
     </script>
 
-    <!-- <style>
-        .dx-cardview-content.dx-cardview-content-grid {
-            --dx-cardview-cardsperrow: 3 !important;
-        }
-    </style> -->
-
     <script type="text/javascript" src="../artifacts/js/jquery.js"></script>
     <!-- HtmlEditor -->
     <!-- <script type="text/javascript" src="../artifacts/js/dx-quill.min.js"></script> -->
@@ -203,6 +197,9 @@
                 });
 
                 $("#cardview").dxCardView({
+                    editing: {
+                        allowAdding: true
+                    },
                     repaintChangesOnly: false,
                     accessKey: 'q',
                     // dataSource: [],
