@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function getImagePath(taskId: number) {
   const imgPath = '../../../../images/employees';
@@ -13,16 +13,35 @@ function getTaskColor(taskId: number) {
 }
 
 export default function TaskTemplate({ taskData, taskSize, taskResources }) {
+  useEffect(() => {
+    console.log('UseEffect', taskData.title);
+
+    return () => {
+      console.log('UseEffect UNMOUNT', taskData.title);
+    };
+  }, []);
+
+  console.log('REACT TaskTemplate RENDER', taskData.title);
+
   return (
-    <div className={`custom-task ${getTaskColor(taskData.id)}`} style={ { width: `${taskSize.width}px` } }>
+    <div
+      className={`custom-task ${getTaskColor(taskData.id)}`}
+      style={{ width: `${taskSize.width}px` }}
+    >
       <div className="custom-task-img-wrapper">
-        <img className="custom-task-img" src={getImagePath(taskData.id)} />
+        <img
+          className="custom-task-img"
+          src={getImagePath(taskData.id)}
+        />
       </div>
-      <div className='custom-task-wrapper'>
-        <div className='custom-task-title'>{taskData.title}</div>
-        <div className='custom-task-row'>{taskResources[0].text}</div>
+      <div className="custom-task-wrapper">
+        <div className="custom-task-title">{taskData.title}</div>
+        <div className="custom-task-row">{taskResources[0].text}</div>
       </div>
-      <div className='custom-task-progress' style={ { width: `${taskData.progress}%` } }></div>
+      <div
+        className="custom-task-progress"
+        style={{ width: `${taskData.progress}%` }}
+      ></div>
     </div>
   );
 }
