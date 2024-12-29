@@ -19,7 +19,7 @@ export function Item(props: HeaderItemProps): JSX.Element {
       {props.column.caption}
       <Button
         tabIndex={-1}
-        icon='close'
+        icon={props.column.visible ? 'eyeopen' : 'eyeclose'}
         stylingMode='text'
         elementAttr={{ class: CLASSES.button }}
         onClick={(): void => { props.onRemove?.(); }}

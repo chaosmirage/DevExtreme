@@ -1,6 +1,6 @@
 /* eslint-disable spellcheck/spell-checker */
 import type { Subscribable } from '@ts/core/reactive/index';
-import { combined } from '@ts/core/reactive/index';
+import { combined, computed } from '@ts/core/reactive/index';
 import { ColumnsController } from '@ts/grids/new/grid_core/columns_controller/columns_controller';
 import { View } from '@ts/grids/new/grid_core/core/view';
 
@@ -21,7 +21,10 @@ export class HeaderPanelView extends View<HeaderPanelProps> {
 
   protected override getProps(): Subscribable<HeaderPanelProps> {
     return combined({
-      columns: this.columnsController.visibleColumns,
+      columns: computed(
+        (columns) => [...columns].sort((a, b) => a.visibleIndex - b.visibleIndex),
+        [this.columnsController.columns],
+      ),
       onMove: this.onMove.bind(this),
       onRemove: this.onRemove.bind(this),
       allowColumnReordering: this.columnsController.allowColumnReordering,
@@ -29,11 +32,11 @@ export class HeaderPanelView extends View<HeaderPanelProps> {
   }
 
   public onRemove(column: Column): void {
-    this.columnsController.columnOption(column, 'visible', false);
+    this.columnsController.columnOption(column, 'visible', !column.visible);
   }
 
   public onMove(column: Column, toIndex: number): void {
-    this.columnsController.columnOption(column, 'visible', true);
+    // this.columnsController.columnOption(column, 'visible', true);
     this.columnsController.columnOption(column, 'visibleIndex', toIndex);
   }
 }

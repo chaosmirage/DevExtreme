@@ -178,7 +178,7 @@ exports[`common initial render should be successfull 1`] = `
               >
                 A
                 <div
-                  aria-label="Close"
+                  aria-label="eyeopen"
                   class="dx-widget dx-button dx-button-mode-text dx-button-normal dx-button-has-icon dx-cardview-header-item-button"
                   role="button"
                   tabindex="-1"
@@ -187,7 +187,7 @@ exports[`common initial render should be successfull 1`] = `
                     class="dx-button-content"
                   >
                     <i
-                      class="dx-icon dx-icon-close"
+                      class="dx-icon dx-icon-eyeopen"
                     />
                   </div>
                 </div>
