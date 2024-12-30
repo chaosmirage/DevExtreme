@@ -101,7 +101,7 @@ const TemplateWrapperComponent: FC<TemplateWrapperProps> = ({
   }, [onTemplateRemoved, removalListenerRequired, container]);
 
   useEffect(() => {
-    // call onRendered
+    // call onRendered after paint
     onRendered();
   }, [onRendered]);
 
@@ -113,6 +113,8 @@ const TemplateWrapperComponent: FC<TemplateWrapperProps> = ({
   const removalListener = removalListenerRequired
     ? createHiddenNode(container?.nodeName, (node: HTMLElement) => { removalListenerElement.current = node; }, 'span')
     : undefined;
+
+  console.log('TemplateWrapperComponent templateFactory', templateFactory);
 
   return createPortal(
       <>

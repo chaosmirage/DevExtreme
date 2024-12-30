@@ -183,7 +183,7 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
           const factory = templateFactories.current[templateKey];
 
           if (factory) {
-            // render TemplateWrapperComponent
+            // here the `taskContentTemplate` is rendered
             return <TemplateWrapper
               key={componentKey}
               templateFactory={factory}
