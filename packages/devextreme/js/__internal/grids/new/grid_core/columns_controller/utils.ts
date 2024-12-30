@@ -29,6 +29,9 @@ function normalizeColumn(column: PreNormalizedColumn): Column {
   };
 }
 
+/**
+ * @jestspec
+ */
 export function getVisibleIndexes(
   indexes: (number | undefined)[],
 ): number[] {

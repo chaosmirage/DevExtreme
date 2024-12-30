@@ -222,7 +222,8 @@
     "test-jest:watch": "jest --watch",
     "qunit-in-docker": "gulp qunit-in-docker --constel",
     "tcd-update": "tcd-update",
-    "gen-doc": "typedoc 'js/__internal/**/*.ts' 'js/__internal/**/*.tsx' --tsconfig js/__internal/tsconfig.json --excludePrivate false"
+    "gen-doc": "typedoc 'js/__internal/**/*.ts' 'js/__internal/**/*.tsx' --tsconfig js/__internal/tsconfig.json --excludePrivate false",
+    "gen-spec": "jest --json > artifacts/specs.json"
   },
   "browserslist": [
     "last 2 versions",

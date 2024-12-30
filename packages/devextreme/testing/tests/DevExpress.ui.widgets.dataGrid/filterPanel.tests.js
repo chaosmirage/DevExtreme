@@ -101,7 +101,7 @@ QUnit.module('Filter Panel', {
         assert.deepEqual(this.getCombinedFilter(true), undefined, 'check filterValue');
     });
 
-    QUnit.test('createFilter', function(assert) {
+    QUnit.test('createFilter', async function(assert) {
         // arrange, act
         this.initFilterPanelView({
             filterPanel: {
@@ -112,6 +112,8 @@ QUnit.module('Filter Panel', {
             },
             filterValue: null
         });
+
+        await this.clock.tickAsync();
 
         // assert
         assert.equal(this.filterPanelView.element().find('.' + FILTER_PANEL_TEXT_CLASS).text(), 'test', 'check createFilter');
@@ -177,7 +179,7 @@ QUnit.module('Filter Panel', {
         assert.equal(this.filterPanelView.element().find('.' + FILTER_PANEL_TEXT_CLASS).text(), '[] Equals \'1\'', 'check filter text');
     });
 
-    QUnit.test('can customize hints', function(assert) {
+    QUnit.test('can customize hints', async function(assert) {
         // arrange, act
         this.initFilterPanelView({
             filterPanel: {
@@ -188,11 +190,13 @@ QUnit.module('Filter Panel', {
             }
         });
 
+        await this.clock.tickAsync();
+
         // assert
         assert.equal(this.filterPanelView.element().find('.' + FILTER_PANEL_CHECKBOX_CLASS).attr('title'), 'test0', 'check hint for applyFilter');
     });
 
-    QUnit.test('clearFilter', function(assert) {
+    QUnit.test('clearFilter', async function(assert) {
         // arrange, act
         this.initFilterPanelView({
             filterPanel: {
@@ -202,6 +206,8 @@ QUnit.module('Filter Panel', {
                 }
             }
         });
+
+        await this.clock.tickAsync();
 
         // assert
         assert.equal(this.filterPanelView.element().find('.' + FILTER_PANEL_CLEAR_FILTER_CLASS).text(), 'test0', 'check clearFilter');

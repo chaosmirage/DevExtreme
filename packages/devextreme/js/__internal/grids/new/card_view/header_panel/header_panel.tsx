@@ -21,6 +21,9 @@ export interface HeaderPanelProps {
   allowColumnReordering: boolean;
 }
 
+/**
+ * <img src="../../../../../../../../e2e/testcafe-devextreme/tests/cardView/etalons/headers.png"></img>
+ */
 export class HeaderPanel extends Component<HeaderPanelProps> {
   public render(): JSX.Element {
     return (

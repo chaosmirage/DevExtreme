@@ -69,8 +69,10 @@ describe('Options', () => {
       });
     });
   });
+});
 
-  describe('columns[].visible', () => {
+describe('ColumnSettings', () => {
+  describe('visible', () => {
     describe('when it is true', () => {
       it('should include column to visibleColumns', () => {
         const { columnsController } = setup({
@@ -103,7 +105,7 @@ describe('Options', () => {
     });
   });
 
-  describe('columns[].visibleIndex', () => {
+  describe('visibleIndex', () => {
     it('should affect order in visibleColumns', () => {
       const { columnsController } = setup({
         columns: [
@@ -125,7 +127,7 @@ describe('Options', () => {
     });
   });
 
-  describe('column[].calculateCellValue', () => {
+  describe('calculateCellValue', () => {
     it('should override value in DataRow', () => {
       const { columnsController } = setup({
         columns: [
@@ -160,7 +162,7 @@ describe('Options', () => {
     });
   });
 
-  describe('column[].calculateDisplayValue', () => {
+  describe('calculateDisplayValue', () => {
     it('should override displayValue in DataRow', () => {
       const { columnsController } = setup({
         columns: [
@@ -177,7 +179,7 @@ describe('Options', () => {
     });
   });
 
-  describe('column[].customizeText', () => {
+  describe('customizeText', () => {
     it('should override text in DataRow', () => {
       const { columnsController } = setup({
         columns: [
@@ -197,7 +199,7 @@ describe('Options', () => {
     });
   });
 
-  describe('column[].dataField', () => {
+  describe('dataField', () => {
     it('should determine which value from data will be used', () => {
       const { columnsController } = setup({
         columns: [{ dataField: 'a' }, { dataField: 'b' }],
@@ -213,7 +215,7 @@ describe('Options', () => {
     });
   });
 
-  describe('column[].dataType', () => {
+  describe('dataType', () => {
     it('should affect column default settings', () => {
       const { columnsController } = setup({
         columns: [
@@ -231,7 +233,7 @@ describe('Options', () => {
   });
 
   (['falseText', 'trueText'] as const).forEach((propName) => {
-    describe(`column[].${propName}`, () => {
+    describe(`${propName}`, () => {
       it('should be used as text for boolean column', () => {
         const { columnsController } = setup({
           columns: [
@@ -253,7 +255,7 @@ describe('Options', () => {
     });
   });
 
-  describe('column[].format', () => {
+  describe('format', () => {
     it('should affect dataRow text', () => {
       const { columnsController } = setup({
         columns: [

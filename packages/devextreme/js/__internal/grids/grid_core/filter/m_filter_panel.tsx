@@ -1,7 +1,5 @@
 /* eslint-disable max-classes-per-file */
 import messageLocalization from '@js/common/core/localization/message';
-import type { dxElementWrapper } from '@js/core/renderer';
-import $ from '@js/core/renderer';
 import { isDefined } from '@js/core/utils/type';
 import inflector from '@ts/core/utils/m_inflector';
 import {
@@ -9,20 +7,16 @@ import {
   getCustomOperation, getField, getGroupValue, isCondition, isGroup,
 } from '@ts/filter_builder/m_utils';
 import type { FilterSyncController } from '@ts/grids/grid_core/filter/m_filter_sync';
-import { createRef, render } from 'inferno';
+import { render } from 'inferno';
 
-import { CheckBox } from '../../new/grid_core/inferno_wrappers/checkbox';
 import type { ColumnsController } from '../columns_controller/m_columns_controller';
 import type { DataController } from '../data_controller/m_data_controller';
 import modules from '../m_modules';
 import type { ModuleType } from '../m_types';
 import gridUtils from '../m_utils';
+import { FilterPanel } from './filter_panel';
 
 const FILTER_PANEL_CLASS = 'filter-panel';
-const FILTER_PANEL_TEXT_CLASS = `${FILTER_PANEL_CLASS}-text`;
-const FILTER_PANEL_CHECKBOX_CLASS = `${FILTER_PANEL_CLASS}-checkbox`;
-const FILTER_PANEL_CLEAR_FILTER_CLASS = `${FILTER_PANEL_CLASS}-clear-filter`;
-const FILTER_PANEL_LEFT_CONTAINER = `${FILTER_PANEL_CLASS}-left`;
 
 const FILTER_PANEL_TARGET = 'filterPanel';
 
@@ -47,7 +41,7 @@ export class FilterPanelView extends modules.View {
     return !!this.option('filterPanel.visible') && !!this._dataController.dataSource();
   }
 
-  protected _renderCore(): void {
+  protected async _renderCore(): Promise<void> {
     const $element = this.element();
 
     $element.addClass(this.addWidgetPrefix(FILTER_PANEL_CLASS));
@@ -61,89 +55,52 @@ export class FilterPanelView extends modules.View {
     const hasFilterValue = !!this.option('filterValue') || !!this._filterValueBuffer;
     const tabIndex = this.option('tabindex') || 0;
 
-    const textRef = createRef<HTMLDivElement>();
+    const text = await this._getTextElement();
 
     render(
-      <>
-        <div className={this.addWidgetPrefix(FILTER_PANEL_LEFT_CONTAINER)}>
-          {hasFilterValue && (
-            <CheckBox
-              elementAttr={{
-                class: this.addWidgetPrefix(FILTER_PANEL_CHECKBOX_CLASS),
-                title: this.option('filterPanel.texts.filterEnabledHint')!,
-              }}
-              value={this.option('filterPanel.filterEnabled')}
-              onValueChanged={(e) => { this.option('filterPanel.filterEnabled', e.value); }}
-            />
-          )}
-          <div
-            onClick={() => this._showFilterBuilder()}
-            tabIndex={tabIndex}
-            className='dx-icon-filter'
-          />
-          <div
-            ref={textRef}
-            className={this.addWidgetPrefix(FILTER_PANEL_TEXT_CLASS)}
-            onClick={() => this._showFilterBuilder()}
-            tabIndex={tabIndex}
-          />
-        </div>
-        {hasFilterValue && (
-          <div
-            className={this.addWidgetPrefix(FILTER_PANEL_CLEAR_FILTER_CLASS)}
-            onClick={() => this.option('filterValue', null as any)}
-            tabIndex={tabIndex}
-          >
-            {this.option('filterPanel.texts.clearFilter')}
-          </div>
-        )}
-      </>,
+      <FilterPanel
+        hasFilterValue={hasFilterValue}
+        addWidgetPrefix={this.addWidgetPrefix.bind(this)}
+        tabIndex={tabIndex}
+        text={text}
+        showFilterBuilder={() => { this._showFilterBuilder(); }}
+        filterEnabledHint={this.option('filterPanel.texts.filterEnabledHint')!}
+        filterEnabled={this.option('filterPanel.filterEnabled')!}
+        onFilterEnabledChange={(value: boolean) => this.option('filterPanel.filterEnabled', value)}
+        clearFilter={(): void => this.option('filterValue', null as any)}
+        clearFilterText={this.option('filterPanel.texts.clearFilter')!}
+      />,
       $element.get(0),
     );
-
-    this._renderTextElement($(textRef.current!));
   }
 
-  private _renderTextElement($textElement) {
+  private async _getTextElement(): Promise<string> {
     const that = this;
     const filterValue = that.option('filterValue');
     if (filterValue) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      (async (): Promise<void> => {
-        let filterText = await that.getFilterText(
+      let filterText = await that.getFilterText(
+        filterValue,
+        this._filterSyncController.getCustomFilterOperations(),
+      );
+      const customizeText = that.option('filterPanel.customizeText');
+      if (customizeText) {
+        const customText = customizeText({
+          component: that.component,
           filterValue,
-          this._filterSyncController.getCustomFilterOperations(),
-        );
-        const customizeText = that.option('filterPanel.customizeText');
-        if (customizeText) {
-          const customText = customizeText({
-            component: that.component,
-            filterValue,
-            text: filterText,
-          });
-          if (typeof customText === 'string') {
-            filterText = customText;
-          }
+          text: filterText,
+        });
+        if (typeof customText === 'string') {
+          filterText = customText;
         }
-        $textElement.text(filterText);
-      })();
-    } else {
-      const filterText = that.option('filterPanel.texts.createFilter');
-      $textElement.text(filterText ?? '');
+      }
+      return filterText;
     }
-
-    return $textElement;
+    const filterText = that.option('filterPanel.texts.createFilter');
+    return filterText ?? '';
   }
 
   private _showFilterBuilder(): void {
     this.option('filterBuilderPopup.visible', true);
-  }
-
-  private _addTabIndexToElement($element) {
-    if (!this.option('useLegacyKeyboardNavigation')) {
-      const tabindex = this.option('tabindex') || 0;
-      $element.attr('tabindex', tabindex);
-    }
   }
 
   public optionChanged(args): void {

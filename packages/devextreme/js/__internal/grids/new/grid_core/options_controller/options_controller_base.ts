@@ -83,7 +83,7 @@ export class OptionsController<TProps, TDefaultProps extends TProps = TProps> {
   ) {
     this.props = state(component.option());
     // @ts-expect-error
-    this.defaults = component._getDefaultOptions();
+    this.defaults = component._getDefaultOptions?.() ?? {};
     this.updateIsControlledMode();
 
     component.on('optionChanged', (e: ChangedOptionInfo) => {

@@ -14,6 +14,7 @@ import { isFunction } from '@js/core/utils/type';
 import { hasWindow } from '@js/core/utils/window';
 import errors from '@js/ui/widget/ui.errors';
 import { DIContext } from '@ts/core/di/index';
+import { fromPromise } from '@ts/core/utils/m_deferred';
 
 import { OptionsController } from '../new/grid_core/options_controller/options_controller';
 import type {
@@ -350,7 +351,7 @@ export class View extends ModuleItem {
 
     if (isVisible) {
       this.component._optionCache = {};
-      const deferred = this._renderCore(options);
+      const deferred = fromPromise(this._renderCore(options));
       this.component._optionCache = undefined;
       if (deferred) {
         deferred.done(() => {
