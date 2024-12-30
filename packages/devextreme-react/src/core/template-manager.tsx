@@ -168,6 +168,8 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
     return null;
   }
 
+  console.log('TemplateManager RENDER');
+
   return (
     <>
       {

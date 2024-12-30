@@ -253,6 +253,7 @@ const ComponentBase = forwardRef<ComponentBaseRef, any>(
     ]);
 
     const onTemplatesRendered = useCallback(() => {
+      console.log('React ComponentBase onTemplatesRendered');
       if (shouldRestoreFocus.current && instance.current?.focus) {
         instance.current.focus();
         shouldRestoreFocus.current = false;

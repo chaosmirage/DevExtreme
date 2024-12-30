@@ -62,6 +62,8 @@ const Component = forwardRef<ComponentRef, any>(
     ), [props, registerExtension]);
 
     const createWidget = useCallback((el?: Element) => {
+      console.log('DevExtremeReact createWidget');
+
       componentBaseRef.current?.createWidget(el);
     }, [componentBaseRef.current]);
 
