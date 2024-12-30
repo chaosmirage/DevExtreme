@@ -53,12 +53,21 @@ export class GanttTemplatesManager {
         const isTaskShowing = true;
         const template = taskContentTemplateOption && this._gantt._getTemplate(taskContentTemplateOption);
         const createTemplateFunction = template && ((container, item, callback, index) => {
+            // callback === onTaskTemplateContainerRendered from gantt repo
+
             item.taskData = this._gantt.getTaskDataByCoreData(item.taskData);
-            template.render({
-                model: item,
-                container: getPublicElement($(container)),
-                onRendered: () => { callback(container, index); }
-            });
+            // call render
+
+            setTimeout(() => {
+                console.log('TIMEOUT');
+
+                template.render({
+                    model: item,
+                    container: getPublicElement($(container)),
+                    onRendered: () => { callback(container, index); }
+                });
+            }, 0)
+
             return isTaskShowing;
         });
         return createTemplateFunction;

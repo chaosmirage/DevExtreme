@@ -204,6 +204,7 @@ class Gantt extends Widget {
             taskTooltipContentTemplate: this._ganttTemplatesManager.getTaskTooltipContentTemplateFunc(this.option('taskTooltipContentTemplate')),
             taskProgressTooltipContentTemplate: this._ganttTemplatesManager.getTaskProgressTooltipContentTemplateFunc(this.option('taskProgressTooltipContentTemplate')),
             taskTimeTooltipContentTemplate: this._ganttTemplatesManager.getTaskTimeTooltipContentTemplateFunc(this.option('taskTimeTooltipContentTemplate')),
+            // bind passed template with `onTaskTemplateContainerRendered` from gantt repo
             taskContentTemplate: this._ganttTemplatesManager.getTaskContentTemplateFunc(this.option('taskContentTemplate')),
             onTaskClick: (e) => { this._ganttTreeList.onRowClick(e); },
             onTaskDblClick: (e) => { this._ganttTreeList.onRowDblClick(e); },

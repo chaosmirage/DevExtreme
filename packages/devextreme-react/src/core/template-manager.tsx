@@ -90,6 +90,7 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
         unsubscribeOnRemoval(containerElement, onRemoved);
 
         if (hostWidgetId === widgetId.current) {
+          // call onTaskTemplateContainerRendered
           onRendered?.();
         }
       },
@@ -106,6 +107,7 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
       switch (template.type) {
         case 'children': return () => template.content as JSX.Element;
 
+        // render
         case 'render': return (props) => {
           normalizeProps(props);
           return template.content(props.data, props.index) as JSX.Element;
@@ -120,6 +122,7 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
       }
     }
 
+    // passed to setTemplateManagerHooks
     function createDXTemplates(templateOptions: Record<string, ITemplate>): DXTemplateCollection {
       const factories = Object.entries(templateOptions)
         .reduce<Record<string, TemplateFunc>>((res, [key, template]) => (
@@ -180,6 +183,7 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
           const factory = templateFactories.current[templateKey];
 
           if (factory) {
+            // render TemplateWrapperComponent
             return <TemplateWrapper
               key={componentKey}
               templateFactory={factory}
@@ -187,6 +191,7 @@ export const TemplateManager: FC<TemplateManagerProps> = ({ init, onTemplatesRen
               index={index}
               container={container}
               onRemoved={onRemoved}
+              // pass onRendered from instantiationModels.collection
               onRendered={onRendered}
             />;
           }

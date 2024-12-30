@@ -101,6 +101,7 @@ const TemplateWrapperComponent: FC<TemplateWrapperProps> = ({
   }, [onTemplateRemoved, removalListenerRequired, container]);
 
   useEffect(() => {
+    // call onRendered
     onRendered();
   }, [onRendered]);
 

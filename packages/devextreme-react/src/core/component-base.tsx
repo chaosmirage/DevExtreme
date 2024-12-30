@@ -152,6 +152,7 @@ const ComponentBase = forwardRef<ComponentBaseRef, any>(
       clearInstantiationModels: clearInstantiationModelsFn,
       updateTemplates: updateTemplatesFn,
     }: InitArgument) => {
+      // createDXTemplatesFn
       createDXTemplates.current = createDXTemplatesFn;
       clearInstantiationModels.current = clearInstantiationModelsFn;
       updateTemplates.current = updateTemplatesFn;
@@ -438,6 +439,7 @@ const ComponentBase = forwardRef<ComponentBaseRef, any>(
             <NestedOptionContext.Provider value={context}>
               {renderContent()}
             </NestedOptionContext.Provider>
+            {/* init */}
             <TemplateManager init={setTemplateManagerHooks} onTemplatesRendered={onTemplatesRendered}/>
               { isPortalComponent
                 && <NestedOptionContext.Provider value={context}>
