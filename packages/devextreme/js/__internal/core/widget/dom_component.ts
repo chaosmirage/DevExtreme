@@ -168,6 +168,8 @@ class DOMComponent<
   }
 
   _renderComponent(): void {
+    console.log('_renderComponent');
+
     addShadowDomStyles(this.$element());
 
     this._initMarkup();
