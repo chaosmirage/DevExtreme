@@ -58,15 +58,21 @@ export class GanttTemplatesManager {
             item.taskData = this._gantt.getTaskDataByCoreData(item.taskData);
             // call render
 
-            setTimeout(() => {
-                console.log('TIMEOUT');
+            template.render({
+                model: item,
+                container: getPublicElement($(container)),
+                onRendered: () => { callback(container, index); }
+            });
 
-                template.render({
-                    model: item,
-                    container: getPublicElement($(container)),
-                    onRendered: () => { callback(container, index); }
-                });
-            }, 0)
+            // setTimeout(() => {
+            //     console.log('TIMEOUT');
+
+            //     template.render({
+            //         model: item,
+            //         container: getPublicElement($(container)),
+            //         onRendered: () => { callback(container, index); }
+            //     });
+            // }, 0)
 
             return isTaskShowing;
         });
