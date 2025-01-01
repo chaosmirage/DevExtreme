@@ -9,7 +9,7 @@ import {
 // import { EditingController } from '../editing/controller';
 // import type { Change } from '../editing/types';
 import { OptionsController } from '../options_controller/options_controller';
-import type { DataObject } from './types';
+import type { DataObject, Key } from './types';
 import { normalizeDataSource, updateItemsImmutable } from './utils';
 
 export class DataController {
@@ -121,7 +121,7 @@ export class DataController {
     );
   }
 
-  public getDataKey(data: unknown): unknown {
+  public getDataKey(data: DataObject): Key {
     return this.dataSource.unreactive_get().store().keyOf(data);
   }
 }

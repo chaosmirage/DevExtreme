@@ -3,50 +3,21 @@
 /* eslint-disable spellcheck/spell-checker */
 import { compileGetter } from '@js/core/utils/data';
 import { isDefined } from '@js/core/utils/type';
-import type dxScrollable from '@js/ui/scroll_view/ui.scrollable';
-import type { ScrollEventInfo } from '@js/ui/scroll_view/ui.scrollable';
 import { combined, computed, state } from '@ts/core/reactive/index';
-import { OptionsController } from '@ts/grids/new/card_view/options_controller';
-import { ColumnsController } from '@ts/grids/new/grid_core/columns_controller/columns_controller';
-import type { Column } from '@ts/grids/new/grid_core/columns_controller/types';
-import { View } from '@ts/grids/new/grid_core/core/view';
-import { DataController } from '@ts/grids/new/grid_core/data_controller';
-import { ErrorController } from '@ts/grids/new/grid_core/error_controller/error_controller';
-import { createRef } from 'inferno';
+import type { OptionsController } from '@ts/grids/new/card_view/options_controller';
 
+import { ContentView as ContentViewBase } from '../../grid_core/content_view/view';
 import type { DataObject } from '../../grid_core/data_controller/types';
 import type { ContentViewProps } from './content_view';
 import { ContentView as ContentViewComponent } from './content_view';
 
-export class ContentView extends View<ContentViewProps> {
-  private readonly isNoData = computed(
-    (isLoading, items) => !isLoading && items.length === 0,
-    [this.dataController.isLoading, this.dataController.items],
-  );
-
-  public readonly items = computed(
-    (dataItems, columns: Column[]) => dataItems.map(
-      (item) => this.columnsController.createDataRow(
-        item,
-        columns,
-      ),
-    ),
-    [this.dataController.items, this.columnsController.visibleColumns],
-  );
-
-  public readonly scrollableRef = createRef<dxScrollable>();
-
-  public loadingText = this.options.twoWay('loadPanel.message');
+export class ContentView extends ContentViewBase<ContentViewProps> {
+  // @ts-expect-error
+  protected options: OptionsController;
 
   private readonly cardMinWidth = this.options.oneWay('cardMinWidth');
 
   private readonly rowHeight = state(0);
-
-  private readonly viewportHeight = state(0);
-
-  private readonly scrollTop = state(0);
-
-  private readonly width = state(0);
 
   private readonly cardsPerRow = computed(
     (width, cardMinWidth, pageSize, cardsPerRowProp) => {
@@ -99,41 +70,9 @@ export class ContentView extends View<ContentViewProps> {
 
   protected override component = ContentViewComponent;
 
-  public static dependencies = [
-    DataController, OptionsController, ErrorController, ColumnsController,
-  ] as const;
-
-  constructor(
-    protected readonly dataController: DataController,
-    protected readonly options: OptionsController,
-    protected readonly errorController: ErrorController,
-    protected readonly columnsController: ColumnsController,
-
-  ) {
-    super();
-  }
-
   protected override getProps() {
     return combined({
-      loadPanelProps: computed(
-        (visible, loadPanel) => ({
-          ...loadPanel,
-          visible,
-        }),
-        [
-          this.dataController.isLoading,
-          this.options.oneWay('loadPanel'),
-        ],
-      ),
-      noDataTextProps: combined({
-        text: this.options.oneWay('noDataText'),
-        template: this.options.template('noDataTemplate'),
-        visible: this.isNoData,
-      }),
-      errorRowProps: combined({
-        enabled: this.options.oneWay('errorRowEnabled'),
-        errors: this.errorController.errors,
-      }),
+      ...this.getBaseProps(),
       contentProps: combined({
         items: this.items,
         // items: computed((virtualState) => virtualState.virtualItems, [this.virtualState]),
@@ -161,26 +100,11 @@ export class ContentView extends View<ContentViewProps> {
           toolbar: this.options.oneWay('cardHeader.items') as any,
         }),
       }),
-      onWidthChange: this.width.update.bind(this.width),
       virtualScrollingProps: combined({
         heightUp: 0,
         heightDown: 0,
         // heightUp: computed((virtualState) => virtualState.virtualTop, [this.virtualState]),
         // heightDown: computed((virtualState) => virtualState.virtualBottom, [this.virtualState]),
-      }),
-      onViewportHeightChange: this.viewportHeight.update.bind(this.viewportHeight),
-      scrollableRef: this.scrollableRef,
-      scrollableProps: combined({
-        onScroll: this.onScroll.bind(this),
-        direction: 'both' as const,
-        scrollTop: this.scrollTop,
-        scrollByContent: this.options.oneWay('scrolling.scrollByContent'),
-        scrollByThumb: this.options.oneWay('scrolling.scrollByThumb'),
-        showScrollbar: this.options.oneWay('scrolling.showScrollbar'),
-        useNative: computed(
-          (useNative) => (useNative === 'auto' ? undefined : useNative),
-          [this.options.oneWay('scrolling.useNative')],
-        ),
       }),
     });
   }
@@ -193,9 +117,5 @@ export class ContentView extends View<ContentViewProps> {
     }
     // @ts-expect-error
     return compileGetter(expr);
-  }
-
-  private onScroll(e: ScrollEventInfo<unknown>): void {
-    this.scrollTop.update(e.scrollOffset.top);
   }
 }

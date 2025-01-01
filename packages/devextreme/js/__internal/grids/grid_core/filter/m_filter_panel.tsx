@@ -27,8 +27,6 @@ export class FilterPanelView extends modules.View {
 
   private _filterSyncController!: FilterSyncController;
 
-  private readonly _filterValueBuffer: any;
-
   public init(): void {
     this._dataController = this.getController('data');
     this._columnsController = this.getController('columns');
@@ -52,7 +50,7 @@ export class FilterPanelView extends modules.View {
       return;
     }
 
-    const hasFilterValue = !!this.option('filterValue') || !!this._filterValueBuffer;
+    const hasFilterValue = !!this.option('filterValue');
     const tabIndex = this.option('tabindex') || 0;
 
     const text = await this._getTextElement();
@@ -63,7 +61,7 @@ export class FilterPanelView extends modules.View {
         addWidgetPrefix={this.addWidgetPrefix.bind(this)}
         tabIndex={tabIndex}
         text={text}
-        showFilterBuilder={() => { this._showFilterBuilder(); }}
+        showFilterBuilder={() => { this.option('filterBuilderPopup.visible', true); }}
         filterEnabledHint={this.option('filterPanel.texts.filterEnabledHint')!}
         filterEnabled={this.option('filterPanel.filterEnabled')!}
         onFilterEnabledChange={(value: boolean) => this.option('filterPanel.filterEnabled', value)}
@@ -97,10 +95,6 @@ export class FilterPanelView extends modules.View {
     }
     const filterText = that.option('filterPanel.texts.createFilter');
     return filterText ?? '';
-  }
-
-  private _showFilterBuilder(): void {
-    this.option('filterBuilderPopup.visible', true);
   }
 
   public optionChanged(args): void {

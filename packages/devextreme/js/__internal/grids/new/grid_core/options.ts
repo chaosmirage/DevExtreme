@@ -3,6 +3,7 @@ import { isMaterialBased } from '@js/ui/themes';
 import type { WidgetOptions } from '@js/ui/widget/ui.widget';
 
 import * as columnsController from './columns_controller';
+import * as contentView from './content_view/index';
 import * as dataController from './data_controller';
 import { filterPanel } from './filtering';
 import * as pager from './pager';
@@ -20,6 +21,7 @@ export type Options =
   & pager.Options
   & columnsController.Options
   & filterPanel.Options
+  & contentView.Options
   & SearchProperties
   & {
     noDataText?: string;
@@ -31,6 +33,7 @@ export const defaultOptions = {
   ...toolbar.defaultOptions,
   ...pager.defaultOptions,
   ...filterPanel.defaultOptions,
+  ...contentView.defaultOptions,
   searchText: '',
 } satisfies Options;
 

@@ -12,7 +12,7 @@ export interface ContentViewProps extends ContentViewBaseProps {
 }
 
 export class ContentView extends Component<ContentViewProps> {
-  render(): InfernoNode {
+  public render(): InfernoNode {
     return (
       <ContentViewBase {...this.props}>
         <Content {...this.props.contentProps} />

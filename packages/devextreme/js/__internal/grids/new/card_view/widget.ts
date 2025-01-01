@@ -27,7 +27,6 @@ export class CardViewBase extends GridCoreNew {
 
     const optionsController = new OptionsController(this);
     this.diContext.registerInstance(OptionsController, optionsController);
-    // @ts-expect-error
     this.diContext.registerInstance(OptionsControllerBase, optionsController);
   }
 

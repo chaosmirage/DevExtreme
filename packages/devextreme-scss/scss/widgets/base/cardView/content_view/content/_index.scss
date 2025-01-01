@@ -3,6 +3,7 @@
 
 .dx-cardview-content {
   display: grid;
+  justify-items: center;
   column-gap: $cardview-content-view-column-gap;
   row-gap: $cardview-content-view-row-gap;
   grid-template-columns: repeat(var(--dx-cardview-cardsperrow), 1fr);

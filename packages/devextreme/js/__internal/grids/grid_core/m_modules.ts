@@ -16,7 +16,9 @@ import errors from '@js/ui/widget/ui.errors';
 import { DIContext } from '@ts/core/di/index';
 import { fromPromise } from '@ts/core/utils/m_deferred';
 
+import { DataController } from '../new/grid_core/data_controller';
 import { OptionsController } from '../new/grid_core/options_controller/options_controller';
+import { NewDataController } from './data_controller/new_data_controller';
 import type {
   Controllers, GridPropertyType, InternalGrid, InternalGridOptions, Module,
   OptionChanged,
@@ -520,6 +522,8 @@ export function processModules(
   componentInstance._controllers = createModuleItems(rootControllerTypes);
   componentInstance._views = createModuleItems(rootViewTypes);
   componentInstance.diContext = diContext;
+
+  diContext.registerInstance(DataController, diContext.get(NewDataController));
 }
 
 export const callModuleItemsMethod = function (that, methodName, args?) {

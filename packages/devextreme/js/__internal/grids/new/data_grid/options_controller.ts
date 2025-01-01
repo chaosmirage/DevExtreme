@@ -1,8 +1,7 @@
 import { OptionsController } from '@ts/grids/new/grid_core/options_controller/options_controller_base';
 
-import type { Options } from './types';
-import type CardView from './widget';
+import type { defaultOptions, Options } from './options';
 
-class CardViewOptionsController extends OptionsController<Options, ReturnType<CardView['_getDefaultOptions']>> {}
+class CardViewOptionsController extends OptionsController<Options, typeof defaultOptions> {}
 
 export { CardViewOptionsController as OptionsController };
