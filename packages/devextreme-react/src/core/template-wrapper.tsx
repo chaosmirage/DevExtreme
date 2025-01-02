@@ -102,6 +102,8 @@ const TemplateWrapperComponent: FC<TemplateWrapperProps> = ({
 
   useEffect(() => {
     // call onRendered after paint
+    console.log('onRendered data', data);
+
     onRendered();
   }, [onRendered]);
 
