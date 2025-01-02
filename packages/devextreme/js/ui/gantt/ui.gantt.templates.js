@@ -56,7 +56,11 @@ export class GanttTemplatesManager {
             // callback === onTaskTemplateContainerRendered from gantt repo
 
             item.taskData = this._gantt.getTaskDataByCoreData(item.taskData);
-            // call render
+
+            // call render from gantt
+
+            console.log('getPublicElement($(container))', getPublicElement($(container)));
+            console.log('$(container)', $(container));
 
             template.render({
                 model: item,
