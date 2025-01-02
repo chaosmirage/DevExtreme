@@ -1,8 +1,8 @@
 /* eslint-disable spellcheck/spell-checker */
 import type { DataSource } from '@js/common/data';
 import type { Subscribable, SubsGets, SubsGetsUpd } from '@ts/core/reactive';
-import { state } from '@ts/core/reactive';
-import { DataController as DataControllerClass } from '@ts/grids/new/grid_core/data_controller';
+import { state } from '@ts/core/reactive/index';
+import { DataController as DataControllerClass } from '@ts/grids/new/grid_core/data_controller/index';
 import type { DataObject, Key } from '@ts/grids/new/grid_core/data_controller/types';
 
 import type { DataController as OldDataController } from './m_data_controller';

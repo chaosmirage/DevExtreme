@@ -1,6 +1,6 @@
 import * as GridCore from '@ts/grids/new/grid_core/options';
 
-import * as ContentView from './content_view';
+import * as ContentView from './content_view/index';
 
 /**
  * @interface

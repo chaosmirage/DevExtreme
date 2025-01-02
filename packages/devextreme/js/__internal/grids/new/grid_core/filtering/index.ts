@@ -1,1 +1,1 @@
-export * as filterPanel from './filter_panel';
+export * as filterPanel from './filter_panel/index';

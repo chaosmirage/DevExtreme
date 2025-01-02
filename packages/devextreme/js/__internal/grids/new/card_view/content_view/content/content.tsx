@@ -30,6 +30,14 @@ export const CLASSES = {
   grid: 'dx-cardview-content-grid',
 };
 
+function getInfernoCardKey(card: DataRow): undefined | string | number {
+  if (typeof card.key === 'string' || typeof card.key === 'number') {
+    return card.key;
+  }
+
+  return undefined;
+}
+
 export class Content extends PureComponent<ContentProps> {
   private readonly containerRef = createRef<HTMLDivElement>();
 
@@ -39,7 +47,6 @@ export class Content extends PureComponent<ContentProps> {
 
   render(): JSX.Element {
     this.cardRefs = new Array(this.props.items.length).fill(undefined).map(() => createRef());
-
     return (
       <div
         tabIndex={0}
@@ -53,7 +60,7 @@ export class Content extends PureComponent<ContentProps> {
         {this.props.items.map((item, i) => (
           <Card
             {...this.props.cardProps}
-            key={item.key as string}
+            key={getInfernoCardKey(item)}
             elementRef={this.cardRefs[i]}
             row={item}
             fieldTemplate={this.props.fieldTemplate}

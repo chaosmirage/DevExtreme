@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import type dxScrollable from '@js/ui/scroll_view/ui.scrollable';
-import { DataController } from '@ts/grids/new/grid_core/data_controller';
+import { DataController } from '@ts/grids/new/grid_core/data_controller/index';
 import type { Constructor } from '@ts/grids/new/grid_core/types';
 
 import type { GridCoreNewBase } from '../widget';

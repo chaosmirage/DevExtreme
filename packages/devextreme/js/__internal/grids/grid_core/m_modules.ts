@@ -16,7 +16,7 @@ import errors from '@js/ui/widget/ui.errors';
 import { DIContext } from '@ts/core/di/index';
 import { fromPromise } from '@ts/core/utils/m_deferred';
 
-import { DataController } from '../new/grid_core/data_controller';
+import { DataController } from '../new/grid_core/data_controller/index';
 import { OptionsController } from '../new/grid_core/options_controller/options_controller';
 import { NewDataController } from './data_controller/new_data_controller';
 import type {
