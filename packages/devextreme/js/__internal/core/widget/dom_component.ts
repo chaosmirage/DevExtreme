@@ -168,6 +168,7 @@ class DOMComponent<
   }
 
   _renderComponent(): void {
+    // eslint-disable-next-line no-console
     console.log('_renderComponent');
 
     addShadowDomStyles(this.$element());

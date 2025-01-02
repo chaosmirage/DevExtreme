@@ -297,6 +297,9 @@ export class GanttView extends Widget {
         return tasks;
     }
     _sortAndFilter(args) {
+        /* eslint-disable no-console */
+        console.log('_sortAndFilter');
+
         this._sieveOptions = args;
         this._update(!args?.expandTasks);
         const selectedRowKey = this.option('selectedRowKey');

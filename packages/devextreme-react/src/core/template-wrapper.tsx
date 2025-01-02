@@ -4,7 +4,6 @@ import * as events from 'devextreme/events';
 import {
   useCallback,
   useLayoutEffect,
-  useEffect,
   useState,
   useRef,
   useMemo,
@@ -102,8 +101,8 @@ const TemplateWrapperComponent: FC<TemplateWrapperProps> = ({
     };
   }, [onTemplateRemoved, removalListenerRequired, container]);
 
-  useEffect(() => {
-    // call onRendered after paint
+  useLayoutEffect(() => {
+    // call onRendered before paint
     console.log('onRendered data', data);
 
     onRendered();
