@@ -65,6 +65,8 @@ const TemplateWrapperComponent: FC<TemplateWrapperProps> = ({
       events.off(removalListenerElement.current, DX_REMOVE_EVENT, onTemplateRemoved);
     }
 
+    console.log('onRemoved data', data);
+
     onRemoved();
   }, [onRemoved]);
 
