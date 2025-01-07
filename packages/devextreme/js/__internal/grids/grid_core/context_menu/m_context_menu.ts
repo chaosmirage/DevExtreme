@@ -110,7 +110,6 @@ export class ContextMenuView extends modules.View {
           }
         },
         onItemClick(params) {
-          // @ts-expect-error
           params.itemData?.onItemClick?.(params);
         },
 

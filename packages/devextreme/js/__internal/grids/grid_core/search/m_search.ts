@@ -202,11 +202,6 @@ const headerPanel = (
     }
     return null;
   }
-
-  public isVisible() {
-    const searchPanelOptions = this.option('searchPanel');
-    return super.isVisible() || !!searchPanelOptions?.visible;
-  }
 };
 
 const rowsView = (
