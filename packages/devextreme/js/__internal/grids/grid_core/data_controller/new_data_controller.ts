@@ -10,6 +10,8 @@ import type { DataController as OldDataController } from './m_data_controller';
 type DataController = { [P in keyof DataControllerClass]: DataControllerClass[P] };
 
 export class NewDataController implements DataController {
+  private oldDataController!: OldDataController;
+
   public dataSource!: SubsGets<DataSource<unknown, unknown>>;
 
   public pageCount!: SubsGets<number>;
@@ -18,57 +20,63 @@ export class NewDataController implements DataController {
 
   public pageSize!: SubsGetsUpd<number>;
 
-  public items!: Subscribable<DataObject[]>;
+  public items!: SubsGets<DataObject[]>;
 
-  public totalCount!: Subscribable<number>;
+  public totalCount!: SubsGets<number>;
 
   public isLoading!: SubsGetsUpd<boolean>;
 
   public filter!: SubsGetsUpd<unknown>;
 
   public init(oldDataController: OldDataController): void {
-    const dataSource = state(oldDataController.getDataSource());
-    oldDataController.dataSourceChanged.add(() => {
-      dataSource.update(oldDataController.getDataSource());
+    this.oldDataController = oldDataController;
+
+    const dataSource = state(this.oldDataController.getDataSource());
+    this.oldDataController.dataSourceChanged.add(() => {
+      dataSource.update(this.oldDataController.getDataSource());
     });
     this.dataSource = dataSource;
 
-    const pageCount = state(oldDataController.pageCount());
+    const pageCount = state(this.oldDataController.pageCount());
     this.pageCount = pageCount;
 
-    const pageSize = state(oldDataController.pageSize());
+    const pageSize = state(this.oldDataController.pageSize());
     this.pageSize = pageSize;
 
-    const pageIndex = state(oldDataController.pageIndex());
+    const pageIndex = state(this.oldDataController.pageIndex());
     this.pageIndex = pageIndex;
 
-    const totalCount = state(oldDataController.totalCount());
+    const totalCount = state(this.oldDataController.totalCount());
     this.totalCount = totalCount;
 
-    const isLoading = state(oldDataController.isLoading());
+    const isLoading = state(this.oldDataController.isLoading());
     this.isLoading = isLoading;
 
-    const items = state(oldDataController.items());
+    const items = state(this.oldDataController.items());
     // @ts-expect-error
     this.items = items;
 
-    oldDataController.loadingChanged.add(() => {
-      isLoading.update(oldDataController.isLoading());
+    this.oldDataController.loadingChanged.add(() => {
+      isLoading.update(this.oldDataController.isLoading());
     });
 
-    oldDataController.changed.add(() => {
-      pageCount.update(oldDataController.pageCount());
-      pageSize.update(oldDataController.pageSize());
-      pageCount.update(oldDataController.pageCount());
-      pageIndex.update(oldDataController.pageIndex());
-      items.update(oldDataController.items());
-      totalCount.update(oldDataController.totalCount());
+    this.oldDataController.changed.add(() => {
+      pageCount.update(this.oldDataController.pageCount());
+      pageSize.update(this.oldDataController.pageSize());
+      pageCount.update(this.oldDataController.pageCount());
+      pageIndex.update(this.oldDataController.pageIndex());
+      items.update(this.oldDataController.items());
+      totalCount.update(this.oldDataController.totalCount());
     });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getDataKey(data: DataObject): Key {
     throw new Error('should be overwritten below');
+  }
+
+  public async waitLoaded(): Promise<void> {
+    await this.oldDataController.waitReady();
   }
 }
 
