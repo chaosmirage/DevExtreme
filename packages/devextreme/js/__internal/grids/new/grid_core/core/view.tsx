@@ -6,25 +6,35 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable spellcheck/spell-checker */
-import type { Subscribable, Subscription } from '@ts/core/reactive/index';
+import type { Subscription, SubsGets } from '@ts/core/reactive/index';
 import { toSubscribable } from '@ts/core/reactive/index';
 import { Component, type ComponentType, render } from 'inferno';
+import { hydrate } from 'inferno-hydrate';
+// import { renderToString } from 'inferno-server';
 
 export abstract class View<T extends {}> {
   private inferno: undefined | ComponentType;
 
   private props?: T;
 
+  private firstRender = true;
+
   protected abstract component: ComponentType<T>;
 
-  protected abstract getProps(): Subscribable<T>;
+  protected abstract getProps(): SubsGets<T>;
 
   public render(root: Element): Subscription {
     const ViewComponent = this.component;
     return toSubscribable(this.getProps()).subscribe((props: T) => {
       this.props = props;
-      // @ts-expect-error
-      render(<ViewComponent {...props}/>, root);
+      if (this.firstRender) {
+        this.firstRender = false;
+        // @ts-expect-error
+        hydrate(<ViewComponent {...props}/>, root);
+      } else {
+        // @ts-expect-error
+        render(<ViewComponent {...props}/>, root);
+      }
     });
   }
 
@@ -41,11 +51,26 @@ export abstract class View<T extends {}> {
     }
 
     return class InfernoView extends Component<{}, State> {
-      private readonly subscription: Subscription;
+      private subscription?: Subscription;
+
+      private readonly viewProps: SubsGets<T>;
 
       constructor() {
         super();
-        this.subscription = toSubscribable(view.getProps()).subscribe((props) => {
+        this.viewProps = view.getProps();
+        this.state = {
+          props: view.getProps().unreactive_get(),
+        };
+      }
+
+      public render(): JSX.Element | undefined {
+        const ViewComponent = view.component;
+        // @ts-expect-error
+        return <ViewComponent {...this.state!.props}/>;
+      }
+
+      public componentDidMount(): void {
+        this.subscription = toSubscribable(this.viewProps).subscribe((props) => {
           this.state ??= {
             props,
           };
@@ -56,10 +81,8 @@ export abstract class View<T extends {}> {
         });
       }
 
-      public render(): JSX.Element | undefined {
-        const ViewComponent = view.component;
-        // @ts-expect-error
-        return <ViewComponent {...this.state!.props}/>;
+      public componentWillUnmount(): void {
+        this.subscription!.unsubscribe();
       }
     };
   }

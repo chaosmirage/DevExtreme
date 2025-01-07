@@ -1,5 +1,5 @@
 /* eslint-disable spellcheck/spell-checker */
-import type { Subscribable } from '@ts/core/reactive/index';
+import type { SubsGets } from '@ts/core/reactive/index';
 import { combined, computed } from '@ts/core/reactive/index';
 
 import { View } from '../core/view';
@@ -39,7 +39,7 @@ export class PagerView extends View<PagerProps> {
     super();
   }
 
-  protected override getProps(): Subscribable<PagerProps> {
+  protected override getProps(): SubsGets<PagerProps> {
     return combined({
       allowedPageSizes: this.allowedPageSizes,
       visible: this.visible,
