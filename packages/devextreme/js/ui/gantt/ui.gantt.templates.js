@@ -59,8 +59,10 @@ export class GanttTemplatesManager {
 
             // call render from gantt
 
-            console.log('getPublicElement($(container))', getPublicElement($(container)));
-            console.log('$(container)', $(container));
+            /* eslint-disable no-console */
+            // console.log('getPublicElement($(container))', getPublicElement($(container)));
+            /* eslint-disable no-console */
+            // console.log('$(container)', $(container));
 
             template.render({
                 model: item,

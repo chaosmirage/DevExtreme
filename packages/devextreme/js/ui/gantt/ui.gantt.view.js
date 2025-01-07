@@ -298,7 +298,7 @@ export class GanttView extends Widget {
     }
     _sortAndFilter(args) {
         /* eslint-disable no-console */
-        console.log('_sortAndFilter');
+        // console.log('_sortAndFilter');
 
         this._sieveOptions = args;
         this._update(!args?.expandTasks);
