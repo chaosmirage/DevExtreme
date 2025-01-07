@@ -27,6 +27,8 @@ export abstract class View<T extends {}> {
     const ViewComponent = this.component;
     return toSubscribable(this.getProps()).subscribe((props: T) => {
       this.props = props;
+      // // @ts-expect-error
+      // root.innerHTML = renderToString(<ViewComponent {...props}/>);
       if (this.firstRender) {
         this.firstRender = false;
         // @ts-expect-error

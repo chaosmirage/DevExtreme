@@ -8,7 +8,7 @@ export const CLASSES = {
 };
 
 export interface HeaderItemProps {
-  column: Column;
+  column: Pick<Column, 'caption' | 'visible'>;
   buttons?: ComponentType;
   onRemove?: () => void;
 }

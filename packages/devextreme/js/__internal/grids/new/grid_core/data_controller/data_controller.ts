@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 /* eslint-disable no-param-reassign */
 /* eslint-disable spellcheck/spell-checker */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -5,8 +6,8 @@ import type { SubsGets } from '@ts/core/reactive/index';
 import {
   computed, effect, state,
 } from '@ts/core/reactive/index';
+import { createPromise } from '@ts/core/utils/promise';
 
-import gridCoreUtils from '../../../grid_core/m_utils';
 // import { EditingController } from '../editing/controller';
 // import type { Change } from '../editing/types';
 import { OptionsController } from '../options_controller/options_controller';
@@ -14,6 +15,8 @@ import type { DataObject, Key } from './types';
 import { normalizeDataSource, updateItemsImmutable } from './utils';
 
 export class DataController {
+  private readonly loadedPromise = createPromise<void>();
+
   private readonly dataSourceConfiguration = this.options.oneWay('dataSource');
 
   private readonly keyExpr = this.options.oneWay('keyExpr');
@@ -23,25 +26,19 @@ export class DataController {
     [this.dataSourceConfiguration, this.keyExpr],
   );
 
-  public readonly cacheEnabled = this.options.oneWay('cacheEnabled');
+  private readonly cacheEnabled = this.options.oneWay('cacheEnabled');
 
-  public readonly pagingEnabled = this.options.twoWay('paging.enabled');
+  private readonly pagingEnabled = this.options.twoWay('paging.enabled');
 
   public readonly pageIndex = this.options.twoWay('paging.pageIndex');
 
   public readonly pageSize = this.options.twoWay('paging.pageSize');
 
-  public readonly remoteFiltering = this.options.oneWay('remoteOperations.filtering');
+  private readonly remoteOperations = this.options.oneWay('remoteOperations');
 
-  public readonly remotePaging = this.options.oneWay('remoteOperations.paging');
+  private readonly dateSerializationFormat = this.options.oneWay('dateSerializationFormat');
 
-  public readonly remoteSorting = this.options.oneWay('remoteOperations.sorting');
-
-  public readonly remoteSummary = this.options.oneWay('remoteOperations.summary');
-
-  public readonly dateSerializationFormat = this.options.oneWay('dateSerializationFormat');
-
-  public readonly onDataErrorOccurred = this.options.oneWay('onDataErrorOccurred');
+  private readonly onDataErrorOccurred = this.options.oneWay('onDataErrorOccurred');
 
   private readonly _items = state<DataObject[]>([]);
 
@@ -90,6 +87,7 @@ export class DataController {
           this.pageIndex.update(dataSource.pageIndex());
           this.pageSize.update(dataSource.pageSize());
           this._totalCount.update(dataSource.totalCount());
+          this.loadedPromise.resolve();
         };
         const loadingChangedCallback = (): void => {
           this.isLoading.update(dataSource.isLoading());
@@ -142,7 +140,7 @@ export class DataController {
     return this.dataSource.unreactive_get().store().keyOf(data);
   }
 
-  public getCardIndexByKey(key: object): number {
-    return gridCoreUtils.getIndexByKey(key, this.items);
+  public waitLoaded(): Promise<void> {
+    return this.loadedPromise.promise;
   }
 }

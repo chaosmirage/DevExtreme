@@ -31,7 +31,7 @@ export class GridCoreNewBase<
 
   protected diContext!: DIContext;
 
-  private dataController!: DataControllerModule.DataController;
+  protected dataController!: DataControllerModule.DataController;
 
   protected columnsController!: ColumnsControllerModule.ColumnsController;
 
