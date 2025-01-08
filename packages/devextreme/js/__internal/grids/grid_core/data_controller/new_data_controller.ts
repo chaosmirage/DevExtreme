@@ -10,6 +10,8 @@ import type { DataController as OldDataController } from './m_data_controller';
 type DataController = { [P in keyof DataControllerClass]: DataControllerClass[P] };
 
 export class NewDataController implements DataController {
+  static dependencies = [] as const;
+
   private oldDataController!: OldDataController;
 
   public dataSource!: SubsGets<DataSource<unknown, unknown>>;

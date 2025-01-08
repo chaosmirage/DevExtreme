@@ -28,6 +28,7 @@ import type {
 import gridCoreUtils from '../m_utils';
 import type { VirtualScrollController } from '../virtual_scrolling/m_virtual_scrolling_core';
 import { DataHelperMixin } from './m_data_helper_mixin';
+import { NewDataController } from './new_data_controller';
 
 const changePaging = function (that, optionName, value) {
   const dataSource = that._dataSource;
@@ -1778,4 +1779,5 @@ export const dataControllerModule: Module = {
   controllers: {
     data: DataController,
   },
+  newModules: [NewDataController],
 };

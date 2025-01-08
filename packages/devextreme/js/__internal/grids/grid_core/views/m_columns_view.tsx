@@ -32,11 +32,13 @@ import type { ColumnChooserController, ColumnChooserView } from '@ts/grids/grid_
 import { ColumnStateMixin } from '@ts/grids/grid_core/column_state_mixin/m_column_state_mixin';
 import type { EditorFactory } from '@ts/grids/grid_core/editor_factory/m_editor_factory';
 import type { SelectionController } from '@ts/grids/grid_core/selection/m_selection';
+import { renderToDOMNode } from '@ts/grids/new/grid_core/core/utils';
 
 import type { ColumnsController } from '../columns_controller/m_columns_controller';
 import type { DataController } from '../data_controller/m_data_controller';
 import modules, { View } from '../m_modules';
 import gridCoreUtils from '../m_utils';
+import { Cell } from './cell';
 
 const SCROLL_CONTAINER_CLASS = 'scroll-container';
 const SCROLLABLE_SIMULATED_CLASS = 'scrollable-simulated';
@@ -294,8 +296,11 @@ export class ColumnsView extends ColumnStateMixin(View) {
     const alignment = column.alignment || getDefaultAlignment(this.option('rtlEnabled'));
     const needToSetCellWidths = this._needToSetCellWidths();
 
-    const cell = domAdapter.createElement('td');
-    cell.style.textAlign = alignment;
+    const cell = renderToDOMNode(
+      <Cell
+        alignment={alignment}
+      />,
+    );
 
     const $cell = $(cell);
 

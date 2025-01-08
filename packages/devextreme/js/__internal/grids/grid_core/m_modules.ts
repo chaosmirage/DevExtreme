@@ -523,7 +523,10 @@ export function processModules(
   componentInstance._views = createModuleItems(rootViewTypes);
   componentInstance.diContext = diContext;
 
-  diContext.registerInstance(DataController, diContext.get(NewDataController));
+  const newDataController = diContext.tryGet(NewDataController);
+  if (newDataController) {
+    diContext.registerInstance(DataController, newDataController);
+  }
 }
 
 export const callModuleItemsMethod = function (that, methodName, args?) {

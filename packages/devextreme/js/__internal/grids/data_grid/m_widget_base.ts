@@ -18,12 +18,9 @@ import type { Properties } from '@js/ui/data_grid';
 import { isMaterialBased } from '@js/ui/themes';
 import gridCoreUtils from '@ts/grids/grid_core/m_utils';
 import GridCoreWidget from '@ts/grids/grid_core/m_widget_base';
-import { newModule } from '@ts/grids/grid_core/new';
 
 import { callModuleItemsMethod } from '../grid_core/m_modules';
 import gridCore from './m_core';
-
-gridCore.registerModule('new', newModule);
 
 const DATAGRID_DEPRECATED_TEMPLATE_WARNING = 'Specifying grid templates with the jQuery selector name is now deprecated. Use the DOM Node or the jQuery object that references this selector instead.';
 

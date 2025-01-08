@@ -283,4 +283,5 @@ export const headerPanelModule = {
       resizing,
     },
   },
+  newModules: [NewToolbar.View, NewToolbar.Controller],
 };

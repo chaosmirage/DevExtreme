@@ -24,7 +24,7 @@ class DataGridDataController extends DataController {
 export { DataGridDataController as DataController };
 
 gridCore.registerModule('data', {
-  defaultOptions: dataControllerModule.defaultOptions,
+  ...dataControllerModule,
   controllers: {
     data: DataGridDataController,
   },
