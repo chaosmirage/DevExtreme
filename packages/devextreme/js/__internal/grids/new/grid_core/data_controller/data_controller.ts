@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable spellcheck/spell-checker */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import type { DataSource } from '@js/common/data';
 import type { SubsGets } from '@ts/core/reactive/index';
 import {
   computed, effect, state,
@@ -26,6 +27,7 @@ export class DataController {
     [this.dataSourceConfiguration, this.keyExpr],
   );
 
+  // TODO
   private readonly cacheEnabled = this.options.oneWay('cacheEnabled');
 
   private readonly pagingEnabled = this.options.twoWay('paging.enabled');
@@ -34,11 +36,10 @@ export class DataController {
 
   public readonly pageSize = this.options.twoWay('paging.pageSize');
 
+  // TODO
   private readonly remoteOperations = this.options.oneWay('remoteOperations');
 
-  private readonly dateSerializationFormat = this.options.oneWay('dateSerializationFormat');
-
-  private readonly onDataErrorOccurred = this.options.oneWay('onDataErrorOccurred');
+  private readonly onDataErrorOccurred = this.options.action('onDataErrorOccurred');
 
   private readonly _items = state<DataObject[]>([]);
 
@@ -76,38 +77,35 @@ export class DataController {
     effect(
       (dataSource) => {
         const changedCallback = (e?): void => {
-          let items = dataSource.items() as DataObject[];
-
-          if (e?.changes) {
-            items = this._items.unreactive_get();
-            items = updateItemsImmutable(items, e.changes, dataSource.store());
-          }
-
-          this._items.update(items);
-          this.pageIndex.update(dataSource.pageIndex());
-          this.pageSize.update(dataSource.pageSize());
-          this._totalCount.update(dataSource.totalCount());
-          this.loadedPromise.resolve();
+          this.onChanged(dataSource, e);
         };
         const loadingChangedCallback = (): void => {
           this.isLoading.update(dataSource.isLoading());
         };
+        const loadErrorCallback = (error: string): void => {
+          const callback = this.onDataErrorOccurred.unreactive_get();
+          callback({ error });
+          changedCallback();
+        };
+
         if (dataSource.isLoaded()) {
           changedCallback();
         }
         dataSource.on('changed', changedCallback);
         dataSource.on('loadingChanged', loadingChangedCallback);
+        dataSource.on('loadError', loadErrorCallback);
 
         return (): void => {
           dataSource.off('changed', changedCallback);
           dataSource.off('loadingChanged', loadingChangedCallback);
+          dataSource.off('loadError', loadErrorCallback);
         };
       },
       [this.dataSource],
     );
 
     effect(
-      (dataSource, pageIndex, pageSize, filter) => {
+      (dataSource, pageIndex, pageSize, filter, pagingEnabled) => {
         let someParamChanged = false;
         if (dataSource.pageIndex() !== pageIndex) {
           dataSource.pageIndex(pageIndex);
@@ -126,14 +124,33 @@ export class DataController {
           dataSource.filter(filter);
           someParamChanged ||= true;
         }
+        if (dataSource.paginate() !== pagingEnabled) {
+          dataSource.paginate(pagingEnabled);
+          someParamChanged ||= true;
+        }
 
         if (someParamChanged || !dataSource.isLoaded()) {
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           dataSource.load();
         }
       },
-      [this.dataSource, this.pageIndex, this.pageSize, this.filter],
+      [this.dataSource, this.pageIndex, this.pageSize, this.filter, this.pagingEnabled],
     );
+  }
+
+  private onChanged(dataSource: DataSource, e): void {
+    let items = dataSource.items() as DataObject[];
+
+    if (e?.changes) {
+      items = this._items.unreactive_get();
+      items = updateItemsImmutable(items, e.changes, dataSource.store());
+    }
+
+    this._items.update(items);
+    this.pageIndex.update(dataSource.pageIndex());
+    this.pageSize.update(dataSource.pageSize());
+    this._totalCount.update(dataSource.totalCount());
+    this.loadedPromise.resolve();
   }
 
   public getDataKey(data: DataObject): Key {

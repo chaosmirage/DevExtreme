@@ -1,3 +1,4 @@
+/* eslint-disable spellcheck/spell-checker */
 import {
   describe, expect, it, jest,
 } from '@jest/globals';
@@ -26,33 +27,15 @@ const setup = (options: Options) => {
 
 describe('PublicMethods', () => {
   describe('getDataSource', () => {
-    describe('when dataSource option is dataSource instance', () => {
-      it('should return value from option', () => {
-        const dataSource = new DataSource({
-          store: [{ a: 1 }, { b: 2 }],
-        });
+    it('should return current dataSource', () => {
+      const data = [{ a: 1 }, { b: 2 }];
+      const { gridCore, dataController } = setup({ dataSource: data });
 
-        const { gridCore } = setup({ dataSource });
-
-        expect(gridCore.getDataSource()).toBe(dataSource);
-      });
-    });
-    describe('when dataSource option is array', () => {
-      it('should return created DataSource', () => {
-        const data = [{ a: 1 }, { b: 2 }];
-        const { gridCore } = setup({ dataSource: data });
-
-        expect(gridCore.getDataSource()).toBeInstanceOf(DataSource);
-        expect(gridCore.getDataSource().items()).toEqual(data);
-      });
-    });
-    describe('when dataSource option is empty', () => {
-      it('should return empty DataSource', () => {
-        const { gridCore } = setup({});
-
-        expect(gridCore.getDataSource()).toBeInstanceOf(DataSource);
-        expect(gridCore.getDataSource().items()).toHaveLength(0);
-      });
+      expect(
+        gridCore.getDataSource(),
+      ).toBe(
+        dataController.dataSource.unreactive_get(),
+      );
     });
   });
   describe('byKey', () => {
@@ -113,6 +96,77 @@ describe('PublicMethods', () => {
         expect(store.byKey).toBeCalledTimes(1);
         expect(item).toEqual({ id: 2, value: 'value 2' });
       });
+    });
+  });
+  describe('getFilter', () => {
+    // TODO: add test once some filter module (header filter, filter row etc) is implemented
+    it.skip('should return filter applied to dataSource', () => {
+    });
+  });
+
+  describe('keyOf', () => {
+    it('should return key of given data object', () => {
+      const { gridCore } = setup({ keyExpr: 'id', dataSource: [] });
+      const dataObject = { value: 'my value', id: 'my id' };
+
+      expect(gridCore.keyOf(dataObject)).toBe('my id');
+    });
+  });
+
+  describe('pageCount', () => {
+    it('should return current page count', () => {
+      const { gridCore, dataController } = setup({
+        dataSource: [{ a: '1' }, { a: '2' }, { a: '3' }, { a: '4' }],
+        paging: {
+          pageSize: 2,
+        },
+      });
+      expect(gridCore.pageCount()).toBe(2);
+
+      dataController.pageSize.update(4);
+      expect(gridCore.pageCount()).toBe(1);
+    });
+  });
+
+  describe('pageSize', () => {
+    it('should return current page size', () => {
+      const { gridCore, dataController } = setup({
+        dataSource: [{ a: '1' }, { a: '2' }, { a: '3' }, { a: '4' }],
+        paging: {
+          pageSize: 2,
+        },
+      });
+      expect(gridCore.pageSize()).toBe(2);
+
+      dataController.pageSize.update(4);
+      expect(gridCore.pageSize()).toBe(4);
+    });
+  });
+
+  describe('pageIndex', () => {
+    it('should return current page index', () => {
+      const { gridCore, dataController } = setup({
+        dataSource: [{ a: '1' }, { a: '2' }, { a: '3' }, { a: '4' }],
+        paging: {
+          pageSize: 2,
+        },
+      });
+      expect(gridCore.pageIndex()).toBe(0);
+
+      dataController.pageIndex.update(3);
+      expect(gridCore.pageIndex()).toBe(3);
+    });
+  });
+
+  describe('totalCount', () => {
+    it('should return current total count', () => {
+      const { gridCore } = setup({
+        dataSource: [{ a: '1' }, { a: '2' }, { a: '3' }, { a: '4' }],
+        paging: {
+          pageSize: 2,
+        },
+      });
+      expect(gridCore.totalCount()).toBe(4);
     });
   });
 });

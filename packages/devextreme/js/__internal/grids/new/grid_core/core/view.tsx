@@ -6,10 +6,11 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable spellcheck/spell-checker */
+import { hydrate } from '@devextreme/runtime/inferno';
 import type { Subscription, SubsGets } from '@ts/core/reactive/index';
 import { toSubscribable } from '@ts/core/reactive/index';
 import { Component, type ComponentType, render } from 'inferno';
-import { hydrate } from 'inferno-hydrate';
+
 // import { renderToString } from 'inferno-server';
 
 export abstract class View<T extends {}> {

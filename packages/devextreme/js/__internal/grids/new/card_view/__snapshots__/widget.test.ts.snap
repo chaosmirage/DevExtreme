@@ -212,7 +212,7 @@ exports[`common initial render should be successfull 1`] = `
     
   </div>
   <div
-    class="dx-cardview-contentview"
+    class="dx-gridcore-contentview"
   >
     <div
       class="dx-overlay dx-widget dx-state-invisible dx-visibility-change-handler dx-loadpanel"

@@ -1,5 +1,7 @@
 import type { DataSourceLike } from '@js/data/data_source';
 
+import type { Action } from '../types';
+
 interface PagingOptions {
   enabled?: boolean;
   pageSize?: number;
@@ -16,9 +18,8 @@ interface RemoteOperationsOptions {
 export interface Options {
   cacheEnabled?: boolean;
   dataSource?: DataSourceLike<unknown>;
-  dateSerializationFormat?: string;
   keyExpr?: string | string[];
-  onDataErrorOccurred?: unknown;
+  onDataErrorOccurred?: Action<{ error: string }>;
   paging?: PagingOptions;
   remoteOperations?: RemoteOperationsOptions | boolean;
 }
@@ -35,4 +36,5 @@ export const defaultOptions = {
     sorting: false,
     summary: false,
   },
+  cacheEnabled: true,
 } satisfies Options;

@@ -27,6 +27,8 @@ export class ColumnsController {
 
   public readonly allowColumnReordering: Subscribable<boolean>;
 
+  private readonly dateSerializationFormat: Subscribable<string | undefined>;
+
   public static dependencies = [OptionsController, DataController] as const;
 
   constructor(
@@ -78,6 +80,7 @@ export class ColumnsController {
     );
 
     this.allowColumnReordering = this.options.oneWay('allowColumnReordering');
+    this.dateSerializationFormat = this.options.oneWay('dateSerializationFormat');
   }
 
   public createDataRow(data: DataObject, columns: Column[]): DataRow {
