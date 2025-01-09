@@ -15,6 +15,7 @@ import { CardHeader } from './header';
 export const CLASSES = {
   card: 'dx-cardview-card',
   cardHover: 'dx-cardview-card-hoverable',
+  content: 'dx-cardview-card-content',
 };
 
 export interface CardClickEvent {
@@ -125,15 +126,17 @@ export class Card extends PureComponent<CardProps> {
             alt={alt}
           />
         )}
-        {this.props.row.cells.map((cell, index) => (
-          <FieldTemplate
-            elementRef={this.fieldRefs[index]}
-            // eslint-disable-next-line max-len, @typescript-eslint/explicit-function-return-type
-            alignment={cell.column.alignment}
-            title={cell.column.caption || cell.column.name}
-            value={cell.text}
-          />
-        ))}
+        <div className={CLASSES.content}>
+          {this.props.row.cells.map((cell, index) => (
+            <FieldTemplate
+              elementRef={this.fieldRefs[index]}
+              // eslint-disable-next-line max-len, @typescript-eslint/explicit-function-return-type
+              alignment={cell.column.alignment}
+              title={cell.column.caption || cell.column.name}
+              value={cell.text}
+            />
+          ))}
+        </div>
       </div>
     );
   }

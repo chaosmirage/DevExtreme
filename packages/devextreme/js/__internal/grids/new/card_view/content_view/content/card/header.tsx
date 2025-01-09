@@ -4,7 +4,7 @@ import { Toolbar } from '@ts/grids/new/grid_core/inferno_wrappers/toolbar';
 import { Component } from 'inferno';
 
 export const CLASSES = {
-  cardHeader: 'dx-cardheader',
+  cardHeader: 'dx-cardview-card-header',
 };
 
 export interface CardHeaderItem {

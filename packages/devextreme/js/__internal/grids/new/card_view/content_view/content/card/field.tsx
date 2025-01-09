@@ -59,8 +59,6 @@ export class Field extends PureComponent<FieldProps> {
     const valueStyle = {
       textAlign: alignment,
       whiteSpace: wordWrapEnabled ? 'normal' : 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
     };
 
     return (

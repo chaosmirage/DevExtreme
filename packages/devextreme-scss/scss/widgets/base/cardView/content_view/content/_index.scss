@@ -1,10 +1,10 @@
-@use '../../variables' as *;
+@use './variables' as *;
 @use './card';
 
 .dx-cardview-content {
   display: grid;
   justify-items: center;
-  column-gap: $cardview-content-view-column-gap;
-  row-gap: $cardview-content-view-row-gap;
+  column-gap: $cardview-content-column-gap;
+  row-gap: $cardview-content-row-gap;
   grid-template-columns: repeat(var(--dx-cardview-cardsperrow), 1fr);
 }

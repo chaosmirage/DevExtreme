@@ -222,7 +222,7 @@
                     // width: 750,
                     height: 700,
                     keyExpr: 'ID',
-                    cardsPerRow: 'auto',
+                    cardsPerRow: 3,
                     paging: {
                         pageSize: 6,
                     },
@@ -233,7 +233,7 @@
                         // allowedPageSizes: [2,4,6],
                     },
                     cardMinWidth: 250,
-                    cardMaxWidth: 350,
+                    cardMaxWidth: 1000,
                     allowColumnReordering: true,
                     columns: [
                         {
@@ -288,7 +288,7 @@
                     //     'SaleAmount',
                     // ],
                     cardCover: {
-                        imageExpr: (data) => `https://js.devexpress.com/jQuery/Demos/WidgetsGallery/JSDemos/${data.Picture}`,
+                        // imageExpr: (data) => `https://js.devexpress.com/jQuery/Demos/WidgetsGallery/JSDemos/${data.Picture}`,
                         altExpr: 'FirstName',
                     },
                     filterPanel: { visible: true },

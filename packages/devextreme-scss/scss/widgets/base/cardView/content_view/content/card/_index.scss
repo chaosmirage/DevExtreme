@@ -3,11 +3,37 @@
 .dx-cardview-card {
   min-width: $cardview-card-min-width;
   border: $cardview-card-border-size solid $cardview-card-border-color;
-  padding: 15px 30px;
+  border-radius: $cardview-card-border-radius;
+  width: 100%;
 }
 
-.dx-cardview-field span {
-  display: inline-block;
-  width: 50%;
+.dx-cardview-card-header {
+  .dx-toolbar {
+    border-radius: $cardview-card-border-radius;
+  }
+}
+
+.dx-cardview-card-content {
+  padding: ($cardview-card-content-padding-vertical - $cardview-card-content-field-gap) $cardview-card-content-padding-horizontal;
+  display: table;
+  border-spacing: $cardview-card-content-field-gap;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.dx-cardview-field {
+  display: table-row
+}
+
+.dx-cardview-field-name,
+.dx-cardview-field-value {
+  display: table-cell;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: $cardview-card-content-cell-padding-vertical $cardview-card-content-cell-padding-horizontal;
+}
+
+.dx-cardview-field-name {
+  font-weight: bold;
 }

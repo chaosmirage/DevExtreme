@@ -4,7 +4,7 @@
 import { describe, expect, it } from '@jest/globals';
 import { render } from 'inferno';
 
-import { CardHeader } from './header';
+import { CardHeader, CLASSES } from './header';
 
 describe('CardHeader', () => {
   it('should render with default properties', () => {
@@ -12,7 +12,7 @@ describe('CardHeader', () => {
     render(<CardHeader visible items={[{ location: 'before', text: 'Test Header' }]} />, container);
 
     // Verify the rendered element
-    const header = container.querySelector('.dx-cardheader');
+    const header = container.querySelector(CLASSES.cardHeader);
     expect(header).not.toBeNull();
 
     // Verify the item text
@@ -26,7 +26,7 @@ describe('CardHeader', () => {
     render(<CardHeader visible={false} />, container);
 
     // Verify the header is not rendered
-    const header = container.querySelector('.dx-cardheader');
+    const header = container.querySelector(CLASSES.cardHeader);
     expect(header).toBeNull();
   });
 
