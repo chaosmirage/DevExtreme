@@ -2,7 +2,6 @@
 import {
   describe, expect, it, jest,
 } from '@jest/globals';
-import { DataSource } from '@ts/data/data_source/m_data_source';
 import ArrayStore from '@ts/data/m_array_store';
 
 import type { Options } from '../options';
