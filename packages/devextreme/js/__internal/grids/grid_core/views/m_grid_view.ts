@@ -16,6 +16,7 @@ import { getWindow, hasWindow } from '@js/core/utils/window';
 import * as accessibility from '@js/ui/shared/accessibility';
 import type { EditorFactory } from '@ts/grids/grid_core/editor_factory/m_editor_factory';
 import { A11yStatusContainerComponent } from '@ts/grids/grid_core/views/a11y_status_container_component';
+import { PagerView } from '@ts/grids/new/grid_core/pager/view';
 import * as Toolbar from '@ts/grids/new/grid_core/toolbar/index';
 
 import type { FooterView } from '../../data_grid/summary/m_summary';
@@ -35,7 +36,7 @@ const GROUP_ROW_SELECTOR = 'tr.dx-group-row';
 
 const HIDDEN_COLUMNS_WIDTH = 'adaptiveHidden';
 
-const VIEW_NAMES = ['columnsSeparatorView', 'blockSeparatorView', 'trackerView', Toolbar.View, 'headerPanel', 'columnHeadersView', 'rowsView', 'footerView', 'columnChooserView', 'filterPanelView', 'pagerView', 'draggingHeaderView', 'contextMenuView', 'errorView', 'headerFilterView', 'filterBuilderView'];
+const VIEW_NAMES = ['columnsSeparatorView', 'blockSeparatorView', 'trackerView', Toolbar.View, 'headerPanel', 'columnHeadersView', 'rowsView', 'footerView', 'columnChooserView', 'filterPanelView', PagerView, 'draggingHeaderView', 'contextMenuView', 'errorView', 'headerFilterView', 'filterBuilderView'];
 
 const E2E_ATTRIBUTES = {
   a11yStatusContainer: 'e2e-a11y-general-status-container',
@@ -917,7 +918,7 @@ export class GridView extends modules.View {
           view.render($groupElement);
         }
       } else {
-        const view = this.component.diContext.get(viewName);
+        const view = this.component.diContext.get<Toolbar.View | PagerView>(viewName);
         const root = $('<div>').appendTo($groupElement);
         view.render(root.get(0));
       }

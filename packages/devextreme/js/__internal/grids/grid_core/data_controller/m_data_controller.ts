@@ -237,6 +237,8 @@ export class DataController extends DataHelperMixin(modules.Controller) {
 
     this._refreshDataSource();
     this.postCtor();
+    // eslint-disable-next-line spellcheck/spell-checker
+    this.component.diContext.get(NewDataController).init(this);
   }
 
   /**

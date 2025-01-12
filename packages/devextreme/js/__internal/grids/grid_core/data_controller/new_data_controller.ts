@@ -1,6 +1,6 @@
 /* eslint-disable spellcheck/spell-checker */
 import type { DataSource } from '@js/common/data';
-import type { Subscribable, SubsGets, SubsGetsUpd } from '@ts/core/reactive';
+import type { SubsGets, SubsGetsUpd } from '@ts/core/reactive';
 import { state } from '@ts/core/reactive/index';
 import { DataController as DataControllerClass } from '@ts/grids/new/grid_core/data_controller/index';
 import type { DataObject, Key } from '@ts/grids/new/grid_core/data_controller/types';
@@ -10,7 +10,7 @@ import type { DataController as OldDataController } from './m_data_controller';
 type DataController = { [P in keyof DataControllerClass]: DataControllerClass[P] };
 
 export class NewDataController implements DataController {
-  static dependencies = [] as const;
+  public static dependencies = [] as const;
 
   private oldDataController!: OldDataController;
 
@@ -44,9 +44,19 @@ export class NewDataController implements DataController {
 
     const pageSize = state(this.oldDataController.pageSize());
     this.pageSize = pageSize;
+    this.pageSize.subscribe((value) => {
+      if (this.oldDataController.pageSize() !== value) {
+        this.oldDataController.pageSize(value);
+      }
+    });
 
     const pageIndex = state(this.oldDataController.pageIndex());
     this.pageIndex = pageIndex;
+    this.pageIndex.subscribe((value) => {
+      if (this.oldDataController.pageIndex() !== value) {
+        this.oldDataController.pageIndex(value);
+      }
+    });
 
     const totalCount = state(this.oldDataController.totalCount());
     this.totalCount = totalCount;

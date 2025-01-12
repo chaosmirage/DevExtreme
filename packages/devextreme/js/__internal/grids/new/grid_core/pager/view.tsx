@@ -44,17 +44,17 @@ export class PagerView extends View<PagerProps> {
       allowedPageSizes: this.allowedPageSizes,
       visible: this.visible,
       pageIndex: computed(
-        // TODO: fix the '??'
         (pageIndex) => (pageIndex ?? 0) + 1,
         [this.dataController.pageIndex],
       ),
       pageIndexChanged: (value): void => this.dataController.pageIndex.update(value - 1),
       pageSize: this.dataController.pageSize,
-      pageSizeChanged: this.dataController.pageSize.update,
+      pageSizeChanged: (value): void => this.dataController.pageSize.update(value),
       gridCompatibility: false,
       pageCount: this.dataController.pageCount,
       showPageSizeSelector: this.options.oneWay('pager.showPageSizeSelector'),
       _skipValidation: true,
+      tabIndex: 0,
     });
   }
 }

@@ -31,7 +31,6 @@ import type { ColumnsController } from '../columns_controller/m_columns_controll
 import type { HeaderPanel } from '../header_panel/m_header_panel';
 import modules from '../m_modules';
 import gridCoreUtils from '../m_utils';
-import type { PagerView } from '../pager/m_pager';
 import { CLASSES } from './const';
 
 const COLUMNS_SEPARATOR_CLASS = 'columns-separator';
@@ -1211,8 +1210,6 @@ export class TablePositionViewController extends modules.ViewController {
 
   public readonly positionChanged: any;
 
-  private _pagerView!: PagerView;
-
   constructor(component) {
     super(component);
     this.positionChanged = Callbacks();
@@ -1224,7 +1221,6 @@ export class TablePositionViewController extends modules.ViewController {
     this._columnsResizerController = this.getController('columnsResizer');
     this._columnHeadersView = this.getView('columnHeadersView');
     this._rowsView = this.getView('rowsView');
-    this._pagerView = this.getView('pagerView');
 
     this._rowsView.resizeCompleted.add(() => {
       if (this.option('allowColumnResizing')) {

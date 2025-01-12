@@ -203,7 +203,6 @@ export interface Views {
   headerPanel: import('./header_panel/m_header_panel').HeaderPanel;
   headerFilterView: import('./header_filter/m_header_filter_core').HeaderFilterView;
   rowsView: import('./views/m_rows_view').RowsView;
-  pagerView: import('./pager/m_pager').PagerView;
   columnsSeparatorView: import('./columns_resizing_reordering/m_columns_resizing_reordering').ColumnsSeparatorView;
   blockSeparatorView: import('./columns_resizing_reordering/m_columns_resizing_reordering').BlockSeparatorView;
   draggingHeaderView: import('./columns_resizing_reordering/m_columns_resizing_reordering').DraggingHeaderView;
