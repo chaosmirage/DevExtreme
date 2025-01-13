@@ -6,13 +6,69 @@ import { items, store } from "./data";
 
 const CardView = wrapDxWithReact(dxCardView);
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+const dataSources = {
+  empty: [],
+  local: items,
+  remote: store,
+}
+
+const columns = {
+  remote: [
+    {
+      dataField: "OrderNumber",
+      alignment: 'right',
+      dataType: "number",
+    },
+    {
+      dataField: "OrderDate",
+      visible: false,
+    },
+    "StoreCity",
+    "StoreState",
+    "Employee",
+    "SaleAmount",
+  ],
+  local: [
+    {
+      dataField: 'column1'
+    }, {
+      dataField: 'column2'
+    }
+  ],
+}
+
 const meta: Meta<typeof CardView> = {
   title: "Grids/CardView",
   component: CardView,
   argTypes: {
     dataSource: {
-      control: false,
+      options: Object.keys(dataSources),
+      mapping: dataSources,
+      control: { type: 'radio' },
+    },
+    width: {
+      control: 'text',
+    },
+    height: {
+      control: 'text',
+    },
+    keyExpr: {
+      control: 'text',
+    },
+    cardsPerRow: {
+      options: ['auto', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      control: { type: 'select' },
+    },
+    paging: {
+      pageSize: 12,
+    },
+    // cardMinWidth: 250,
+    // cardMaxWidth: 350,
+    // filterPanel: { visible: true },
+    columns: {
+      options: Object.keys(columns),
+      mapping: columns,
+      control: { type: 'radio' },
     }
   }
 };
@@ -23,10 +79,9 @@ type Story = StoryObj<typeof CardView>;
 
 export const DefaultMode: Story = {
   args: {
-    dataSource: store,
+    dataSource: 'local',
     width: "100%",
-    // width: 750,
-    height: 500,
+    height: '500px',
     keyExpr: "OrderNumber",
     cardsPerRow: "auto",
     paging: {
@@ -34,21 +89,44 @@ export const DefaultMode: Story = {
     },
     cardMinWidth: 250,
     cardMaxWidth: 350,
-    columns: [
-      {
-        dataField: "OrderNumber",
-        alignment: 'right',
-        dataType: "number",
-      },
-      {
-        dataField: "OrderDate",
-        visible: false,
-      },
-      "StoreCity",
-      "StoreState",
-      "Employee",
-      "SaleAmount",
-    ],
+    columns: 'local',
     filterPanel: { visible: true },
   },
 };
+
+export const RawControls: Story = {
+  ...DefaultMode,
+  argTypes: {
+    ...meta.argTypes,
+    dataSource: {
+      control: 'object',
+      mapping: null,
+    },
+    columns: {
+      control: 'object',
+      mapping: null,
+    },
+  },
+  args: {
+    ...DefaultMode.args,
+    dataSource: dataSources.local.slice(0, 10),
+    columns: columns.local,
+  }
+};
+
+export const FixatedCardsPerRow: Story = {
+  ...DefaultMode,
+  args: {
+    ...DefaultMode.args,
+    cardsPerRow: 3
+  },
+};
+
+export const EmptyCardView: Story = {
+  ...DefaultMode,
+  args: {
+    ...DefaultMode.args,
+    dataSource: 'empty',
+  },
+};
+
