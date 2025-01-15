@@ -13,7 +13,8 @@
   "dependencies": {
     "devextreme": "workspace:~",
     "devextreme-react": "workspace:~",
-    "inferno": "^8.2.3"
+    "inferno": "^8.2.3",
+    "html-react-parser": "^5.2.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.6.19",
