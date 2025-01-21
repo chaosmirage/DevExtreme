@@ -201,7 +201,6 @@ export class ResizingController extends modules.ViewController {
     const widgetStatusText = messageLocalization
     // @ts-expect-error Badly typed format method
       .format(widgetAriaLabel, totalItemsCount, columnCount);
-    // @ts-expect-error Badly typed dxElementWrapper
     const $ariaLabelElement = this.component.$element().children(`.${GRIDBASE_CONTAINER_CLASS}`);
     // @ts-expect-error Treelist Variable
     const expandableWidgetAriaLabel = messageLocalization.format(this._expandableWidgetAriaId);
@@ -364,7 +363,6 @@ export class ResizingController extends modules.ViewController {
 
     this._toggleContentMinHeight(wordWrapEnabled); // T1047239
 
-    // @ts-expect-error
     if ($element && $element.get(0) && this._maxWidth) {
       delete this._maxWidth;
       $element[0].style.maxWidth = '';
@@ -511,7 +509,7 @@ export class ResizingController extends modules.ViewController {
             const borderWidth = gridCoreUtils.getComponentBorderWidth(this, $rowsViewElement);
 
             that._maxWidth = totalWidth + scrollbarWidth + borderWidth;
-            // @ts-expect-error
+
             $element.css('maxWidth', that._maxWidth);
           }
         }
@@ -606,7 +604,6 @@ export class ResizingController extends modules.ViewController {
   }
 
   private _getGroupElement() {
-    // @ts-expect-error
     return this.component.$element().children().get(0);
   }
 
@@ -707,15 +704,15 @@ export class ResizingController extends modules.ViewController {
   private _resetGroupElementHeight() {
     const groupElement = this._getGroupElement();
     const scrollable = this._rowsView.getScrollable();
-
+    // @ts-expect-error
     if (groupElement && groupElement.style.height && (!scrollable || !scrollable.scrollTop())) {
+      // @ts-expect-error
       groupElement.style.height = '';
     }
   }
 
   private _checkSize(checkSize?) {
     const $rootElement = this.component.$element();
-    // @ts-expect-error
     const isWidgetVisible = $rootElement.is(':visible');
     const isGridSizeChanged = this._lastWidth !== getWidth($rootElement)
           || this._lastHeight !== getHeight($rootElement)
@@ -782,6 +779,7 @@ export class ResizingController extends modules.ViewController {
     // eslint-disable-next-line radix
     const maxHeight = parseInt($rootElement.css('maxHeight'));
     const maxHeightHappened = maxHeight && rootElementHeight >= maxHeight;
+    // @ts-expect-error
     const isMaxHeightApplied = groupElement && groupElement.scrollHeight === groupElement.offsetHeight;
 
     that.updateSize($rootElement);

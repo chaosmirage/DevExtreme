@@ -1,20 +1,5 @@
-import type { ToolbarItem } from './types';
+import type { ToolbarProps } from './types';
 
 export interface Options {
-  toolbar?: {
-    items?: ToolbarItem[];
-
-    visible?: boolean;
-
-    disabled?: boolean;
-  };
-
-  onToolbarPreparing?: unknown;
+  toolbar?: ToolbarProps;
 }
-
-export const defaultOptions = {
-  toolbar: {
-    // TODO: set to undefined
-    visible: true,
-  },
-} satisfies Options;

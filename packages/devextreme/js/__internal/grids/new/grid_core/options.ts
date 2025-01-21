@@ -8,7 +8,7 @@ import * as dataController from './data_controller/index';
 import { filterPanel } from './filtering/index';
 import * as pager from './pager/index';
 import type { SearchProperties } from './search/types';
-import * as toolbar from './toolbar/index';
+import type * as toolbar from './toolbar/index';
 import type { GridCoreNew } from './widget';
 
 /**
@@ -30,7 +30,6 @@ export type Options =
 export const defaultOptions = {
   ...dataController.defaultOptions,
   ...columnsController.defaultOptions,
-  ...toolbar.defaultOptions,
   ...pager.defaultOptions,
   ...filterPanel.defaultOptions,
   ...contentView.defaultOptions,

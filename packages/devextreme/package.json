@@ -31,7 +31,7 @@
     "@babel/runtime": "^7.12.1",
     "@devextreme/runtime": "3.0.13",
     "devexpress-diagram": "2.2.15",
-    "devexpress-gantt": "4.1.56",
+    "devexpress-gantt": "4.1.57",
     "devextreme-quill": "1.7.1",
     "inferno": "^8.2.3",
     "inferno-hydrate": "^8.2.3",
@@ -225,6 +225,10 @@
     "tcd-update": "tcd-update",
     "gen-doc": "typedoc 'js/__internal/**/*.ts' 'js/__internal/**/*.tsx' --tsconfig js/__internal/tsconfig.json --excludePrivate false",
     "gen-spec": "jest --json > artifacts/specs.json"
+  },
+  "bin": {
+    "devextreme-bundler-init": "bin/bundler-init.js",
+    "devextreme-bundler": "bin/bundler.js"
   },
   "browserslist": [
     "last 2 versions",

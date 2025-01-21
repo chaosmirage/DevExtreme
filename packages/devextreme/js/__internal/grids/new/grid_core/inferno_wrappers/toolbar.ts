@@ -2,17 +2,17 @@
 import '@js/ui/button';
 import '@js/ui/check_box';
 
-import type { dxToolbarOptions } from '@js/ui/toolbar';
+import type { Properties as ToolbarProps } from '@js/ui/toolbar';
 import dxToolbar from '@js/ui/toolbar';
 
 import { InfernoWrapper } from './widget_wrapper';
 
-export class Toolbar extends InfernoWrapper<dxToolbarOptions, dxToolbar> {
+export class Toolbar extends InfernoWrapper<ToolbarProps, dxToolbar> {
   protected getComponentFabric(): typeof dxToolbar {
     return dxToolbar;
   }
 
-  protected updateComponentOptions(prevProps: dxToolbarOptions, props: dxToolbarOptions): void {
+  protected updateComponentOptions(prevProps: ToolbarProps, props: ToolbarProps): void {
     if (
       Array.isArray(props.items)
       && Array.isArray(prevProps.items)
@@ -29,8 +29,9 @@ export class Toolbar extends InfernoWrapper<dxToolbarOptions, dxToolbar> {
           });
         }
       });
-      const propsToUpdate = { ...props };
-      delete propsToUpdate.items;
+
+      const { items, ...propsToUpdate } = props;
+
       super.updateComponentOptions(prevProps, propsToUpdate);
     } else {
       super.updateComponentOptions(prevProps, props);

@@ -114,6 +114,7 @@ export class ContextMenuView extends modules.View {
         },
 
         cssClass: this.getWidgetContainerClass(),
+        // @ts-expect-error
         target: this.component.$element(),
       },
     );

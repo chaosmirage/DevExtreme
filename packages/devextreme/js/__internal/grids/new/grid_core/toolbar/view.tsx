@@ -1,26 +1,24 @@
 /* eslint-disable spellcheck/spell-checker */
-import { computed } from '@ts/core/reactive/index';
+import type { SubsGets } from '@ts/core/reactive/index';
+import { combined, computed } from '@ts/core/reactive/index';
 
-import { View } from '../core/view_old';
-import { Toolbar } from '../inferno_wrappers/toolbar';
+import { View } from '../core/view';
 import { OptionsController } from '../options_controller/options_controller';
 import { ToolbarController } from './controller';
+import { ToolbarView as Toolbar } from './toolbar';
+import type { ToolbarProps } from './types';
+import { isVisible } from './utils';
 
-export class ToolbarView extends View {
-  public vdom = computed(
-    (items, visible, disabled) => (
-      <Toolbar
-        items={items}
-        visible={visible}
-        disabled={disabled}
-      />
-    ),
-    [
-      this.controller.items,
-      this.options.oneWay('toolbar.visible'),
-      this.options.oneWay('toolbar.disabled'),
-    ],
+export class ToolbarView extends View<ToolbarProps> {
+  protected override component = Toolbar;
+
+  private readonly visibleConfig = this.options.oneWay('toolbar.visible');
+
+  private readonly visible = computed(
+    (visibleConfig, items) => isVisible(visibleConfig, items),
+    [this.visibleConfig, this.controller.items],
   );
+
   public static dependencies = [ToolbarController, OptionsController] as const;
 
   constructor(
@@ -28,5 +26,13 @@ export class ToolbarView extends View {
     private readonly options: OptionsController,
   ) {
     super();
+  }
+
+  protected override getProps(): SubsGets<ToolbarProps> {
+    return combined({
+      visible: this.visible,
+      items: this.controller.items,
+      disabled: this.options.oneWay('toolbar.disabled'),
+    });
   }
 }

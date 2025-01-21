@@ -45,7 +45,7 @@ export class PagerView extends View<PagerProps> {
       allowedPageSizes: this.allowedPageSizes,
       visible: this.visible,
       pageIndex: computed(
-        (pageIndex) => (pageIndex ?? 0) + 1,
+        (pageIndex) => pageIndex + 1,
         [this.dataController.pageIndex],
       ),
       pageIndexChanged: (value): void => this.dataController.pageIndex.update(value - 1),

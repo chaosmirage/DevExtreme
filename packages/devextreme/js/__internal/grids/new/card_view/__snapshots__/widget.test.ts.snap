@@ -24,15 +24,6 @@ exports[`common initial render should be successfull 1`] = `
         role="presentation"
       >
         <div
-          class="dx-item dx-toolbar-item dx-toolbar-button dx-toolbar-item-auto-hide"
-        >
-          <div
-            class="dx-item-content dx-toolbar-item-content"
-          >
-            <input />
-          </div>
-        </div>
-        <div
           class="dx-item dx-toolbar-item dx-toolbar-button dx-toolbar-item-auto-hide dx-toolbar-text-auto-hide"
         >
           <div
@@ -51,6 +42,31 @@ exports[`common initial render should be successfull 1`] = `
                 <i
                   class="dx-icon dx-icon-column-chooser"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-disabled="true"
+          class="dx-state-disabled dx-item dx-toolbar-item dx-toolbar-button"
+        >
+          <div
+            class="dx-item-content dx-toolbar-item-content"
+          >
+            <div
+              aria-label="save"
+              class="dx-widget dx-button dx-button-mode-contained dx-button-normal dx-button-has-text"
+              role="button"
+              tabindex="-1"
+            >
+              <div
+                class="dx-button-content"
+              >
+                <span
+                  class="dx-button-text"
+                >
+                  save
+                </span>
               </div>
             </div>
           </div>
@@ -105,28 +121,12 @@ exports[`common initial render should be successfull 1`] = `
           </div>
         </div>
         <div
-          aria-disabled="true"
-          class="dx-state-disabled dx-item dx-toolbar-item dx-toolbar-button"
+          class="dx-item dx-toolbar-item dx-toolbar-button dx-toolbar-item-auto-hide"
         >
           <div
             class="dx-item-content dx-toolbar-item-content"
           >
-            <div
-              aria-label="save"
-              class="dx-widget dx-button dx-button-mode-contained dx-button-normal dx-button-has-text"
-              role="button"
-              tabindex="-1"
-            >
-              <div
-                class="dx-button-content"
-              >
-                <span
-                  class="dx-button-text"
-                >
-                  save
-                </span>
-              </div>
-            </div>
+            <input />
           </div>
         </div>
         <div
