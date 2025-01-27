@@ -33,8 +33,6 @@ export class Cover extends PureComponent<CoverProps> {
           src={src}
           alt={alt}
           className={CLASSES.image}
-          // TODO: move to scss
-          style={{ width: '100%', height: 'auto' }}
         />
       </div>
     );

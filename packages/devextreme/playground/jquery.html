@@ -53,6 +53,22 @@
         </select>
         <br />
         <div id="cardview"></div>
+
+        <style>
+            .dx-card-cover {
+                overflow: hidden;
+                height: 180px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .dx-card-cover-image {
+                height: 207px;
+                width: auto;
+            }
+        </style>
+
         <script>
             const render = () => {
                 const employees = [{
@@ -223,6 +239,9 @@
                     height: 700,
                     keyExpr: 'ID',
                     cardsPerRow: 3,
+                    cardHeader: {
+                        captionExpr: (data) => `${data.FirstName} ${data.LastName}`
+                    },
                     paging: {
                         pageSize: 6,
                     },
@@ -288,7 +307,7 @@
                     //     'SaleAmount',
                     // ],
                     cardCover: {
-                        // imageExpr: (data) => `https://js.devexpress.com/jQuery/Demos/WidgetsGallery/JSDemos/${data.Picture}`,
+                        imageExpr: (data) => `https://js.devexpress.com/jQuery/Demos/WidgetsGallery/JSDemos/${data.Picture}`,
                         altExpr: 'FirstName',
                     },
                     filterPanel: { visible: true },

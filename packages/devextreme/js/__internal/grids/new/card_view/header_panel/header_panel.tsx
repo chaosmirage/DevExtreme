@@ -16,8 +16,6 @@ export interface HeaderPanelProps {
 
   onMove: (column: Column, toIndex: number) => void;
 
-  onRemove: (column: Column) => void;
-
   allowColumnReordering: boolean;
 }
 
@@ -35,6 +33,7 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
           itemOrientation="horizontal"
           onMove={(column, index): void => this.props.onMove?.(column, index)}
           filter={`.${itemClasses.item}`}
+          dragTemplate={Item}
         >
           <Scrollable
             direction='horizontal'
@@ -46,7 +45,6 @@ export class HeaderPanel extends Component<HeaderPanelProps> {
               {this.props.columns.map((column) => (
                 <Item
                   column={column}
-                  onRemove={(): void => this.props.onRemove?.(column)}
                 />
               ))}
             </div>

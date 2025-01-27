@@ -9,6 +9,14 @@ export interface Options extends Base.Options {
     imageExpr: string | ((data: DataObject) => string);
     altExpr: string | ((data: DataObject) => string);
   };
+
+  cardHeader?: {
+    captionExpr?: string | ((data: DataObject) => string);
+    visible?: boolean;
+    // TODO
+    // template
+    // items
+  };
 }
 
 export const defaultOptions = {

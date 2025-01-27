@@ -1,6 +1,7 @@
 import type { Format } from '@js/common';
 import type { ColumnBase } from '@js/common/grids';
 
+import type * as HeaderPanel from '../../card_view/header_panel/index';
 import type { DataObject, Key } from '../data_controller/types';
 
 type InheritedColumnProps =
@@ -9,6 +10,7 @@ type InheritedColumnProps =
   | 'visible'
   | 'visibleIndex'
   | 'allowReordering'
+  | 'allowHiding'
   | 'trueText'
   | 'falseText'
   | 'caption';
@@ -32,7 +34,7 @@ export type Column = Pick<Required<ColumnBase>, InheritedColumnProps> & {
   editorTemplate?: unknown;
 
   fieldTemplate?: unknown;
-};
+} & HeaderPanel.ColumnOptions;
 
 export type VisibleColumn = Column & { visible: true };
 

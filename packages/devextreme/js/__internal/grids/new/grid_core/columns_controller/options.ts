@@ -25,6 +25,7 @@ export const defaultColumnProperties = {
   alignment: 'left',
   visible: true,
   allowReordering: true,
+  allowHiding: true,
   trueText: messageLocalization.format('dxDataGrid-trueText'),
   falseText: messageLocalization.format('dxDataGrid-falseText'),
 } satisfies Partial<Column>;

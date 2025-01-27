@@ -1,0 +1,11 @@
+@use './variables' as *;
+
+.dx-cardview-card-header {
+  .dx-toolbar {
+    padding: 0px 12px;
+
+    .dx-toolbar-label {
+      font-size: $cardview-card-header-text-size;
+    }
+  }
+}

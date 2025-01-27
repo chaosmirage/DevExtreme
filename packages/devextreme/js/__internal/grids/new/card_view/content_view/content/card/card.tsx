@@ -41,6 +41,10 @@ export interface CardProps {
     altExpr?: (data: DataObject) => string;
   };
 
+  header?: {
+    captionExpr?: (data: DataObject) => string;
+  };
+
   elementRef?: RefObject<HTMLDivElement>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,6 +92,7 @@ export class Card extends PureComponent<CardProps> {
       maxWidth,
       hoverStateEnabled,
       cover,
+      header,
     } = this.props;
 
     const style = {
@@ -103,6 +108,7 @@ export class Card extends PureComponent<CardProps> {
 
     const imageSrc = cover?.imageExpr?.(this.props.row.data);
     const alt = cover?.altExpr?.(this.props.row.data);
+    const headerCaption = header?.captionExpr?.(this.props.row.data);
 
     return (
       <div
@@ -119,6 +125,7 @@ export class Card extends PureComponent<CardProps> {
       >
         <CardHeader
           items={this.props.toolbar || []}
+          caption={headerCaption}
         />
         {imageSrc && (
           <Cover

@@ -1,3 +1,4 @@
+@use './header';
 @use './variables' as *;
 
 .dx-cardview-card {
@@ -19,6 +20,11 @@
   border-spacing: $cardview-card-content-field-gap;
   table-layout: fixed;
   width: 100%;
+}
+
+.dx-card-cover {
+  border-top: $cardview-card-border-size solid $cardview-card-border-color;
+  border-bottom: $cardview-card-border-size solid $cardview-card-border-color;
 }
 
 .dx-cardview-field {

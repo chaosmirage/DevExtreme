@@ -36,7 +36,7 @@ export class HeaderPanelView extends View<HeaderPanelProps> {
   }
 
   public onMove(column: Column, toIndex: number): void {
-    // this.columnsController.columnOption(column, 'visible', true);
+    this.columnsController.columnOption(column, 'visible', true);
     this.columnsController.columnOption(column, 'visibleIndex', toIndex);
   }
 }

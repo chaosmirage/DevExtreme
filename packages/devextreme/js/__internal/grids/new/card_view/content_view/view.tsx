@@ -96,6 +96,12 @@ export class ContentView extends ContentViewBase<ContentViewProps> {
               [this.options.oneWay('cardCover.altExpr')],
             ),
           }),
+          header: combined({
+            captionExpr: computed(
+              (captionExpr) => this.processExpr(captionExpr),
+              [this.options.oneWay('cardHeader.captionExpr')],
+            ),
+          }),
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           toolbar: this.options.oneWay('cardHeader.items') as any,
         }),
