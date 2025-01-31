@@ -7,6 +7,7 @@ import { OptionsController as OptionsControllerBase } from '@ts/grids/new/grid_c
 import { GridCoreNew } from '@ts/grids/new/grid_core/widget';
 
 import * as ContentViewModule from './content_view/index';
+import * as HeadersViewModule from './headers/index';
 import { MainView } from './main_view';
 import { defaultOptions } from './options';
 import { OptionsController } from './options_controller';
@@ -17,6 +18,7 @@ export class DataGridNewBase extends GridCoreNew {
   protected _registerDIContext(): void {
     super._registerDIContext();
     this.diContext.register(ContentViewModule.View);
+    this.diContext.register(HeadersViewModule.View);
     this.diContext.register(MainViewBase, MainView);
 
     const optionsController = new OptionsController(this);
