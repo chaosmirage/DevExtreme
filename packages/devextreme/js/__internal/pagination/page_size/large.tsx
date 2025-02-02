@@ -102,7 +102,6 @@ export class PageSizeLarge extends BaseInfernoComponent<PageSizeLargePropsType> 
 
   render(): JSX.Element {
     return (
-      // @ts-expect-error
       <Fragment>
         {
             this.getPageSizesText().map(({

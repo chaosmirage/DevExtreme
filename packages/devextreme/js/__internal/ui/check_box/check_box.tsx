@@ -212,7 +212,6 @@ export class CheckBox extends InfernoWrapperComponent<CheckBoxProps> {
         onFocusIn={this.props.onFocusIn}
         {...this.restAttributes}
       >
-        {/* @ts-expect-error */}
         <Fragment>
           <input type="hidden" value={`${value}`} {...this.props.name && { name: this.props.name }} />
           <div className="dx-checkbox-container">

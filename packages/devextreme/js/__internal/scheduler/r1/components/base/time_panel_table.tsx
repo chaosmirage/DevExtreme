@@ -65,7 +65,6 @@ export class TimePanelTable extends InfernoWrapperComponent<TimePanelTableProps>
             isGroupedAllDayPanel,
             key: fragmentKey,
           }) => (
-            // @ts-expect-error
             <Fragment key={fragmentKey}>
               {
                 isGroupedAllDayPanel && (
@@ -99,14 +98,12 @@ export class TimePanelTable extends InfernoWrapperComponent<TimePanelTableProps>
                   startDate,
                   text,
                 }) => (
-                  // @ts-ignore
                   <Row
                     key={key}
                     className="dx-scheduler-time-panel-row"
                     leftVirtualCellWidth={RowDefaultProps.leftVirtualCellWidth}
                     rightVirtualCellWidth={RowDefaultProps.rightVirtualCellWidth}
                   >
-                    {/* @ts-ignore */}
                     <TimePanelCell
                       viewContext={viewContext}
                       startDate={startDate}
@@ -117,7 +114,6 @@ export class TimePanelTable extends InfernoWrapperComponent<TimePanelTableProps>
                       isFirstGroupCell={isFirstGroupCell}
                       isLastGroupCell={isLastGroupCell}
                       index={cellIndex}
-                      // @ts-expect-error
                       timeCellTemplate={TimeCellTemplateComponent}
                       highlighted={highlighted}
                     />

@@ -46,14 +46,12 @@ export class DateTableBody extends BaseInfernoComponent<DateTableBodyProps> {
             isGroupedAllDayPanel,
             key: fragmentKey,
           }) => (
-              // @ts-expect-error
               <Fragment key={fragmentKey}>
                 {
                   // @ts-ignore
                   isGroupedAllDayPanel && <AllDayPanelTableBody
                     viewData={allDayPanel ?? AllDayPanelTableBodyDefaultProps.viewData}
                     viewContext={viewContext}
-                    // @ts-expect-error
                     dataCellTemplate={DataCellTemplateComponent}
                     isVerticalGroupOrientation={true}
                     leftVirtualCellWidth={viewData.leftVirtualCellWidth

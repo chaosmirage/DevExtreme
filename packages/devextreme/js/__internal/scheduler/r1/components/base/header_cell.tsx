@@ -1,10 +1,11 @@
 import { BaseInfernoComponent, normalizeStyles } from '@devextreme/runtime/inferno';
+import type { InfernoNode } from 'inferno';
 
 import type { OrdinaryCellProps } from './ordinary_cell';
 import { OrdinaryCellDefaultProps } from './ordinary_cell';
 
 export class HeaderCell extends BaseInfernoComponent<OrdinaryCellProps> {
-  render(): JSX.Element {
+  render(): InfernoNode {
     const {
       children,
       className,

@@ -62,7 +62,6 @@ export class TimelineDateHeaderLayout extends BaseInfernoComponent<DateHeaderPro
             }
 
             return (
-              // @ts-ignore
               <Row
                 key={rowIndex.toString()}
                 className="dx-scheduler-header-row"
@@ -103,9 +102,7 @@ export class TimelineDateHeaderLayout extends BaseInfernoComponent<DateHeaderPro
                       isWeekDayCell={isWeekDayRow}
                       colSpan={colSpan}
                       splitText={splitText}
-                      // @ts-expect-error
                       dateCellTemplate={DateCellTemplateComponent}
-                      // @ts-expect-error
                       timeCellTemplate={TimeCellTemplateComponent}
                       isTimeCellTemplate={isTimeCellTemplate}
                     />

@@ -91,7 +91,6 @@ export class DateHeader extends BaseInfernoComponent<DateHeaderProps> {
                     text={text}
                     isFirstGroupCell={isFirstGroupCell}
                     isLastGroupCell={isLastGroupCell}
-                    // @ts-expect-error
                     dateCellTemplate={DateCellTemplateComponent}
                     colSpan={colSpan}
                     splitText={isMaterialBased}

@@ -29,7 +29,7 @@ export class HeaderPanelTimeline extends InfernoWrapperComponent<HeaderPanelProp
     const TimeCellTemplateComponent = getTemplate(timeCellTemplate);
 
     return (
-      // @ts-ignore
+      // @ts-expect-error
       <HeaderPanel
         viewContext={viewContext}
         dateHeaderData={dateHeaderData}
@@ -39,11 +39,8 @@ export class HeaderPanelTimeline extends InfernoWrapperComponent<HeaderPanelProp
         groupOrientation={groupOrientation}
         isRenderDateHeader={isRenderDateHeader}
         dateHeaderTemplate={TimelineDateHeaderLayout}
-        // @ts-expect-error
         resourceCellTemplate={ResourceCellTemplateComponent}
-        // @ts-expect-error
         dateCellTemplate={DateCellTemplateComponent}
-        // @ts-expect-error
         timeCellTemplate={TimeCellTemplateComponent}
       />
     );

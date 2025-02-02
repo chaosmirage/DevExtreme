@@ -31,7 +31,6 @@ export class GroupPanelVerticalRow extends BaseInfernoComponent<GroupPanelRowPro
             data={data}
             index={index}
             color={color}
-            // @ts-expect-error
             cellTemplate={CellTemplateComponent}
           />)
         }

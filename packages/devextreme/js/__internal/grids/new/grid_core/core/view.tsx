@@ -32,10 +32,8 @@ export abstract class View<T extends {}> {
       // root.innerHTML = renderToString(<ViewComponent {...props}/>);
       if (this.firstRender) {
         this.firstRender = false;
-        // @ts-expect-error
         hydrate(<ViewComponent {...props}/>, root);
       } else {
-        // @ts-expect-error
         render(<ViewComponent {...props}/>, root);
       }
     });
@@ -68,7 +66,6 @@ export abstract class View<T extends {}> {
 
       public render(): JSX.Element | undefined {
         const ViewComponent = view.component;
-        // @ts-expect-error
         return <ViewComponent {...this.state!.props}/>;
       }
 

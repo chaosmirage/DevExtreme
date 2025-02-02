@@ -32,7 +32,6 @@ export class GroupPanelVertical extends BaseInfernoComponent<GroupPanelProps> {
               .map((group) => <GroupPanelVerticalRow
                 key={group[0].key}
                 groupItems={group}
-                // @ts-expect-error
                 cellTemplate={ResourceCellTemplateComponent}
               />)
           }

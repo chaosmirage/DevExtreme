@@ -238,7 +238,6 @@ export class PagesLarge extends BaseInfernoComponent<PagesLargePropsType> {
         <div key={key} className={PAGER_PAGE_SEPARATOR_CLASS}>. . .</div>
       )
     ));
-    // @ts-expect-error
     return (<Fragment>{PagesMarkup}</Fragment>);
   }
 }

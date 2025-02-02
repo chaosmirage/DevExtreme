@@ -244,7 +244,6 @@ export class Editor extends InfernoWrapperComponent<EditorProps> {
         visible={this.props.visible}
         {...this.restAttributes}
       >
-        {/* @ts-expect-error */}
         <Fragment>
           {this.props.children}
           {this.state!.isValidationMessageVisible && (

@@ -67,7 +67,6 @@ export class AllDayTable extends InfernoWrapperComponent<AllDayPanelTableProps> 
             ?? AllDayPanelTableBodyDefaultProps.rightVirtualCellWidth}
           leftVirtualCellCount={viewData.leftVirtualCellCount}
           rightVirtualCellCount={viewData.rightVirtualCellCount}
-          // @ts-expect-error
           dataCellTemplate={DataCellTemplateComponent}
         />
       </Table>

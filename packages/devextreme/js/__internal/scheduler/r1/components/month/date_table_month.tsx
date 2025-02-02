@@ -34,7 +34,6 @@ export class DateTableMonth extends InfernoWrapperComponent<DateTableProps> {
         viewContext={viewContext}
         groupOrientation={groupOrientation}
         addDateTableClass={addDateTableClass}
-        // @ts-expect-error
         dataCellTemplate={DataCellTemplateComponent}
         cellTemplate={DateTableMonthCell}
         tableRef={tableRef}

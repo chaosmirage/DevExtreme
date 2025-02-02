@@ -66,9 +66,7 @@ export class DateTable extends InfernoWrapperComponent<DateTableProps> {
         <DateTableBody
           viewData={viewData}
           viewContext={viewContext}
-          // @ts-expect-error
           cellTemplate={CellTemplateComponent}
-          // @ts-expect-error
           dataCellTemplate={DataCellTemplateComponent}
           leftVirtualCellWidth={leftVirtualCellWidth}
           rightVirtualCellWidth={rightVirtualCellWidth}
