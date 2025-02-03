@@ -122,6 +122,22 @@ describe('computed', () => {
       expect(callback).toHaveBeenNthCalledWith(2, 'new value other value');
     });
   });
+
+  describe('dispose', () => {
+    it('should prevent all updates', () => {
+      const callback = jest.fn();
+      myComputed.subscribe(callback);
+
+      expect(callback).toBeCalledTimes(1);
+      expect(callback).toBeCalledWith('some value other value');
+
+      // @ts-expect-error
+      myComputed.dispose();
+      myState1.update('new value');
+
+      expect(callback).toBeCalledTimes(1);
+    });
+  });
 });
 
 describe('interruptableComputed', () => {
