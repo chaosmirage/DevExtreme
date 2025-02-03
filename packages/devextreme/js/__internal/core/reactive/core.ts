@@ -48,41 +48,47 @@ export class Observable<T> implements Subscribable<T>, Updatable<T>, Gettable<T>
 export class InterruptableComputed<
   TArgs extends readonly any[], TValue,
 > extends Observable<TValue> {
-  private readonly depValues: [...TArgs];
+  private readonly observedStatesValues: [...TArgs];
 
-  private readonly depInitialized: boolean[];
+  private readonly observedStatesInitializationStates: boolean[];
 
   private isInitialized = false;
 
-  private readonly subscriptions = new SubscriptionBag();
+  private readonly subscriptionsToObservedStates = new SubscriptionBag();
 
   constructor(
     compute: (...args: TArgs) => TValue,
-    deps: { [I in keyof TArgs]: Subscribable<TArgs[I]> },
+    observedStates: { [I in keyof TArgs]: Subscribable<TArgs[I]> },
   ) {
     super(undefined as any);
 
-    this.depValues = deps.map(() => undefined) as any;
-    this.depInitialized = deps.map(() => false);
+    this.observedStatesValues = observedStates.map(() => undefined) as any;
+    this.observedStatesInitializationStates = observedStates.map(() => false);
 
-    deps.forEach((dep, i) => {
-      this.subscriptions.add(dep.subscribe((v) => {
-        this.depValues[i] = v;
+    observedStates.forEach((observedState, index) => {
+      const observedStateChangesHandler = (value: any): void => {
+        this.observedStatesValues[index] = value;
 
         if (!this.isInitialized) {
-          this.depInitialized[i] = true;
-          this.isInitialized = this.depInitialized.every((e) => e);
+          this.observedStatesInitializationStates[index] = true;
         }
 
+        // An observed state calls current handler, and the following logic updates
+        // current computed's state
+        // eslint-disable-next-line max-len
+        this.isInitialized = this.observedStatesInitializationStates.every((isInitialized) => isInitialized);
+
         if (this.isInitialized) {
-          this.update(compute(...this.depValues));
+          this.update(compute(...this.observedStatesValues));
         }
-      }));
+      };
+
+      this.subscriptionsToObservedStates.add(observedState.subscribe(observedStateChangesHandler));
     });
   }
 
   dispose(): void {
     super.dispose();
-    this.subscriptions.unsubscribe();
+    this.subscriptionsToObservedStates.unsubscribe();
   }
 }
