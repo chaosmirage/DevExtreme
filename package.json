@@ -44,7 +44,7 @@
     "axe-core": "4.10.2",
     "cheerio": "1.0.0-rc.10",
     "codelyzer": "6.0.2",
-    "devextreme-internal-tools": "16.1.0",
+    "devextreme-internal-tools": "16.3.1",
     "devextreme-nx-plugin": "workspace:*",
     "http-server": "14.1.1",
     "husky": "8.0.3",
@@ -66,7 +66,7 @@
     "lint-staged",
     "pre-commit"
   ],
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.15.4",
   "pnpm": {
     "patchedDependencies": {
       "@devextreme/runtime@3.0.13": "patches/@devextreme__runtime@3.0.13.patch"
